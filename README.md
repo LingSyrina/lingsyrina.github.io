@@ -1,3 +1,3 @@
 # relational_judgement
 
-https://pcl.sitehost.iu.edu//rgoldsto/curvemorph/bezier-curve2.html
+[Rob's example](https://pcl.sitehost.iu.edu//rgoldsto/curvemorph/bezier-curve2.html)
