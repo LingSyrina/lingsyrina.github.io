@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My experiment</title>
+    <script src="https://unpkg.com/jspsych@7.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-canvas-keyboard-response@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-canvas-button-response@1.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-preload@1.0.0"></script>
+    <script src="canvasMorpher.js"></script>
+
+    <link href="https://unpkg.com/jspsych@7.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+  </head>
+  <body></body>
+
+  <script>
+    
+  /* initialize jsPsych */
+  var jsPsych = initJsPsych({
+    on_finish: function() {
+      var json = jsPsych.data.get().json();
+      var filename = "Englishtrial.json";
+      downloadJson(json,filename);
+      jsPsych.data.displayData();
+    }
+  });
+
+    /* define welcome message trial */
+    var welcome = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "Welcome to the experiment. Press any key to begin."
+    };
+
+    /* define instructions trial */
+    var instruction_1 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <p>In this section, an object will appear in the center of the screen.</p>
+        <p> Below is a statement that describes the image. </p>
+        <p> <strong> Once you finished reading, press any key to continue to the next image. </strong> </p>
+        <p> Press any key to begin. </p>
+      `,
+      post_trial_gap: 500
+    };
+    
+    var learn_stimuli = [
+        { stimulus: "1", radius_a: 90, radius_b: 90, name: 'They are equally A' },
+        { stimulus: "2", radius_a: 95, radius_b: 80, name: 'This is more A' },
+        { stimulus: "3", radius_a: 100,radius_b: 120, name: 'This is more B' },
+        { stimulus: "4", radius_a: 105,radius_b: 90, name: 'This is more A' },
+        { stimulus: "5", radius_a: 110,radius_b: 140, name: 'This is more B' },
+        { stimulus: "6", radius_a: 115,radius_b: 90, name: 'This is more A' },
+        { stimulus: "7", radius_a: 120,radius_b: 130, name: 'This is more B' },
+        { stimulus: "8", radius_a: 125,radius_b: 110, name: 'This is more A' },
+        { stimulus: "9", radius_a: 130,radius_b: 140, name: 'This is more b' },
+        { stimulus: "10", radius_a: 135,radius_b: 130, name: 'This is more A' },
+      ];
+      
+
+    function Morphfunction(canvas,radius){
+        const canvasMorpher = new CanvasMorpher(canvas, 80, radius);
+        canvasMorpher.morphAndDraw();
+    }
+    
+    /* define fixation and test trials */
+    var fixation = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '<div style="font-size:60px;">+</div>',
+      choices: "NO_KEYS",
+      trial_duration: 700,
+      data: {
+        task: 'fixation'
+      }
+    };
+
+
+    /*block1: learning task*/
+    /* 1.1 learning: define learning trials*/
+    var learn_A = {
+        type: jsPsychCanvasKeyboardResponse,
+        canvas_size: [300, 300],
+        //stimulus: Morphfunction,
+        stimulus: function(c) {
+            Morphfunction(c, jsPsych.timelineVariable('radius_a'));
+        },
+        choices: "NO_KEYS",
+        trial_duration: 3000,
+        data: {
+                radius: jsPsych.timelineVariable('radius_a'), 
+                prompt: jsPsych.timelineVariable('name')
+            },
+      };
+      
+    var learn_B = {
+        type: jsPsychCanvasKeyboardResponse,
+        canvas_size: [300, 300],
+        //stimulus: Morphfunction,
+        stimulus: function(c) {
+            Morphfunction(c, jsPsych.timelineVariable('radius_b'));
+        },
+        prompt: jsPsych.timelineVariable('name'),
+        choices: "NO_KEYS",
+        trial_duration: 3000,
+        data: {
+                radius: jsPsych.timelineVariable('radius_b'), 
+                prompt: jsPsych.timelineVariable('name')
+            },
+      };
+    
+      /* define learning procedure*/
+      var learn_procedure = {
+        timeline: [fixation, learn_A, fixation, learn_B],
+        timeline_variables:learn_stimuli,
+        repetitions: 1,
+        randomize_order: true
+      };
+
+
+    /*set the structure*/
+    var timeline = [];
+    
+    timeline.push(welcome);
+    /*block1*/
+    timeline.push(instruction_1);
+    timeline.push(learn_procedure);
+    
+    /* start the experiment */
+    jsPsych.run(timeline);
+
+  </script>
+</html>
