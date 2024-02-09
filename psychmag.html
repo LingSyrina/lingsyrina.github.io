@@ -97,6 +97,7 @@
                 radius: jsPsych.timelineVariable('radius_a'), 
                 prompt: jsPsych.timelineVariable('name')
             },
+        post_trial_gap: 500,
       };
       
     var learn_B_1 = {
@@ -125,6 +126,7 @@
         data: {
                 radius: jsPsych.timelineVariable('radius_a'), 
             },
+       post_trial_gap: 500,
       };
       
     var learn_B_2 = {
@@ -151,12 +153,12 @@
     
       /* define learning procedure*/
       var learn_procedure_1 = {
-        timeline: [fixation, learn_A_1, fixation, learn_B_1],
+        timeline: [fixation, learn_A_1, learn_B_1],
         timeline_variables:learn_stimuli_1,
         repetitions: 1,
       };
        var learn_procedure_2 = {
-        timeline: [fixation, learn_A_2, fixation, learn_B_2],
+        timeline: [fixation, learn_A_2, learn_B_2],
         timeline_variables:learn_stimuli_2,
         repetitions: 1,
         randomize_order: true
