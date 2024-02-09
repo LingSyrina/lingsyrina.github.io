@@ -149,13 +149,11 @@
                 task: 'response',
                 correct_response: jsPsych.timelineVariable('correct_response')
             },
-      on_finish: function(data) {
-          if (data.response == data.correct_response) {
-            jsPsych.finishTrial(); // Proceed to the next trial
-          } else {
-            // Display a message or prompt the participant to correct their response
-            alert(data.response);
+        on_finish: function(data) {
+          data.correct = data.response === data.correct_response;
+          if (data.response != data.correct_response){
             alert('Incorrect response. Please try again.');
+          } 
           }
         }
       };
