@@ -24,8 +24,8 @@ class CanvasMorpher {
     return coordinates;
   }
 
-  nonlinearAsymmetricPerspectiveShift(x, y) {
-    const scaleFactorX = 1 + 0.7 * Math.pow(x / this.radius, 3);
+  nonlinearAsymmetricPerspectiveShift(x, y, p) {
+    const scaleFactorX = 1 + p * Math.pow(x / this.radius, 3);
     const scaleFactorY = 1 + 0.2 * Math.pow(y / this.radius, 2);
 
     const newX = x * Math.pow(scaleFactorX, 2);
@@ -34,9 +34,9 @@ class CanvasMorpher {
     return { x: newX, y: newY };
   }
 
-  morphAndDraw() {
+  morphAndDraw(p) {
     const originalCoordinates = this.generateRandomCircleCoordinates();
-    const morphedCoordinates = originalCoordinates.map(({ x, y }) => this.nonlinearAsymmetricPerspectiveShift(x, y));
+    const morphedCoordinates = originalCoordinates.map(({ x, y }) => this.nonlinearAsymmetricPerspectiveShift(x, y, p));
 
     const minX = Math.min(...morphedCoordinates.map(coord => coord.x));
     const minY = Math.min(...morphedCoordinates.map(coord => coord.y));
