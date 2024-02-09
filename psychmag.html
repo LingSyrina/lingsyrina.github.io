@@ -63,11 +63,11 @@
       ];
 
     var learn_stimuli_2 = [
-        { stimulus: "6", radius_a: .30,radius_b: .90, name: 'This is more B', correct_response: 'This is more A' },
-        { stimulus: "7", radius_a: .20,radius_b: .20, name: 'They are equal',correct_response: 'This is more A' },
-        { stimulus: "8", radius_a: .25,radius_b: .10, name: 'This is more A',correct_response: 'This is more A' },
-        { stimulus: "9", radius_a: .30,radius_b: .75, name: 'This is more B',correct_response: 'This is more A' },
-        { stimulus: "10", radius_a: .90,radius_b: .30, name: 'This is more A',correct_response: 'This is more A' },
+        { stimulus: "6", radius_a: .30,radius_b: .90, name: 'This is more B', correct_response: 'a' },
+        { stimulus: "7", radius_a: .20,radius_b: .20, name: 'They are equal',correct_response: 'a' },
+        { stimulus: "8", radius_a: .25,radius_b: .10, name: 'This is more A',correct_response: 'a' },
+        { stimulus: "9", radius_a: .30,radius_b: .75, name: 'This is more B',correct_response: 'a' },
+        { stimulus: "10", radius_a: .90,radius_b: .30, name: 'This is more A',correct_response: 'a' },
       ];
       
 
@@ -140,7 +140,7 @@
         //choices: ['This is more A', 'This is more B'],
         //stimulus: Morphfunction,
         on_start: function(trial) {
-          trial.choices = ['This is more A', 'b', 'c']; // Define response options
+          trial.choices = ['a', 'b', 'c']; // Define response options
         },
         stimulus: function(c) {
             Morphfunction(c, jsPsych.timelineVariable('radius_b'));
