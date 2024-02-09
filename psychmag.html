@@ -154,7 +154,7 @@
             },
       on_finish: function(data) {
           var response = data.response;
-          var correctResponse = correctResponses[jsPsych.timelineVariable('stimulus_index')];
+          var correctResponse = jsPsych.timelineVariable('correct_response');
           if (response == correctResponse) {
             jsPsych.finishTrial(); // Proceed to the next trial
           } else {
