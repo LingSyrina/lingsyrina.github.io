@@ -152,6 +152,7 @@
             },
         on_finish: function(data) {
           data.correct = data.response === data.correct_response;
+          alert(data.correct);
           if (data.response != data.correct_response){
             alert('Incorrect response. Please try again.');
           } 
