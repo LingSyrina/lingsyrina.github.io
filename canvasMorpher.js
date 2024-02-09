@@ -25,8 +25,8 @@ class CanvasMorpher {
   }
 
   nonlinearAsymmetricPerspectiveShift(x, y, p) {
-    const scaleFactorX = 1 + p * Math.pow(x / this.radius, 3);
-    const scaleFactorY = 1 + 0.2 * Math.pow(y / this.radius, 2);
+    const scaleFactorX = 1 + p * Math.pow(x / 110, 3);
+    const scaleFactorY = 1 + 0.2 * Math.pow(y / 110, 2);
 
     const newX = x * Math.pow(scaleFactorX, 2);
     const newY = y * Math.pow(scaleFactorY, 1.5);
