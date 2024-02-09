@@ -150,7 +150,7 @@
                 correct_response: jsPsych.timelineVariable('correct_response')
             },
       on_finish: function(data) {
-          if (data.response == data.correctResponse) {
+          if (data.response == data.correct_response) {
             jsPsych.finishTrial(); // Proceed to the next trial
           } else {
             // Display a message or prompt the participant to correct their response
