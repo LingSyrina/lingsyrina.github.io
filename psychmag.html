@@ -109,7 +109,6 @@
     var learn_B_1 = {
         type: jsPsychCanvasKeyboardResponse,
         canvas_size: [300, 300],
-        //stimulus: Morphfunction,
         stimulus: function(c) {
             Morphfunction(c, jsPsych.timelineVariable('radius_b'));
         },
@@ -148,18 +147,14 @@
         response_ends_trial: true,
         data: {
                 task: 'response',
-                correct_response: jsPsych.timelineVariable('correct_response'),
-                radius: jsPsych.timelineVariable('radius_b'), 
-                //prompt: jsPsych.timelineVariable('name')
+                correct_response: jsPsych.timelineVariable('correct_response')
             },
       on_finish: function(data) {
-          var response = data.response;
-          var correctResponse = jsPsych.timelineVariable('correct_response');
-          if (response == correctResponse) {
+          if (data.response == data.correctResponse) {
             jsPsych.finishTrial(); // Proceed to the next trial
           } else {
             // Display a message or prompt the participant to correct their response
-            alert(response);
+            alert(data.response);
             alert('Incorrect response. Please try again.');
           }
         }
