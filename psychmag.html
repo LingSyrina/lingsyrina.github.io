@@ -40,7 +40,7 @@
     var instruction_1 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
-        <p>In this section, an object will appear in the center of the screen.</p>
+        <p> In this section, a pair of objects will appear in the center of the screen.</p>
         <p> Below is a statement that describes the image. </p>
         <p> <strong> Once you finished reading, press any key to continue to the next image. </strong> </p>
         <p> Press any key to begin. </p>
@@ -48,17 +48,20 @@
       post_trial_gap: 500
     };
     
-    var learn_stimuli = [
+    var learn_stimuli_1 = [
         { stimulus: "1", radius_a: .05, radius_b: .80, name: 'This is more B' },
         { stimulus: "2", radius_a: .95, radius_b: .35, name: 'This is more A' },
         { stimulus: "3", radius_a: .10,radius_b: .55, name: 'This is more B' },
         { stimulus: "4", radius_a: .35,radius_b: .20, name: 'This is more A' },
         { stimulus: "5", radius_a: .55,radius_b: .55, name: 'They are equal' },
-        { stimulus: "6", radius_a: .30,radius_b: .90, name: 'This is more B' },
-        { stimulus: "7", radius_a: .20,radius_b: .20, name: 'They are equal' },
-        { stimulus: "8", radius_a: .25,radius_b: .10, name: 'This is more A' },
-        { stimulus: "9", radius_a: .30,radius_b: .75, name: 'This is more B' },
-        { stimulus: "10", radius_a: .90,radius_b: .30, name: 'This is more A' },
+      ];
+
+    var learn_stimuli_2 = [
+        { stimulus: "6", radius_a: .30,radius_b: .90, name: 'This is more B', correct_response: 0 },
+        { stimulus: "7", radius_a: .20,radius_b: .20, name: 'They are equal',correct_response: 0 },
+        { stimulus: "8", radius_a: .25,radius_b: .10, name: 'This is more A',correct_response: 0 },
+        { stimulus: "9", radius_a: .30,radius_b: .75, name: 'This is more B',correct_response: 0 },
+        { stimulus: "10", radius_a: .90,radius_b: .30, name: 'This is more A',correct_response: 0 },
       ];
       
 
@@ -81,7 +84,7 @@
 
     /*block1: learning task*/
     /* 1.1 learning: define learning trials*/
-    var learn_A = {
+    var learn_A_1 = {
         type: jsPsychCanvasKeyboardResponse,
         canvas_size: [300, 300],
         //stimulus: Morphfunction,
@@ -96,9 +99,39 @@
             },
       };
       
-    var learn_B = {
+    var learn_B_1 = {
         type: jsPsychCanvasKeyboardResponse,
         canvas_size: [300, 300],
+        //stimulus: Morphfunction,
+        stimulus: function(c) {
+            Morphfunction(c, jsPsych.timelineVariable('radius_b'));
+        },
+        prompt: jsPsych.timelineVariable('name'),
+        trial_duration: 3000,
+        data: {
+                radius: jsPsych.timelineVariable('radius_b'), 
+                prompt: jsPsych.timelineVariable('name')
+            },
+      };
+
+     var learn_A_2 = {
+        type: jsPsychCanvasButtonResponse,
+        canvas_size: [300, 300],
+        stimulus: function(c) {
+            Morphfunction(c, jsPsych.timelineVariable('radius_a'));
+        },
+        choices: "NO_KEYS",
+        trial_duration: 3000,
+        data: {
+                radius: jsPsych.timelineVariable('radius_a'), 
+            },
+      };
+      
+    var learn_B_2 = {
+        type: jsPsychCanvasButtonResponse,
+        canvas_size: [300, 300],
+        choices: ['A', 'B'],
+        prompt:"<p>Is this A or B? <p>",
         //stimulus: Morphfunction,
         stimulus: function(c) {
             Morphfunction(c, jsPsych.timelineVariable('radius_b'));
@@ -107,17 +140,27 @@
         choices: "NO_KEYS",
         trial_duration: 3000,
         data: {
+                task: 'response',
+                correct_response: jsPsych.timelineVariable('correct_response'),
                 radius: jsPsych.timelineVariable('radius_b'), 
                 prompt: jsPsych.timelineVariable('name')
             },
+      on_finish: function(data){
+        data.correct = data.response === data.correct_response;
+      }
       };
     
       /* define learning procedure*/
-      var learn_procedure = {
-        timeline: [fixation, learn_A, fixation, learn_B],
-        timeline_variables:learn_stimuli,
+      var learn_procedure_1 = {
+        timeline: [fixation, learn_A_1, fixation, learn_B_1],
+        timeline_variables:learn_stimuli_1,
         repetitions: 1,
-        //randomize_order: true
+      };
+       var learn_procedure_2 = {
+        timeline: [fixation, learn_A_2, fixation, learn_B_2],
+        timeline_variables:learn_stimuli_2,
+        repetitions: 1,
+        randomize_order: true
       };
 
 
