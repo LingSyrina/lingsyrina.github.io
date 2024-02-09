@@ -176,6 +176,16 @@
         randomize_order: true
       };
 
+var trial = {
+  type: jsPsychHtmlButtonResponse,
+  stimulus: '<p style="font-size:48px; color:red;">GREEN</p>',
+  choices: ['Red', 'Green', 'Blue'],
+  prompt: "<p>What color is the ink?</p>",
+  on_finish: function(data){
+                data.correct = data.response == data.correct_response;
+                alert(data.response);
+            }
+};
     
 function filledCirc(canvas, radius, color) {
     var ctx = canvas.getContext("2d");
@@ -221,7 +231,7 @@ var circle_procedure = {
     /*block1*/
     //timeline.push(instruction_1);
     //timeline.push(learn_procedure_1);
-    timeline.push(circle_procedure);
+    timeline.push(trial);
     timeline.push(learn_procedure_2);
     
     /* start the experiment */
