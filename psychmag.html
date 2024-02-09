@@ -137,13 +137,14 @@
     var learn_B_2 = {
         type: jsPsychCanvasButtonResponse,
         canvas_size: [300, 300],
-        choices: ['This is more A', 'This is more B'],
+        //choices: ['This is more A', 'This is more B'],
         //stimulus: Morphfunction,
+        on_start: function(trial) {
+          trial.choices = ['a', 'b', 'c']; // Define response options
+        },
         stimulus: function(c) {
             Morphfunction(c, jsPsych.timelineVariable('radius_b'));
         },
-        //prompt: jsPsych.timelineVariable('name'),
-        //trial_duration: 3000,
         response_ends_trial: true,
         data: {
                 task: 'response',
