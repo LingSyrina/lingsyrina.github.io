@@ -152,6 +152,16 @@
                 radius: jsPsych.timelineVariable('radius_b'), 
                 //prompt: jsPsych.timelineVariable('name')
             },
+      on_finish: function(data) {
+          var response = data.response;
+          var correctResponse = correctResponses[jsPsych.timelineVariable('stimulus_index')];
+          if (response == correctResponse) {
+            jsPsych.finishTrial(); // Proceed to the next trial
+          } else {
+            // Display a message or prompt the participant to correct their response
+            alert('Incorrect response. Please try again.');
+          }
+        }
       };
     
       /* define learning procedure*/
