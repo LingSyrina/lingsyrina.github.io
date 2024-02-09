@@ -107,7 +107,7 @@
             Morphfunction(c, jsPsych.timelineVariable('radius_b'));
         },
         prompt: jsPsych.timelineVariable('name'),
-        trial_duration: 3000,
+        //trial_duration: 3000,
         data: {
                 radius: jsPsych.timelineVariable('radius_b'), 
                 prompt: jsPsych.timelineVariable('name')
@@ -136,14 +136,13 @@
         stimulus: function(c) {
             Morphfunction(c, jsPsych.timelineVariable('radius_b'));
         },
-        prompt: jsPsych.timelineVariable('name'),
-        choices: "NO_KEYS",
-        trial_duration: 3000,
+        //prompt: jsPsych.timelineVariable('name'),
+        //trial_duration: 3000,
         data: {
                 task: 'response',
                 correct_response: jsPsych.timelineVariable('correct_response'),
                 radius: jsPsych.timelineVariable('radius_b'), 
-                prompt: jsPsych.timelineVariable('name')
+                //prompt: jsPsych.timelineVariable('name')
             },
       on_finish: function(data){
         data.correct = data.response === data.correct_response;
