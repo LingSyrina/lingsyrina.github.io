@@ -159,6 +159,7 @@
             jsPsych.finishTrial(); // Proceed to the next trial
           } else {
             // Display a message or prompt the participant to correct their response
+            alert(response);
             alert('Incorrect response. Please try again.');
           }
         }
@@ -181,10 +182,10 @@
     /*set the structure*/
     var timeline = [];
     
-    timeline.push(welcome);
+    //timeline.push(welcome);
     /*block1*/
-    timeline.push(instruction_1);
-    timeline.push(learn_procedure_1);
+    //timeline.push(instruction_1);
+    //timeline.push(learn_procedure_1);
     timeline.push(learn_procedure_2);
     
     /* start the experiment */
