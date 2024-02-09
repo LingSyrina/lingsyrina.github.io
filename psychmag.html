@@ -49,22 +49,22 @@
     };
     
     var learn_stimuli = [
-        { stimulus: "1", radius_a: 90, radius_b: 90, name: 'They are equally A' },
-        { stimulus: "2", radius_a: 95, radius_b: 80, name: 'This is more A' },
-        { stimulus: "3", radius_a: 100,radius_b: 120, name: 'This is more B' },
-        { stimulus: "4", radius_a: 105,radius_b: 90, name: 'This is more A' },
-        { stimulus: "5", radius_a: 110,radius_b: 140, name: 'This is more B' },
-        { stimulus: "6", radius_a: 115,radius_b: 90, name: 'This is more A' },
-        { stimulus: "7", radius_a: 120,radius_b: 130, name: 'This is more B' },
-        { stimulus: "8", radius_a: 125,radius_b: 110, name: 'This is more A' },
-        { stimulus: "9", radius_a: 130,radius_b: 140, name: 'This is more B' },
-        { stimulus: "10", radius_a: 135,radius_b: 130, name: 'This is more A' },
+        { stimulus: "1", radius_a: .5, radius_b: .90, name: 'They are equally A' },
+        { stimulus: "2", radius_a: .95, radius_b: .80, name: 'This is more A' },
+        { stimulus: "3", radius_a: .10,radius_b: .20, name: 'This is more B' },
+        { stimulus: "4", radius_a: .05,radius_b: .90, name: 'This is more A' },
+        { stimulus: "5", radius_a: .10,radius_b: .40, name: 'This is more B' },
+        { stimulus: "6", radius_a: .15,radius_b: .90, name: 'This is more A' },
+        { stimulus: "7", radius_a: .20,radius_b: .30, name: 'This is more B' },
+        { stimulus: "8", radius_a: .25,radius_b: .10, name: 'This is more A' },
+        { stimulus: "9", radius_a: .30,radius_b: .40, name: 'This is more B' },
+        { stimulus: "10", radius_a: .35,radius_b: .30, name: 'This is more A' },
       ];
       
 
-    function Morphfunction(canvas,radius){
-        const canvasMorpher = new CanvasMorpher(canvas, 80, radius);
-        canvasMorpher.morphAndDraw();
+    function Morphfunction(canvas,p){
+        const canvasMorpher = new CanvasMorpher(canvas, 80, 138);
+        canvasMorpher.morphAndDraw(p);
     }
     
     /* define fixation and test trials */
