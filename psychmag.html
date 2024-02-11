@@ -136,7 +136,7 @@
     var learn_B_2 = {
         type: jsPsychCanvasButtonResponse,
         canvas_size: [300, 300],
-        on_start: function(trial) {
+        on_start: function(learn_B_2) {
           trial.choices = ['a', 'b', 'c']; // Define response options
           trial.button_html = ['This is more A', 'This is more B', 'They are the same'];
         },
@@ -200,7 +200,7 @@ var circle_procedure = {
     timeline: [
         {
             type: jsPsychCanvasButtonResponse,
-            on_start: function(trial) {
+            on_start: function(circle_procedure) {
               alert("This is jsPsychCanvasButtonResponse trial from documentation"),
             },
             stimulus: function(c) {
