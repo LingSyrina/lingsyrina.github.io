@@ -30,13 +30,14 @@
     }
   });
 
-    /* define welcome message trial */
+    /* Instructions */
+    /* welcome message */
     var welcome = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: "Welcome to the experiment. Press any key to begin."
     };
 
-    /* define instructions trial */
+    /* instruction for learning phase_1 */
     var instruction_1 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
@@ -47,13 +48,18 @@
       `,
       post_trial_gap: 500
     };
-    
+
+    /* instruction for learning phase_1 */
     var instruction_break = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: "Look at this pair!"
+      stimulus: `
+        <p> Look at this pair! </p>
+        <p> (press any key when you are ready) </p> 
+      `,
     };
 
-    
+    /* Stimuli */
+    /* Stimuli for learning_phase_1A */
     var learn_stimuli_1 = [
         { stimulus: "1", radius_a: .05, radius_b: .80, name: 'This is more B' },
         { stimulus: "2", radius_a: .95, radius_b: .35, name: 'This is more A' },
@@ -61,22 +67,20 @@
         { stimulus: "4", radius_a: .35,radius_b: .20, name: 'This is more A' },
         { stimulus: "5", radius_a: .55,radius_b: .55, name: 'They are equal' },
       ];
-
+    /* Stimuli for learning_phase_1B */
     var learn_stimuli_2 = [
-        { stimulus: "6", radius_a: .30,radius_b: .90, name: 'This is more B', correct_response: 'a' },
-        { stimulus: "7", radius_a: .20,radius_b: .20, name: 'They are equal',correct_response: 'a' },
-        { stimulus: "8", radius_a: .25,radius_b: .10, name: 'This is more A',correct_response: 'a' },
-        { stimulus: "9", radius_a: .30,radius_b: .75, name: 'This is more B',correct_response: 'a' },
-        { stimulus: "10", radius_a: .90,radius_b: .30, name: 'This is more A',correct_response: 'a' },
-      ];
-      
-
+        { stimulus: "6", radius_a: .30,radius_b: .90, name: 'This is more B', correct_response:0 },
+        { stimulus: "7", radius_a: .20,radius_b: .20, name: 'They are equal',correct_response:0},
+        { stimulus: "8", radius_a: .25,radius_b: .10, name: 'This is more A',correct_response:0 },
+        { stimulus: "9", radius_a: .30,radius_b: .75, name: 'This is more B',correct_response:0 },
+        { stimulus: "10", radius_a: .90,radius_b: .30, name: 'This is more A',correct_response:0 },
+      ];      
+    /* Function for generating canvas stimuli */
     function Morphfunction(canvas,p){
         const canvasMorpher = new CanvasMorpher(canvas, 80, 138);
         canvasMorpher.morphAndDraw(p);
-    }
-    
-    /* define fixation and test trials */
+    }    
+    /* Fixation */
     var fixation = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: '<div style="font-size:60px;">+</div>',
@@ -87,13 +91,12 @@
       } 
     };
 
-
-    /*block1: learning task*/
+    /* Experiment procedures */
+    /* block1: learning task */
     /* 1.1 learning: define learning trials*/
     var learn_A_1 = {
         type: jsPsychCanvasKeyboardResponse,
         canvas_size: [300, 300],
-        //stimulus: Morphfunction,
         stimulus: function(c) {
             Morphfunction(c, jsPsych.timelineVariable('radius_a'));
         },
@@ -101,9 +104,7 @@
         trial_duration: 2000,
         data: {
                 radius: jsPsych.timelineVariable('radius_a'), 
-                prompt: jsPsych.timelineVariable('name')
             },
-        post_trial_gap: 500,
       };
       
     var learn_B_1 = {
@@ -113,7 +114,6 @@
             Morphfunction(c, jsPsych.timelineVariable('radius_b'));
         },
         prompt: jsPsych.timelineVariable('name'),
-        //trial_duration: 3000,
         data: {
                 radius: jsPsych.timelineVariable('radius_b'), 
                 prompt: jsPsych.timelineVariable('name')
@@ -131,17 +131,14 @@
         data: {
                 radius: jsPsych.timelineVariable('radius_a'), 
             },
-       post_trial_gap: 500,
       };
       
     var learn_B_2 = {
         type: jsPsychCanvasButtonResponse,
         canvas_size: [300, 300],
-        //choices: ['This is more A', 'This is more B'],
-        //stimulus: Morphfunction,
         on_start: function(trial) {
           trial.choices = ['a', 'b', 'c']; // Define response options
-          trial.button_html = ['This is more A', 'This is B', 'This is C'];
+          trial.button_html = ['This is more A', 'This is more B', 'They are the same'];
         },
         stimulus: function(c) {
             Morphfunction(c, jsPsych.timelineVariable('radius_b'));
@@ -153,10 +150,7 @@
             },
         on_finish: function(data) {
           data.correct = data.response === data.correct_response;
-          alert(data.response);
-          alert(data.correct_response);
-          alert(data.correct);
-          
+          alert(data.response); //bug: this always prints NaN        
           if (data.response != data.correct_response){
             alert('Incorrect response. Please try again.');
           } 
@@ -176,6 +170,9 @@
         randomize_order: true
       };
 
+
+/* bug replication with JsPsych examples from documentation */
+/* JSpsych example with jsPsychHtmlButtonResponse: this works */
 var trial = {
   type: jsPsychHtmlButtonResponse,
   stimulus: '<p style="font-size:48px; color:red;">GREEN</p>',
@@ -183,10 +180,11 @@ var trial = {
   prompt: "<p>What color is the ink?</p>",
   on_finish: function(data){
                 data.correct = data.response == data.correct_response;
-                alert(data.response);
+                alert(data.response); //this correctly prints 0, 1 or 2
             }
 };
-    
+
+/* JSpsych example with jsPsychCanvasButtonResponse: this prints NaN */
 function filledCirc(canvas, radius, color) {
     var ctx = canvas.getContext("2d");
     ctx.beginPath();
@@ -212,7 +210,7 @@ var circle_procedure = {
             },
             on_finish: function(data){
                 data.correct = data.response == data.correct_response;
-                alert(data.response);
+                alert(data.response); //this prints NaN
             }
         }
     ],
@@ -226,13 +224,16 @@ var circle_procedure = {
     
     /*set the structure*/
     var timeline = [];
+
+    /* bug replication */ 
+    timeline.push(trial); //this works
+    timeline.push(circle_procedure); //this fails
     
     //timeline.push(welcome);
     /*block1*/
     //timeline.push(instruction_1);
-    //timeline.push(learn_procedure_1);
-    timeline.push(trial);
-    timeline.push(learn_procedure_2);
+    //timeline.push(learn_procedure_1);    
+    //timeline.push(learn_procedure_2);
     
     /* start the experiment */
     jsPsych.run(timeline);
