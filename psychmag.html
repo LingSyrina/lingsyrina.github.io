@@ -175,6 +175,9 @@
 /* JSpsych example with jsPsychHtmlButtonResponse: this works */
 var trial = {
   type: jsPsychHtmlButtonResponse,
+  on_start: function(trial) {
+    alert("This is jsPsychHtmlButtonResponse trial from documentation"),
+  }
   stimulus: '<p style="font-size:48px; color:red;">GREEN</p>',
   choices: ['Red', 'Green', 'Blue'],
   prompt: "<p>What color is the ink?</p>",
@@ -197,6 +200,9 @@ var circle_procedure = {
     timeline: [
         {
             type: jsPsychCanvasButtonResponse,
+            on_start: function(trial) {
+              alert("This is jsPsychCanvasButtonResponse trial from documentation"),
+            }
             stimulus: function(c) {
                 filledCirc(c, jsPsych.timelineVariable('radius'), jsPsych.timelineVariable('color'));
             },
