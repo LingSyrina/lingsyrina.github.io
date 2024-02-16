@@ -59,7 +59,7 @@
 
     /* Stimuli */
     /* Stimuli for learning_phase_1A */
-    var learn_stimuli_1 = [
+    var learn_stimuli_a1 = [
         { stimulus: "1", radius_a: .05, radius_b: .80, name: 'This is more B' },
         { stimulus: "2", radius_a: .95, radius_b: .35, name: 'This is more A' },
         { stimulus: "3", radius_a: .10,radius_b: .55, name: 'This is more B' },
@@ -67,13 +67,43 @@
         { stimulus: "5", radius_a: .55,radius_b: .55, name: 'They are equal' },
       ];
     /* Stimuli for learning_phase_1B */
-    var learn_stimuli_2 = [
+    var learn_stimuli_a2 = [
         { stimulus: "6", radius_a: .30,radius_b: .90, name: 'This is more B', correct_response:0 },
         { stimulus: "7", radius_a: .20,radius_b: .20, name: 'They are equal',correct_response:0},
         { stimulus: "8", radius_a: .25,radius_b: .10, name: 'This is more A',correct_response:0 },
         { stimulus: "9", radius_a: .30,radius_b: .75, name: 'This is more B',correct_response:0 },
         { stimulus: "10", radius_a: .90,radius_b: .30, name: 'This is more A',correct_response:0 },
-      ];      
+      ];  
+        var test_stimuli_1 = [
+        { stimulus: "6", radius_a: .30,radius_b: .90, name: 'This is more B', correct_response:0 },
+        { stimulus: "7", radius_a: .20,radius_b: .20, name: 'They are equal',correct_response:0},
+        { stimulus: "8", radius_a: .25,radius_b: .10, name: 'This is more A',correct_response:0 },
+        { stimulus: "9", radius_a: .30,radius_b: .75, name: 'This is more B',correct_response:0 },
+        { stimulus: "10", radius_a: .90,radius_b: .30, name: 'This is more A',correct_response:0 },
+      ];
+    /* Stimuli for learning_phase_1B */
+    var learn_stimuli_c1 = [
+        { stimulus: "1", radius_a: .05, radius_b: .80, name: 'This is more B' },
+        { stimulus: "2", radius_a: .95, radius_b: .35, name: 'This is more A' },
+        { stimulus: "3", radius_a: .10,radius_b: .55, name: 'This is more B' },
+        { stimulus: "4", radius_a: .35,radius_b: .20, name: 'This is more A' },
+        { stimulus: "5", radius_a: .55,radius_b: .55, name: 'They are equal' },
+      ];
+   var learn_stimuli_c2 = [
+       { stimulus: "6", radius_a: .30,radius_b: .90, name: 'This is more B', correct_response:0 },
+        { stimulus: "7", radius_a: .20,radius_b: .20, name: 'They are equal',correct_response:0},
+        { stimulus: "8", radius_a: .25,radius_b: .10, name: 'This is more A',correct_response:0 },
+        { stimulus: "9", radius_a: .30,radius_b: .75, name: 'This is more B',correct_response:0 },
+        { stimulus: "10", radius_a: .90,radius_b: .30, name: 'This is more A',correct_response:0 },
+      ];
+    /* Stimuli for learning_phase_1B */
+    var test_stimuli_2 = [
+        { stimulus: "6", radius_a: .30,radius_b: .90, name: 'This is more B', correct_response:0 },
+        { stimulus: "7", radius_a: .20,radius_b: .20, name: 'They are equal',correct_response:0},
+        { stimulus: "8", radius_a: .25,radius_b: .10, name: 'This is more A',correct_response:0 },
+        { stimulus: "9", radius_a: .30,radius_b: .75, name: 'This is more B',correct_response:0 },
+        { stimulus: "10", radius_a: .90,radius_b: .30, name: 'This is more A',correct_response:0 },
+      ];
     /* Function for generating canvas stimuli */
     function Morphfunction(canvas,p){
         const canvasMorpher = new CanvasMorpher(canvas, 80, 138);
