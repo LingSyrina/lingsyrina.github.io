@@ -190,12 +190,19 @@
         timeline_variables:learn_stimuli_a1,
         repetitions: 1,
       };
-       var learn_procedure_2 = {
+      var learn_procedure_2 = {
         timeline: [instruction_break, learn_A_2a, learn_A_2b],
-        timeline_variables:learn_stimuli_a2,
-        repetitions: 1,
-        randomize_order: true
-      };
+        timeline_variables: learn_stimuli_a2,
+        randomize_order: true,
+        on_finish: function() {
+            var data = jsPsych.data.get().last(1).values()[0]; // Get data from the last trial
+            while (data.response != data.correct_response) {
+                learn_A_2b.choices = ['a', 'b', 'c']; // Reset choices
+                jsPsych.endCurrentTimeline(); // End current trial
+                jsPsych.resumeExperiment(); // Resume the experiment
+            }
+        }
+    };
 
 
     
