@@ -73,8 +73,8 @@
         { stimulus: "8", radius_a: .25,name_a: 'Compared to this...',radius_b: .10, name_b: 'This is more A',correct_response:0 },
         { stimulus: "9", radius_a: .30,name_a: 'Compared to this...',radius_b: .75, name_b: 'This is more B',correct_response:1 },
         { stimulus: "10", radius_a: .90,name_a: 'Compared to this...',radius_b: .30, name_b: 'This is more A',correct_response:0 },
-      ];  
-        var test_stimuli_1 = [
+      ];
+    var test_stimuli_1 = [
         { stimulus: "6", radius_a: .30,name_a: 'Compared to this...',radius_b: .90, name_b: 'This is more B', correct_response:1 },
         { stimulus: "7", radius_a: .20,name_a: 'Compared to this...',radius_b: .20, name_b: 'They are equal',correct_response:2},
         { stimulus: "8", radius_a: .25,name_a: 'Compared to this...',radius_b: .10, name_b: 'This is more A',correct_response:0 },
@@ -178,15 +178,21 @@
         data: {
                 task: 'response',
                 correct_response: jsPsych.timelineVariable('correct_response')
-            },
-        on_finish: function(data) {
-          data.correct = data.response === data.correct_response;
-          alert(data.response); //bug: this always prints NaN        
-          if (data.response != data.correct_response){
-            alert('Incorrect response. Please try again.');
-          } 
-        }
+            }
       };
+      var looped_A_2 = {
+        timeline: [learn_A_2a, learn_A_2b],
+        loop_function: function(data){
+          if (jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
+            alert('Nah, let us try again!');
+            return true;
+            //jsPsych.resumeExperiment(learn_A_2b); // Resume the experiment
+          } else{
+            alert('Yes! Great job!');
+            return false;
+          }
+        }
+      }
     
       /* define learning procedure*/
       var learn_procedure_1 = {
@@ -195,18 +201,10 @@
         repetitions: 1,
       };
       var learn_procedure_2 = {
-        timeline: [instruction_break, learn_A_2a, learn_A_2b],
+        timeline: [instruction_break,looped_A_2],
         timeline_variables: learn_stimuli_a2,
         randomize_order: true,
-        on_finish: function() {
-            var data = jsPsych.data.get().last(1).values()[0]; // Get data from the last trial
-            while (data.response != data.correct_response) {
-                learn_A_2b.choices = ['a', 'b', 'c']; // Reset choices
-                jsPsych.endCurrentTimeline(); // End current trial
-                jsPsych.resumeExperiment(); // Resume the experiment
-            }
-        }
-    };
+     };
 
 
     
