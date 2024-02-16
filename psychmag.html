@@ -42,7 +42,7 @@
       stimulus: `
         <p> In this section, a pair of objects will appear in the center of the screen.</p>
         <p> Below is a statement that describes the image. </p>
-        <p> <strong> Once you finished reading, press any key to continue to the next image. </strong> </p>
+        <p> <strong> Once you've finished reading, press any key to continue to the next image. </strong> </p>
         <p> Press any key to begin. </p>
       `,
       post_trial_gap: 500
@@ -129,6 +129,7 @@
         stimulus: function(c) {
             Morphfunction(c, jsPsych.timelineVariable('radius_a'));
         },
+        prompt: jsPsych.timelineVariable('name_a'),
         choices: "NO_KEYS",
         trial_duration: 2000,
         data: {
@@ -143,7 +144,7 @@
         stimulus: function(c) {
             Morphfunction(c, jsPsych.timelineVariable('radius_b'));
         },
-        prompt: jsPsych.timelineVariable('name'),
+        prompt: jsPsych.timelineVariable('name_b'),
         data: {
                 radius: jsPsych.timelineVariable('radius_b'), 
                 prompt: jsPsych.timelineVariable('name_b')
@@ -156,6 +157,7 @@
         stimulus: function(c) {
             Morphfunction(c, jsPsych.timelineVariable('radius_a'));
         },
+        prompt: jsPsych.timelineVariable('name_a'),
         choices: "NO_KEYS",
         trial_duration: 2000,
         data: {
