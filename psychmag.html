@@ -123,7 +123,7 @@
     /* Experiment procedures */
     /* block1: learning task */
     /* 1.1 learning: define learning trials*/
-    var learn_A_1 = {
+    var learn_A_1a = {
         type: jsPsychCanvasKeyboardResponse,
         canvas_size: [300, 300],
         stimulus: function(c) {
@@ -136,7 +136,7 @@
             },
       };
       
-    var learn_B_1 = {
+    var learn_A_1b = {
         type: jsPsychCanvasKeyboardResponse,
         canvas_size: [300, 300],
         stimulus: function(c) {
@@ -149,7 +149,7 @@
             },
       };
 
-     var learn_A_2 = {
+     var learn_A_2a = {
         type: jsPsychCanvasKeyboardResponse,
         canvas_size: [300, 300],
         stimulus: function(c) {
@@ -162,7 +162,7 @@
             },
       };
       
-    var learn_B_2 = {
+    var learn_A_2b = {
         type: jsPsychCanvasButtonResponse,
         canvas_size: [300, 300],
         choices: ['a', 'b', 'c'],
@@ -186,13 +186,13 @@
     
       /* define learning procedure*/
       var learn_procedure_1 = {
-        timeline: [instruction_break, learn_A_1, learn_B_1],
-        timeline_variables:learn_stimuli_1,
+        timeline: [instruction_break, learn_A_1a, learn_A_1b],
+        timeline_variables:learn_stimuli_a1,
         repetitions: 1,
       };
        var learn_procedure_2 = {
-        timeline: [instruction_break, learn_A_2, learn_B_2],
-        timeline_variables:learn_stimuli_2,
+        timeline: [instruction_break, learn_A_2a, learn_A_2b],
+        timeline_variables:learn_stimuli_a2,
         repetitions: 1,
         randomize_order: true
       };
