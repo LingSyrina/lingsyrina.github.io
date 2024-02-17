@@ -37,6 +37,7 @@
     };
 
     /* instruction for learning phase_1 */
+    // Passive learning
     var instruction_1 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
@@ -47,8 +48,63 @@
       `,
       post_trial_gap: 500
     };
+    
+    // Active learning
+    var instruction_2 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <p> Active learning. </p>
+      `,
+      post_trial_gap: 500
+    };
+    
+    /* instruction for testing phase_1 */
+    var instruction_3 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <p> Pre training testing. </p>
+      `,
+      post_trial_gap: 500
+    };
+    
+    /* instruction for learning phase_2 */
+    //Passive
+    var instruction_4 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <p> Passive learning </p>
+      `,
+      post_trial_gap: 500
+    };
 
-    /* instruction for learning phase_1 */
+    //Active
+    var instruction_5 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <p> Active learning.</p>
+      `,
+      post_trial_gap: 500
+    };
+
+    /* instruction for testing phase_2 */
+    var instruction_6 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <p> Final testing </p>
+      `,
+      post_trial_gap: 500
+    };
+
+     /* Fixation */
+    var fixation = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '<div style="font-size:60px;">+</div>',
+      choices: "NO_KEYS",
+      trial_duration: 500, 
+      data: {
+        task: 'fixation'
+      } 
+    };
     var instruction_break = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
@@ -56,6 +112,8 @@
         <p> (press any key when you are ready) </p> 
       `,
     };
+
+    
 
     /* Stimuli */
     /* Stimuli for learning_phase_1A */
@@ -120,17 +178,7 @@
     function Morphfunction(canvas,p){
         const canvasMorpher = new CanvasMorpher(canvas, 80, 138);
         canvasMorpher.morphAndDraw(p);
-    }    
-    /* Fixation */
-    var fixation = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: '<div style="font-size:60px;">+</div>',
-      choices: "NO_KEYS",
-      trial_duration: 500, 
-      data: {
-        task: 'fixation'
-      } 
-    };
+    }   
 
 /* Experiment procedures */
     /* block1: learning task */
@@ -320,10 +368,15 @@
     /*block1*/
     timeline.push(instruction_1);
     timeline.push(learn_procedure_1);
+    timeline.push(instruction_2);
     timeline.push(learn_procedure_2);
+    timeline.push(instruction_3);
     timeline.push(test_procedure_1);
+    timeline.push(instruction_4);
     timeline.push(learn_procedure_3);
+    timeline.push(instruction_5);
     timeline.push(learn_procedure_4);
+    timeline.push(instruction_6);
     timeline.push(test_procedure_2);
 
     /* start the experiment */
