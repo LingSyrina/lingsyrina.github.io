@@ -74,36 +74,48 @@
         { stimulus: "9", radius_a: .30,name_a: 'Compared to this...',radius_b: .75, name_b: 'This is more B',correct_response:1 },
         { stimulus: "10", radius_a: .90,name_a: 'Compared to this...',radius_b: .30, name_b: 'This is more A',correct_response:0 },
       ];
+
     var test_stimuli_1 = [
-        { stimulus: "6", radius_a: .30,name_a: 'Compared to this...',radius_b: .90, name_b: 'This is more B', correct_response:1 },
-        { stimulus: "7", radius_a: .20,name_a: 'Compared to this...',radius_b: .20, name_b: 'They are equal',correct_response:2},
-        { stimulus: "8", radius_a: .25,name_a: 'Compared to this...',radius_b: .10, name_b: 'This is more A',correct_response:0 },
-        { stimulus: "9", radius_a: .30,name_a: 'Compared to this...',radius_b: .75, name_b: 'This is more B',correct_response:1 },
-        { stimulus: "10", radius_a: .90,name_a: 'Compared to this...',radius_b: .30, name_b: 'This is more A',correct_response:0 },
+      { stimulus: "1", radius_a: .05, name_a: 'Compared to this...', radius_b: .80, name_b: 'This is more B', correct_response:1  },
+      { stimulus: "2", radius_a: .95, name_a: 'Compared to this...',radius_b: .35, name_b: 'This is more A' , correct_response:0 },
+      { stimulus: "3", radius_a: .10,name_a: 'Compared to this...',radius_b: .55, name_b: 'This is more B' , correct_response:1 },
+      { stimulus: "4", radius_a: .35,name_a: 'Compared to this...',radius_b: .20, name_b: 'This is more A' ,correct_response:0 },
+      { stimulus: "5", radius_a: .55,name_a: 'Compared to this...',radius_b: .55, name_b: 'They are equal' ,correct_response:2 },
+      { stimulus: "6", radius_a: .30,name_a: 'Compared to this...',radius_b: .90, name_b: 'This is more B', correct_response:1 },
+      { stimulus: "7", radius_a: .20,name_a: 'Compared to this...',radius_b: .20, name_b: 'They are equal',correct_response:2},
+      { stimulus: "8", radius_a: .25,name_a: 'Compared to this...',radius_b: .10, name_b: 'This is more A',correct_response:0 },
+      { stimulus: "9", radius_a: .30,name_a: 'Compared to this...',radius_b: .75, name_b: 'This is more B',correct_response:1 },
+      { stimulus: "10", radius_a: .90,name_a: 'Compared to this...',radius_b: .30, name_b: 'This is more A',correct_response:0 },
       ];
     /* Stimuli for learning_phase_1B */
     var learn_stimuli_c1 = [
-        { stimulus: "1", radius_a: .05, name_a: 'Compared to this...',radius_b: .80, name_b: 'This is more B' },
-        { stimulus: "2", radius_a: .95, name_a: 'Compared to this...',radius_b: .35, name_b: 'This is more A' },
-        { stimulus: "3", radius_a: .10,name_a: 'Compared to this...',radius_b: .55, name_b: 'This is more B' },
-        { stimulus: "4", radius_a: .35,name_a: 'Compared to this...',radius_b: .20, name_b: 'This is more A' },
-        { stimulus: "5", radius_a: .55,name_a: 'Compared to this...',radius_b: .55, name_b: 'They are equal' },
+        { stimulus: "1", radius_a: .05, name_a: 'Compared to this...', radius_b: .80, name_b: 'This is 5 degrees more B' },//75
+        { stimulus: "3", radius_a: .10,name_a: 'Compared to this...',radius_b: .55, name_b: 'This is 3 degrees more B' },//45
+        { stimulus: "4", radius_a: .35,name_a: 'Compared to this...',radius_b: .20, name_b: 'This is 1 degrees more A' },//15
+        { stimulus: "2", radius_a: .95, name_a: 'Compared to this...',radius_b: .35, name_b: 'This is 4 degrees more A' },//60
+        { stimulus: "5", radius_a: .55,name_a: 'Compared to this...',radius_b: .55, name_b: 'They are equal' },//0
       ];
    var learn_stimuli_c2 = [
-       { stimulus: "6", radius_a: .30,name_a: 'Compared to this...',radius_b: .90, name_b: 'This is more B', correct_response:1 },
-        { stimulus: "7", radius_a: .20,name_a: 'Compared to this...',radius_b: .20, name_b: 'They are equal',correct_response:2},
-        { stimulus: "8", radius_a: .25,name_a: 'Compared to this...',radius_b: .10, name_b: 'This is more A',correct_response:0 },
-        { stimulus: "9", radius_a: .30,name_a: 'Compared to this...',radius_b: .75, name_b: 'This is more B',correct_response:1 },
-        { stimulus: "10", radius_a: .90,name_a: 'Compared to this...',radius_b: .30, name_b: 'This is more A',correct_response:0 },
+        { stimulus: "6", radius_a: .30,name_a: 'Compared to this...',radius_b: .90, name_b: 'From 0 to 4, how many degrees is this more B?', correct_response:'4' },//60
+        { stimulus: "7", radius_a: .20,name_a: 'Compared to this...',radius_b: .20, name_b: 'From 0 to 4, how many degrees is this more B?',correct_response:'0'},//0
+        { stimulus: "8", radius_a: .25,name_a: 'Compared to this...',radius_b: .10, name_b: 'From 0 to 4, how many degrees is this more A?',correct_response:'1' },//15
+        { stimulus: "9", radius_a: .30,name_a: 'Compared to this...',radius_b: .75, name_b: 'From 0 to 4, how many degrees is this more B?',correct_response:'3'},//45
+        { stimulus: "10", radius_a: .90,name_a: 'Compared to this...',radius_b: .30, name_b: 'From 0 to 4, how many degrees is this more A?',correct_response:'4'},//60
       ];
     /* Stimuli for learning_phase_1B */
     var test_stimuli_2 = [
+        { stimulus: "1", radius_a: .05, name_a: 'Compared to this...', radius_b: .80, name_b: 'This is more B', correct_response:1  },
+        { stimulus: "2", radius_a: .95, name_a: 'Compared to this...',radius_b: .35, name_b: 'This is more A' , correct_response:0 },
+        { stimulus: "3", radius_a: .10,name_a: 'Compared to this...',radius_b: .55, name_b: 'This is more B' , correct_response:1 },
+        { stimulus: "4", radius_a: .35,name_a: 'Compared to this...',radius_b: .20, name_b: 'This is more A' ,correct_response:0 },
+        { stimulus: "5", radius_a: .55,name_a: 'Compared to this...',radius_b: .55, name_b: 'They are equal' ,correct_response:2 },
         { stimulus: "6", radius_a: .30,name_a: 'Compared to this...',radius_b: .90, name_b: 'This is more B', correct_response:1 },
         { stimulus: "7", radius_a: .20,name_a: 'Compared to this...',radius_b: .20, name_b: 'They are equal',correct_response:2},
         { stimulus: "8", radius_a: .25,name_a: 'Compared to this...',radius_b: .10, name_b: 'This is more A',correct_response:0 },
         { stimulus: "9", radius_a: .30,name_a: 'Compared to this...',radius_b: .75, name_b: 'This is more B',correct_response:1 },
         { stimulus: "10", radius_a: .90,name_a: 'Compared to this...',radius_b: .30, name_b: 'This is more A',correct_response:0 },
       ];
+    
     /* Function for generating canvas stimuli */
     function Morphfunction(canvas,p){
         const canvasMorpher = new CanvasMorpher(canvas, 80, 138);
@@ -120,7 +132,7 @@
       } 
     };
 
-    /* Experiment procedures */
+/* Experiment procedures */
     /* block1: learning task */
     /* 1.1 learning: define learning trials*/
     var learn_A_1a = {
@@ -134,10 +146,10 @@
         trial_duration: 2000,
         data: {
                 radius: jsPsych.timelineVariable('radius_a'),
-                prompt: jsPsych.timelineVariable('name_a')
+                prompt: jsPsych.timelineVariable('name_a'),
             },
       };
-      
+
     var learn_A_1b = {
         type: jsPsychCanvasKeyboardResponse,
         canvas_size: [300, 300],
@@ -146,8 +158,8 @@
         },
         prompt: jsPsych.timelineVariable('name_b'),
         data: {
-                radius: jsPsych.timelineVariable('radius_b'), 
-                prompt: jsPsych.timelineVariable('name_b')
+                radius: jsPsych.timelineVariable('radius_b'),
+                prompt: jsPsych.timelineVariable('name_b'),
             },
       };
 
@@ -161,12 +173,12 @@
         choices: "NO_KEYS",
         trial_duration: 2000,
         data: {
-                radius: jsPsych.timelineVariable('radius_a'), 
+                radius: jsPsych.timelineVariable('radius_a'),
                 prompt: jsPsych.timelineVariable('name_a')
             },
       };
-      
-    var learn_A_2b = {
+
+     var learn_A_2b = {
         type: jsPsychCanvasButtonResponse,
         canvas_size: [300, 300],
         choices: ['a', 'b', 'c'],
@@ -178,8 +190,9 @@
         data: {
                 task: 'response',
                 correct_response: jsPsych.timelineVariable('correct_response')
-            }
+            },
       };
+
       var looped_A_2 = {
         timeline: [learn_A_2a, learn_A_2b],
         loop_function: function(data){
@@ -192,33 +205,128 @@
             return false;
           }
         }
-      }
-    
+      };
+
+      var test_a = {
+         type: jsPsychCanvasKeyboardResponse,
+         canvas_size: [300, 300],
+         stimulus: function(c) {
+             Morphfunction(c, jsPsych.timelineVariable('radius_a'));
+         },
+         prompt: jsPsych.timelineVariable('name_a'),
+         choices: "NO_KEYS",
+         trial_duration: 2000,
+         data: {
+                 radius: jsPsych.timelineVariable('radius_a'),
+                 prompt: jsPsych.timelineVariable('name_a')
+             },
+       };
+
+      var test_b = {
+         type: jsPsychCanvasButtonResponse,
+         canvas_size: [300, 300],
+         choices: ['a', 'b', 'c'],
+         button_html: ['This is more A', 'This is more B', 'They are the same'],
+         stimulus: function(c) {
+             Morphfunction(c, jsPsych.timelineVariable('radius_b'));
+         },
+         response_ends_trial: true,
+         data: {
+                 task: 'response',
+                 correct_response: jsPsych.timelineVariable('correct_response'),
+                 correct: 'response' == jsPsych.timelineVariable('correct_response'),
+             },
+       };
+
+       var learn_C_2b = {
+          type: jsPsychCanvasKeyboardResponse,
+          canvas_size: [300, 300],
+          stimulus: function(c) {
+              Morphfunction(c, jsPsych.timelineVariable('radius_b'));
+          },
+          prompt: jsPsych.timelineVariable('name_b'),
+          response_ends_trial: true,
+          data: {
+                  task: 'response',
+                  correct_response: jsPsych.timelineVariable('correct_response'),
+                  prompt: jsPsych.timelineVariable('name_b')
+              },
+          on_finish: function(data){
+                  // Score the response as correct or incorrect.
+                  if(jsPsych.pluginAPI.compareKeys(data.response, data.correct_response)){
+                    data.wrong = false;
+                  } else {
+                    data.wrong = true;
+                  }
+                }
+        };
+
+        var looped_C_2 = {
+          timeline: [learn_A_2a, learn_C_2b],
+          loop_function: function(data){
+            if (jsPsych.data.get().last(1).values()[0].wrong){
+              alert('Nah, let us try again!');
+              return true;
+              //jsPsych.resumeExperiment(learn_A_2b); // Resume the experiment
+            } else{
+              alert('Yes! Great job!');
+              return false;
+            }
+          }
+        };
+
+
+
       /* define learning procedure*/
+      // Block I: learning (passive + active)
       var learn_procedure_1 = {
         timeline: [instruction_break, learn_A_1a, learn_A_1b],
         timeline_variables:learn_stimuli_a1,
-        repetitions: 1,
       };
       var learn_procedure_2 = {
         timeline: [instruction_break,looped_A_2],
         timeline_variables: learn_stimuli_a2,
         randomize_order: true,
-     };
+      };
+      // Block II: testing
+      var test_procedure_1 = {
+         timeline: [instruction_break, test_a, test_b],
+         timeline_variables: test_stimuli_1,
+         randomize_order: true,
+       };
+       // Block III: learning (passive + active)
+       var learn_procedure_3 = {
+         timeline: [instruction_break, learn_A_1a, learn_A_1b],
+         timeline_variables:learn_stimuli_c1,
+       };
+       var learn_procedure_4 = {
+         timeline: [instruction_break,looped_C_2],
+         timeline_variables: learn_stimuli_c2,
+         randomize_order: true,
+       };
+       // Block IV: testing
+       var test_procedure_2 = {
+          timeline: [instruction_break, test_a, test_b],
+          timeline_variables: test_stimuli_2,
+          randomize_order: true,
+        };
 
 
-    
+
     /*set the structure*/
     var timeline = [];
-    
-    //timeline.push(welcome);
+
+    timeline.push(welcome);
     /*block1*/
     timeline.push(instruction_1);
-    timeline.push(learn_procedure_1);    
+    timeline.push(learn_procedure_1);
     timeline.push(learn_procedure_2);
-    
+    timeline.push(test_procedure_1);
+    timeline.push(learn_procedure_3);
+    timeline.push(learn_procedure_4);
+    timeline.push(test_procedure_2);
+
     /* start the experiment */
     jsPsych.run(timeline);
-
   </script>
 </html>
