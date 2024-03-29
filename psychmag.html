@@ -42,7 +42,8 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
         <p> In this section, You will see pairs of images which appear in the center of the screen.<br />
-        Below each image will be a statement that describes it. </p>
+        Below each image will be a statement that describes it. <br/> 
+        For each pair, <strong> do not press a key until you see the second image.</strong> </p>
         <p> Press any key to begin. </p>
       `,
       post_trial_gap: 500
@@ -52,8 +53,10 @@
     var instruction_2 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
-        <p> Active learning. </p>
-      `,
+        <p> In this section, you will continue to compare pairs of images. However, you will now be asked to choose the correct description for the second image.</p>
+        Press any key to continue.
+      `, 
+      /* I am deliberately not telling them that they will be given limitless chances until they get it right -- just so they can pay more attention.*/
       post_trial_gap: 500
     };
     
@@ -61,7 +64,9 @@
     var instruction_3 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
-        <p> Pre training testing. </p>
+        <p> Great Job! </p>
+        <p> Continue answering our questions by selecting the correct description for the second image. However, we are no longer telling you if you\'ve got the right answer!</p>
+        <p> Press any key to continue.</p>
       `,
       post_trial_gap: 500
     };
@@ -118,10 +123,10 @@
     /* Stimuli for learning_phase_1A */
     var learn_stimuli_a1 = [
         { stimulus: "1", radius_a: .05, name_a: 'Compared to this...<br/> .', radius_b: .80, name_b: 'This is more B. <br />Press any key to continue to the next image.' },
-        { stimulus: "2", radius_a: .95, name_a: 'Compared to this...<br/> .',radius_b: .35, name_b: 'This is more A. <br /><br /> Press any key to continue to the next image.' },
-        { stimulus: "3", radius_a: .10,name_a: 'Compared to this...<br/> .',radius_b: .55, name_b: 'This is more B. <br /><br /> Press any key to continue to the next image.' },
-        { stimulus: "4", radius_a: .35,name_a: 'Compared to this...<br/> .',radius_b: .20, name_b: 'This is more A. <br /><br /> Press any key to continue to the next image.' },
-        { stimulus: "5", radius_a: .55,name_a: 'Compared to this...<br/> .',radius_b: .55, name_b: 'They are equal. <br /><br /> Press any key to continue to the next image.' },
+        { stimulus: "2", radius_a: .95, name_a: 'Compared to this...<br/> .',radius_b: .35, name_b: 'This is more A. <br />Press any key to continue to the next image.' },
+        { stimulus: "3", radius_a: .10,name_a: 'Compared to this...<br/> .',radius_b: .55, name_b: 'This is more B. <br />Press any key to continue to the next image.' },
+        { stimulus: "4", radius_a: .35,name_a: 'Compared to this...<br/> .',radius_b: .20, name_b: 'This is more A. <br />Press any key to continue to the next image.' },
+        { stimulus: "5", radius_a: .55,name_a: 'Compared to this...<br/> .',radius_b: .55, name_b: 'They are equal. <br />Press any key to continue to the next image.' },
       ];
     /* Stimuli for learning_phase_1B */
     var learn_stimuli_a2 = [
