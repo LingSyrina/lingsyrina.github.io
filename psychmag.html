@@ -36,6 +36,12 @@
       stimulus: "<p> Thank you for your participation! </p> <p> Press any key to begin.</p>"
     };
 
+    /* closing message */
+    var closing = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "<p> Thank you very much again for your participation! We sincerely appreciate your time and effort.</p> <p>You can close your window whenever you feel comfortable.</p>"
+    };
+
     /* instruction for learning phase_1 */
     // Passive learning
     var instruction_1 = {
@@ -43,7 +49,7 @@
       stimulus: `
         <p> In this section, You will see pairs of images which appear in the center of the screen.<br />
         Below each image will be a statement that describes it. <br/> 
-        For each pair, <strong> do not press a key until you see the second image.</strong> </p>
+        For each pair, <strong> do not press anything until you see the second image.</strong> </p>
         <p> Press any key to begin. </p>
       `,
       post_trial_gap: 500
@@ -53,7 +59,8 @@
     var instruction_2 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
-        <p> In this section, you will continue to compare pairs of images. However, you will now be asked to choose the correct description for the second image.</p>
+        <p> In this section, you will continue to compare pairs of images. <br/>
+        However, you will now be asked to choose the correct description for the second image.</p>
         Press any key to continue.
       `, 
       /* I am deliberately not telling them that they will be given limitless chances until they get it right -- just so they can pay more attention.*/
@@ -76,7 +83,10 @@
     var instruction_4 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
-        <p> Passive learning </p>
+        <p> Perfect! </p>
+        <p> You will continue to see pairs of images accompanied by the description. 
+        <br/> This time, we are giving you more detailed description, using our own mysterious scale... </p>
+        <p>Press any key to continue.</p>
       `,
       post_trial_gap: 500
     };
@@ -85,7 +95,9 @@
     var instruction_5 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
-        <p> Active learning.</p>
+        <p> Awesome! <br/>
+        Now, we would like to ask you to choose the correct statement for the second image.</p>
+        Press any key to continue.
       `,
       post_trial_gap: 500
     };
@@ -94,7 +106,9 @@
     var instruction_6 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
-        <p> Final testing </p>
+        <p> Great Job! </p>
+        <p> We're going to give you one last set of questions. However, we are no longer telling you if you\'ve got the right answer!</p>
+        <p> Press any key to continue.</p>
       `,
       post_trial_gap: 500
     };
@@ -155,7 +169,7 @@
         { stimulus: "3", radius_a: .10,name_a: 'Compared to this...<br/> .',radius_b: .55, name_b: 'This is 3 degrees more B. <br />Press any key to continue to the next image.' },//45
         { stimulus: "4", radius_a: .35,name_a: 'Compared to this...<br/> .',radius_b: .20, name_b: 'This is 1 degrees more A. <br />Press any key to continue to the next image.' },//15
         { stimulus: "2", radius_a: .95, name_a: 'Compared to this...<br/> .',radius_b: .35, name_b: 'This is 4 degrees more A. <br /> Press any key to continue to the next image.' },//60
-        { stimulus: "5", radius_a: .55,name_a: 'Compared to this...<br/> .',radius_b: .55, name_b: 'They are equal. <br /><br /> Press any key to continue to the next image.' },//0
+        { stimulus: "5", radius_a: .55,name_a: 'Compared to this...<br/> .',radius_b: .55, name_b: 'They are equal. <br />Press any key to continue to the next image.' },//0
       ];
    var learn_stimuli_c2 = [
         { stimulus: "6", radius_a: .30,name_a: 'Compared to this...',radius_b: .90, name_b: 'From 0 to 4, how many degrees is this more B?', correct_response:'4' },//60
@@ -382,7 +396,8 @@
     timeline.push(learn_procedure_4);
     timeline.push(instruction_6);
     timeline.push(test_procedure_2);
-
+    timeline.push(closing);
+    
     /* start the experiment */
     jsPsych.run(timeline);
   </script>
