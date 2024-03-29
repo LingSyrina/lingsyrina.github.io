@@ -33,7 +33,7 @@
     /* welcome message */
     var welcome = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: "<p> Thank you for your participation! </p> <p></p> <p> Press any key to begin </p>"
+      stimulus: "<p> Thank you for your participation! </p> <p> Press any key to begin.</p>"
     };
 
     /* instruction for learning phase_1 */
@@ -41,9 +41,8 @@
     var instruction_1 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
-        <p> In this section, a pair of objects will appear in the center of the screen.</p>
-        <p> Below is a statement that describes the image. </p>
-        <p> <strong> Once you've finished reading, press any key to continue to the next image. </strong> </p>
+        <p> In this section, You will see pairs of images which appear in the center of the screen.</p>
+        <p> Below each image will be a statement that describes it. </p>
         <p> Press any key to begin. </p>
       `,
       post_trial_gap: 500
@@ -118,7 +117,7 @@
     /* Stimuli */
     /* Stimuli for learning_phase_1A */
     var learn_stimuli_a1 = [
-        { stimulus: "1", radius_a: .05, name_a: 'Compared to this...', radius_b: .80, name_b: 'This is more B' },
+        { stimulus: "1", radius_a: .05, name_a: 'Compared to this...', radius_b: .80, name_b: '<p> This is more B </p> <p> <strong> Once you've finished reading, press any key to continue to the next image. </strong> </p>' },
         { stimulus: "2", radius_a: .95, name_a: 'Compared to this...',radius_b: .35, name_b: 'This is more A' },
         { stimulus: "3", radius_a: .10,name_a: 'Compared to this...',radius_b: .55, name_b: 'This is more B' },
         { stimulus: "4", radius_a: .35,name_a: 'Compared to this...',radius_b: .20, name_b: 'This is more A' },
