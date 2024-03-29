@@ -401,23 +401,7 @@
     timeline.push(closing);
     
     /* start the experiment */
-    /*jsPsych.run(timeline); */
-      jsPsych.init({
-    timeline: timeline,
-    /*
-    on_finish: function(data) {
-      // This function will be called when the experiment finishes
-      // You can access the collected data via the 'data' parameter
-      // Here, you can choose to save the data to a server, local storage, or perform any other action
-      console.log(data); // Log the data to the console for demonstration
-      
-      // Convert the data to CSV format
-      var csv = jsPsych.data.get().csv();
+    jsPsych.run(timeline);
 
-      // Call the downloadCSV function from saver.js to save the CSV data
-      downloadCSV(csv, 'experiment_data.csv');
-    }
-    */
-  });
   </script>
 </html>
