@@ -9,6 +9,8 @@
     <script src="https://unpkg.com/@jspsych/plugin-canvas-button-response"></script>
     <script src="https://unpkg.com/@jspsych/plugin-preload"></script>
     <script src="canvasMorpher.js"></script>
+    <script src="saver.js"></script>
+
 
     <link href="https://unpkg.com/jspsych/css/jspsych.css" rel="stylesheet" type="text/css" />
     
@@ -72,7 +74,7 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
         <p> Great Job! </p>
-        <p> Continue answering our questions by selecting the correct description for the second image. However, we are no longer telling you if you\'ve got the right answer!</p>
+        <p> Continue answering our questions by selecting the correct description for the second image.</br> However, we are no longer telling you if you\'ve got the right answer!</p>
         <p> Press any key to continue.</p>
       `,
       post_trial_gap: 500
@@ -107,7 +109,7 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
         <p> Great Job! </p>
-        <p> We're going to give you one last set of questions. However, we are no longer telling you if you\'ve got the right answer!</p>
+        <p> We're going to give you one last set of questions.<br/> However, we are no longer telling you if you\'ve got the right answer!</p>
         <p> Press any key to continue.</p>
       `,
       post_trial_gap: 500
@@ -399,6 +401,21 @@
     timeline.push(closing);
     
     /* start the experiment */
-    jsPsych.run(timeline);
+    /*jsPsych.run(timeline); */
+      jsPsych.init({
+    timeline: timeline,
+    on_finish: function(data) {
+      // This function will be called when the experiment finishes
+      // You can access the collected data via the 'data' parameter
+      // Here, you can choose to save the data to a server, local storage, or perform any other action
+      console.log(data); // Log the data to the console for demonstration
+      
+      // Convert the data to CSV format
+      var csv = jsPsych.data.get().csv();
+
+      // Call the downloadCSV function from saver.js to save the CSV data
+      downloadCSV(csv, 'experiment_data.csv');
+    }
+  });
   </script>
 </html>
