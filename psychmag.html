@@ -25,7 +25,7 @@
   var jsPsych = initJsPsych({
     on_finish: function() {
       var csv = jsPsych.data.get().csv();
-      var filename = "Englishtrial.csv";
+      var filename = "trial.csv";
       downloadJson(csv,filename);
       jsPsych.data.displayData();
     }
