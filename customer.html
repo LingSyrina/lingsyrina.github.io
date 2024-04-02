@@ -27,19 +27,14 @@
       };
   
       trials.push(trial);
-    }
+    }}
     
     initjsPsych({
       timeline: trials,
       on_finish: function() {
-        // This will output the data as a CSV string
-        jsPsych.data.displayData('csv');
+        jsPsych.data.get().localSave('csv','mydata.csv');
       }
     });
-    
-  var timeline = [];
-  timeline.push(trials);
-  jsPsych.run(timeline);
-  jsPsych.data.get().localSave('csv','mydata.csv');
+
   </script>
 </html>
