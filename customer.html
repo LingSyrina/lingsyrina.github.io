@@ -18,7 +18,7 @@ function generateTrials() {
     var rating = Math.floor(Math.random() * 5) + 1;
 
     var trial = {
-      type: surveyMultiChoice,
+      type: jsPsychSurveyMultiChoice,
       questions: [
         {prompt: `The product costs $${price}. Is it expensive?`, options: ['Yes', 'No', 'Don’t know'], required: true},
         {prompt: `The product has a rating of ${rating}. Is it high-rated?`, options: ['Yes', 'No', 'Don’t know'], required: true},
