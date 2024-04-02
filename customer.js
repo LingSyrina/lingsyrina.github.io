@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     trials.push(trial);
   }
 
-  jsPsych.init({
+  initjsPsych({
     timeline: trials,
     on_finish: function() {
       // This will output the data as a CSV string
