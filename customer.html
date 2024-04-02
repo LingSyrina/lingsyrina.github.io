@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsPsych Experiment</title>
+    <script src="https://unpkg.com/jspsych"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-button-response"></script>
+</head>
+<body>
+
+<script>
+    // Function to generate random integer between min and max (inclusive)
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    // Generate random trials
+    var trials = [];
+    for (var i = 0; i < 2000; i++) {
+        var price = getRandomInt(200, 2000);
+        var rating = getRandomInt(1, 5);
+        var trial = {
+            type: 'html-button-response',
+            stimulus: '<img src="path_to_your_icon_image" alt="Icon">',
+            choices: ['Yes', 'No', 'Don\'t Know'],
+            data: {
+                price: price,
+                rating: rating
+            },
+            on_finish: function(data) {
+                var csv = data.price + ',' + data.rating + ',' + data.expensive_response + ',' + data.highly_rated_response + ',' + data.good_purchase_response + '\n';
+                $.post('save_data.php', { data: csv });
+            }
+        };
+        trials.push(trial);
+    }
+
+    // Define questions
+    var questions = [
+        { prompt: "Is the product expensive?", name: "expensive_response" },
+        { prompt: "Is the product highly rated?", name: "highly_rated_response" },
+        { prompt: "Is the product a good purchase?", name: "good_purchase_response" }
+    ];
+
+    // Run the experiment
+    jsPsych.init({
+        timeline: trials,
+        on_finish: function() {
+            alert("Experiment complete. Data saved.");
+        }
+    });
+</script>
+
+</body>
+</html>
