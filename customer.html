@@ -19,7 +19,7 @@ function generateTrials() {
     var rating = Math.floor(Math.random() * 5) + 1;
 
     var multiChoiceTrial = {
-      type: jsPsychSurvey,,
+      type: jsPsychSurvey,
       questions: [
         {type: 'multi-choice', prompt: `The product costs $${price}. Is it expensive?`, options: ['Yes', 'No', 'Don’t know'], required: true, name: 'expensive'},
         {type: 'text', prompt: "Why did you make this choice?", rows: 4, columns: 40, required: true, name: 'expensive_reason'}, 
