@@ -19,27 +19,21 @@ function generateTrials() {
     var rating = Math.floor(Math.random() * 5) + 1;
 
     var multiChoiceTrial = {
-      type: jsPsychSurveyMultiChoice,
+      type: jsPsychSurvey,,
       questions: [
-        {prompt: `The product costs $${price}. Is it expensive?`, options: ['Yes', 'No', 'Don’t know'], required: true, name: 'expensive'},
-        {prompt: `The product has a rating of ${rating}. Is it high-rated?`, options: ['Yes', 'No', 'Don’t know'], required: true, name: 'high_rated'},
-        {prompt: 'Considering its price and rating, is it a good purchase?', options: ['Yes', 'No', 'Don’t know'], required: true, name: 'good_purchase'}
+        {type: 'multi-choice', prompt: `The product costs $${price}. Is it expensive?`, options: ['Yes', 'No', 'Don’t know'], required: true, name: 'expensive'},
+        {type: 'text', prompt: "Why did you make this choice?", rows: 4, columns: 40, required: true, name: 'expensive_reason'}, 
+        {type: 'multi-choice', prompt: `The product has a rating of ${rating}. Is it high-rated?`, options: ['Yes', 'No', 'Don’t know'], required: true, name: 'high_rated'},
+        {type: 'text', prompt: "Why did you make this choice?", rows: 4, columns: 40, required: true, name: 'rating_reason'}, 
+        {type: 'multi-choice', prompt: 'Considering its price and rating, is it a good purchase?', options: ['Yes', 'No', 'Don’t know'], required: true, name: 'good_purchase'},
+        {type: 'text', prompt: "Why did you make this choice?", rows: 4, columns: 40, required: true, name: 'buy_reason'}
       ],
       preamble: `<img src="icon.png" alt="Product Icon">`,
       data: {price: price, rating: rating} // Record price and rating in the trial data
     };
 
-    var textQuestionTrial = {
-      type: jsPsychSurveyText,
-      questions: [
-        {prompt: "Why did you make this choice?", rows: 4, columns: 40, required: true, name: 'reason'}
-      ],
-      preamble: "Please explain your decision."
-    };
-
     // Push the multi-choice and text question trial as a sequence for each product
     trials.push(multiChoiceTrial);
-    trials.push(textQuestionTrial);
   }
   return trials;
 }
