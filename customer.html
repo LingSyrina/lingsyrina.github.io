@@ -5,29 +5,41 @@
   <script src="https://unpkg.com/jspsych"></script>
   <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response"></script>
   <script src="https://unpkg.com/@jspsych/plugin-survey-multi-choice"></script>
+  <script src="https://unpkg.com/@jspsych/plugin-survey-text"></script> <!-- Include survey text plugin -->
   <script src="https://unpkg.com/@jspsych/plugin-preload"></script>
   <link href="https://unpkg.com/jspsych/css/jspsych.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <script>
-// Function to generate each trial with random price and rating
+// Function to generate each trial with random price, rating, and a follow-up question
 function generateTrials() {
   var trials = [];
   for (var i = 0; i < 5; i++) {
     var price = Math.floor(Math.random() * (2000 - 200 + 1)) + 200;
     var rating = Math.floor(Math.random() * 5) + 1;
 
-    var trial = {
-      type: jsPsychSurveyMultiChoice,
+    var multiChoiceTrial = {
+      type: jsPsych.plugins['survey-multi-choice'],
       questions: [
-        {prompt: `The product costs $${price}. Is it expensive?`, options: ['Yes', 'No', 'Don’t know'], required: true},
-        {prompt: `The product has a rating of ${rating}. Is it high-rated?`, options: ['Yes', 'No', 'Don’t know'], required: true},
-        {prompt: 'Considering its price and rating, is it a good purchase?', options: ['Yes', 'No', 'Don’t know'], required: true}
+        {prompt: `The product costs $${price}. Is it expensive?`, options: ['Yes', 'No', 'Don’t know'], required: true, name: 'expensive'},
+        {prompt: `The product has a rating of ${rating}. Is it high-rated?`, options: ['Yes', 'No', 'Don’t know'], required: true, name: 'high_rated'},
+        {prompt: 'Considering its price and rating, is it a good purchase?', options: ['Yes', 'No', 'Don’t know'], required: true, name: 'good_purchase'}
       ],
-      preamble: `<img src="icon.png" alt="Product Icon">`
+      preamble: `<img src="icon.png" alt="Product Icon">`,
+      data: {price: price, rating: rating} // Record price and rating in the trial data
     };
 
-    trials.push(trial);
+    var textQuestionTrial = {
+      type: jsPsych.plugins['survey-text'],
+      questions: [
+        {prompt: "Why did you make this choice?", rows: 4, columns: 40, required: true, name: 'reason'}
+      ],
+      preamble: "Please explain your decision."
+    };
+
+    // Push the multi-choice and text question trial as a sequence for each product
+    trials.push(multiChoiceTrial);
+    trials.push(textQuestionTrial);
   }
   return trials;
 }
@@ -44,4 +56,5 @@ jsPsych.run(generateTrials());
 </script>
 </body>
 </html>
+
 
