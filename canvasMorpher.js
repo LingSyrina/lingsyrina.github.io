@@ -10,6 +10,11 @@ class CanvasMorpher {
     this.radius = radius;
   }
 
+  //Random Color generator
+  generateRandomColor(){
+    return '#' + Math.floor(Math.random() * 16777215).toString(16);
+  }
+
   generateRandomCircleCoordinates() {
     const coordinates = [];
 
@@ -51,11 +56,15 @@ class CanvasMorpher {
       y: y - minY + this.canvas.height / 2
     }));
 
-    this.ctx.fillStyle = '#A3C1AD';
+    const backgroundColor = this.generateRandomColor();
+    const originalColor = this.generateRandomColor();
+    const morphedColor = this.generateRandomColor();
+
+    this.ctx.fillStyle = blackgroundColor;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.drawCircle(originalCoordinates, '#D9AFAF', 1.5);
-    this.drawCircle(normalizedCoordinates, '#87A6B8', 1.5);
+    this.drawCircle(originalCoordinates, originalColor, 1.5);
+    this.drawCircle(normalizedCoordinates, morphedColor, 1.5);
   }
 
   drawCircle(coordinates, color, scaleFactor) {
