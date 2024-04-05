@@ -301,6 +301,9 @@
                  stimuli_1: (jsPsych.timelineVariable('radius_a')),
                  stimuli_2: (jsPsych.timelineVariable('radius_b')),
              },
+        on_finish: function(data){
+                data.correct = data.response == data.correct_response;
+         }
        };
 
        var learn_C_2b = {
