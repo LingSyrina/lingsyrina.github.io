@@ -72,11 +72,6 @@ class CanvasMorpher {
   }
 }
 
-// Your jsPsych related code
-function Morphfunction(container, p1, p2) {
-  const canvasMorpher = new CanvasMorpher(container, 80, 138);
-  canvasMorpher.morphAndDraw(p1, p2);
-}
 
 // Example usage
 // Create a container in your HTML: <div id="morphContainer" style="width: 600px; height: 300px;"></div>
