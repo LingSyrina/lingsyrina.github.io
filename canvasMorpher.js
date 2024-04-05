@@ -72,7 +72,6 @@ class CanvasMorpher {
   }
 }
 
-
 // Example usage
 // Create a container in your HTML: <div id="morphContainer" style="width: 600px; height: 300px;"></div>
 // Then:
