@@ -299,6 +299,7 @@
                  task: 'response',
                  correct_response: jsPsych.timelineVariable('correct_response'),
                  correct: int('response') == int(jsPsych.timelineVariable('correct_response')),
+                 correct: parseInt(jsPsych.data.get().last(1).values()[0].response) === parseInt(jsPsych.timelineVariable('correct_response')),
                  stimuli: (jsPsych.timelineVariable('radius_a'),jsPsych.timelineVariable('radius_b')),
              },
        };
