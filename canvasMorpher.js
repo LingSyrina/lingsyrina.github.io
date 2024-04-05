@@ -11,22 +11,24 @@ class CanvasMorpher {
     return '#' + Math.floor(Math.random() * 16777215).toString(16);
   }
 
-  generateRandomCircleCoordinates(offsetX = 0) {
+  generateRandomCircleCoordinates(offsetX = 0, offsetY = 0) {
     const coordinates = [];
     for (let i = 0; i < this.numPoints; i++) {
       const angle = (Math.PI * 2 * i) / this.numPoints;
       const x = Math.cos(angle) * this.radius + offsetX;
-      const y = Math.sin(angle) * this.radius + this.canvasHeight / 4; // Center vertically
+      const y = Math.sin(angle) * this.radius + offsetY; // Adjust for offsetY
       coordinates.push({ x, y });
     }
     return coordinates;
   }
 
-  nonlinearAsymmetricPerspectiveShift(x, y, p) {
-    const scaleFactorX = 1 + p * Math.pow((x - this.canvasWidth / 4) / 110, 3); // Adjust for offsetX
-    const scaleFactorY = 1 + 0.2 * Math.pow((y - this.canvasHeight / 4) / 110, 2); // Center vertically
-    const newX = x * Math.pow(scaleFactorX, 2);
-    const newY = y * Math.pow(scaleFactorY, 1.5);
+  nonlinearAsymmetricPerspectiveShift(x, y, p, offsetX, offsetY) {
+    const adjustedX = x - offsetX;
+    const adjustedY = y - offsetY;
+    const scaleFactorX = 1 + p * Math.pow(adjustedX / 110, 3);
+    const scaleFactorY = 1 + 0.2 * Math.pow(adjustedY / 110, 2);
+    const newX = adjustedX * Math.pow(scaleFactorX, 2) + offsetX;
+    const newY = adjustedY * Math.pow(scaleFactorY, 1.5) + offsetY;
     return { x: newX, y: newY };
   }
 
@@ -34,13 +36,18 @@ class CanvasMorpher {
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight); // Clear the canvas
 
     // Draw first morph on the left half
-    let originalCoordinates = this.generateRandomCircleCoordinates(this.canvasWidth / 4);
-    let morphedCoordinates = originalCoordinates.map(({ x, y }) => this.nonlinearAsymmetricPerspectiveShift(x, y, p1));
+    const offsetX1 = this.canvasWidth / 4;
+    const offsetY = this.canvasHeight / 2;
+    let originalCoordinates = this.generateRandomCircleCoordinates(offsetX1, offsetY);
+    let morphedCoordinates = originalCoordinates.map(({ x, y }) => 
+      this.nonlinearAsymmetricPerspectiveShift(x, y, p1, offsetX1, offsetY));
     this.drawCircle(morphedCoordinates, this.generateRandomColor());
 
     // Draw second morph on the right half
-    originalCoordinates = this.generateRandomCircleCoordinates(3 * this.canvasWidth / 4);
-    morphedCoordinates = originalCoordinates.map(({ x, y }) => this.nonlinearAsymmetricPerspectiveShift(x, y, p2));
+    const offsetX2 = 3 * this.canvasWidth / 4;
+    originalCoordinates = this.generateRandomCircleCoordinates(offsetX2, offsetY);
+    morphedCoordinates = originalCoordinates.map(({ x, y }) => 
+      this.nonlinearAsymmetricPerspectiveShift(x, y, p2, offsetX2, offsetY));
     this.drawCircle(morphedCoordinates, this.generateRandomColor());
   }
 
@@ -60,5 +67,4 @@ class CanvasMorpher {
 }
 
 
-
-//test
+// Integration with jsPsych goes here...
