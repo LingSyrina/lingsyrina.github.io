@@ -199,6 +199,27 @@
         const canvasMorpher = new CanvasMorpher(canvas, 80, 138);
         canvasMorpher.morphAndDraw(p);
     }   
+    /* Function to create a container with two canvases for the stimuli */
+    function createDualCanvasStimuli(c, p1, p2) {
+      const container = document.createElement('div');
+      container.style.display = 'flex';
+      container.style.justifyContent = 'space-between';
+    
+      const canvas1 = document.createElement('canvas');
+      canvas1.width = 300;
+      canvas1.height = 300;
+      container.appendChild(canvas1);
+
+      const canvas2 = document.createElement('canvas');
+      canvas2.width = 300;
+      canvas2.height = 300;
+      container.appendChild(canvas2);
+
+      Morphfunction(canvas1, p1);
+      Morphfunction(canvas2, p2);
+       
+      c.appendChild(container);
+    }
 
 /* Experiment procedures */
     /* block1: learning task */
@@ -279,7 +300,7 @@
          type: jsPsychCanvasKeyboardResponse,
          canvas_size: [300, 300],
          stimulus: function(c) {
-             Morphfunction(c, jsPsych.timelineVariable('radius_a'));
+             createDualCanvasStimuli(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
          },
          prompt: jsPsych.timelineVariable('name_a'),
          choices: "NO_KEYS",
