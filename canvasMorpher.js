@@ -60,7 +60,7 @@ class CanvasMorpher {
     const originalColor = this.generateRandomColor();
     const morphedColor = this.generateRandomColor();
 
-    this.ctx.fillStyle = blackgroundColor;
+    this.ctx.fillStyle = backgroundColor;
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     this.drawCircle(originalCoordinates, originalColor, 1.5);
