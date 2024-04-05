@@ -284,10 +284,6 @@
          prompt: jsPsych.timelineVariable('name_a'),
          choices: "NO_KEYS",
          trial_duration: 2000,
-         data: {
-                 radius: jsPsych.timelineVariable('radius_a'),
-                 prompt: jsPsych.timelineVariable('name_a')
-             },
        };
 
       var test_b = {
@@ -302,7 +298,8 @@
          data: {
                  task: 'response',
                  correct_response: jsPsych.timelineVariable('correct_response'),
-                 correct: 'response' == jsPsych.timelineVariable('correct_response'),
+                 correct: int('response') == int(jsPsych.timelineVariable('correct_response')),
+                 stimuli: (jsPsych.timelineVariable('radius_a'),jsPsych.timelineVariable('radius_b')),
              },
        };
 
