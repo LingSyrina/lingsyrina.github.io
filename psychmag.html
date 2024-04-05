@@ -195,9 +195,9 @@
       ];
     
     /* Function for generating canvas stimuli */
-    function Morphfunction(canvas,p){
+    function Morphfunction(canvas, p1, p2){
         const canvasMorpher = new CanvasMorpher(canvas, 80, 138);
-        canvasMorpher.morphAndDraw(p);
+        canvasMorpher.morphAndDraw(p1,p2);
     }   
 
 /* Experiment procedures */
@@ -279,7 +279,7 @@
          type: jsPsychCanvasKeyboardResponse,
          canvas_size: [300, 300],
          stimulus: function(c) {
-             Morphfunction(c, jsPsych.timelineVariable('radius_a'));
+             Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
          },
          prompt: jsPsych.timelineVariable('name_a'),
          choices: "NO_KEYS",
