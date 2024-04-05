@@ -288,11 +288,11 @@
 
       var test_b = {
          type: jsPsychCanvasButtonResponse,
-         canvas_size: [300, 300],
          choices: ['a', 'b', 'c'],
          button_html: ['This is more A', 'This is more B', 'They are the same'],
+         canvas_size: [300, 700],
          stimulus: function(c) {
-             Morphfunction(c, jsPsych.timelineVariable('radius_b'));
+             Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
          },
          response_ends_trial: true,
          data: {
