@@ -4,8 +4,11 @@
 class CanvasMorpher {
   constructor(c, numPoints, radius) {
     //this.canvas = document.getElementById(canvasId);
-    this.ctx = c.getContext('2d');
-    this.canvas = this.ctx.canvas;
+    //this.ctx = c.getContext('2d');
+    //this.canvas = this.ctx.canvas;
+    
+    this.container = c; // This is now a container for two canvases
+
     this.numPoints = numPoints;
     this.radius = radius;
   }
