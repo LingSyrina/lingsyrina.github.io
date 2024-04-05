@@ -9,6 +9,29 @@ class CanvasMorpher {
     this.numPoints = numPoints;
     this.radius = radius;
   }
+  
+  morphAndDraw(p1, p2) {
+    // Clear the container and prepare for two new canvases
+    this.container.innerHTML = '';
+    this.canvas1 = this.createCanvas();
+    this.canvas2 = this.createCanvas();
+
+    // First morph
+    this.ctx = this.canvas1.getContext('2d');
+    this.morph_Draw(p1);
+
+    // Second morph
+    this.ctx = this.canvas2.getContext('2d');
+    this.morph_Draw(p2);
+  }
+
+  createCanvas() {
+    const canvas = document.createElement('canvas');
+    canvas.width = this.container.clientWidth / 2; // Assuming the container's width is set to hold two canvases side by side
+    canvas.height = this.container.clientHeight; // Use the full height of the container
+    this.container.appendChild(canvas);
+    return canvas;
+  }
 
   //Random Color generator
   generateRandomColor(){
@@ -39,7 +62,7 @@ class CanvasMorpher {
     return { x: newX, y: newY };
   }
 
-  morphAndDraw(p) {
+  morph_Draw(p) {
     const originalCoordinates = this.generateRandomCircleCoordinates();
     const morphedCoordinates = originalCoordinates.map(({ x, y }) => this.nonlinearAsymmetricPerspectiveShift(x, y, p));
 
