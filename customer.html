@@ -21,14 +21,14 @@ function generateTrials() {
 
     var multiChoiceTrial = {
       type: jsPsychSurvey,
-      questions: [
+      pages:[ [
         {type: 'multi-choice', prompt: `The product costs $${price}. Is it expensive?`, options: ['Yes', 'No', 'Don’t know'], required: true, name: 'expensive'},
         {type: 'text', prompt: "Why did you make this choice?", rows: 4, columns: 40, required: true, name: 'expensive_reason'}, 
         {type: 'multi-choice', prompt: `The product has a rating of ${rating}. Is it high-rated?`, options: ['Yes', 'No', 'Don’t know'], required: true, name: 'high_rated'},
         {type: 'text', prompt: "Why did you make this choice?", rows: 4, columns: 40, required: true, name: 'rating_reason'}, 
         {type: 'multi-choice', prompt: 'Considering its price and rating, is it a good purchase?', options: ['Yes', 'No', 'Don’t know'], required: true, name: 'good_purchase'},
         {type: 'text', prompt: "Why did you make this choice?", rows: 4, columns: 40, required: true, name: 'buy_reason'}
-      ],
+      ] ],
       preamble: `<img src="icon.png" alt="Product Icon">`,
       data: {price: price, rating: rating} // Record price and rating in the trial data
     };
