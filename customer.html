@@ -15,7 +15,7 @@
 // Function to generate each trial with random price, rating, and a follow-up question
 function generateTrials() {
   var trials = [];
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 500; i++) {
     var price = Math.floor(Math.random() * (2000 - 200 + 1)) + 200;
     var rating = Math.floor(Math.random() * 5) + 1;
 
@@ -30,7 +30,9 @@ function generateTrials() {
         {type: 'text', prompt: "Why did you make this choice?", rows: 4, columns: 40, required: true, name: 'buy_reason'}
       ] ],
       preamble: `<img src="icon.png" alt="Product Icon">`,
-      data: {price: price, rating: rating} // Record price and rating in the trial data
+      data: {price: price, 
+             rating: rating
+            } // Record price and rating in the trial data
     };
 
     // Push the multi-choice and text question trial as a sequence for each product
