@@ -195,9 +195,9 @@
       ];
     
     /* Function for generating canvas stimuli */
-    function Morphfunction(canvas, p1, p2){
+    function Morphfunction(canvas,p){
         const canvasMorpher = new CanvasMorpher(canvas, 80, 138);
-        canvasMorpher.morphAndDraw(p1,p2);
+        canvasMorpher.morphAndDraw(p);
     }   
 
 /* Experiment procedures */
@@ -277,9 +277,9 @@
 
       var test_a = {
          type: jsPsychCanvasKeyboardResponse,
-         canvas_size: [300, 700],
+         canvas_size: [300, 300],
          stimulus: function(c) {
-             Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
+             Morphfunction(c, jsPsych.timelineVariable('radius_a'));
          },
          prompt: jsPsych.timelineVariable('name_a'),
          choices: "NO_KEYS",
@@ -288,11 +288,11 @@
 
       var test_b = {
          type: jsPsychCanvasButtonResponse,
+         canvas_size: [300, 300],
          choices: ['a', 'b', 'c'],
          button_html: ['This is more A', 'This is more B', 'They are the same'],
-         canvas_size: [300, 700],
          stimulus: function(c) {
-             Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
+             Morphfunction(c, jsPsych.timelineVariable('radius_b'));
          },
          response_ends_trial: true,
          data: {
@@ -301,9 +301,6 @@
                  stimuli_1: (jsPsych.timelineVariable('radius_a')),
                  stimuli_2: (jsPsych.timelineVariable('radius_b')),
              },
-        on_finish: function(data){
-                data.correct = data.response == data.correct_response;
-         }
        };
 
        var learn_C_2b = {
