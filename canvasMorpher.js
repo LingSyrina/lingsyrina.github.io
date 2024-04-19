@@ -1,70 +1,89 @@
+// canvasMorpher.js
+
 class CanvasMorpher {
-  constructor(canvas, numPoints, radius) {
-    this.ctx = canvas.getContext('2d');
+  constructor(c, numPoints, radius) {
+    //this.canvas = document.getElementById(canvasId);
+    this.ctx = c.getContext('2d');
+    this.canvas = this.ctx.canvas;
     this.numPoints = numPoints;
     this.radius = radius;
-    this.canvasWidth = canvas.width;
-    this.canvasHeight = canvas.height;
   }
 
-  generateRandomColor() {
+  //Random Color generator
+  generateRandomColor(){
     return '#' + Math.floor(Math.random() * 16777215).toString(16);
   }
 
-  generateRandomCircleCoordinates(offsetX = 0, offsetY = 0) {
+  generateRandomCircleCoordinates() {
     const coordinates = [];
+
     for (let i = 0; i < this.numPoints; i++) {
       const angle = (Math.PI * 2 * i) / this.numPoints;
-      const x = Math.cos(angle) * this.radius + offsetX;
-      const y = Math.sin(angle) * this.radius + offsetY; // Adjust for offsetY
+      const x = Math.cos(angle) * this.radius;
+      const y = Math.sin(angle) * this.radius;
+
       coordinates.push({ x, y });
     }
+
     return coordinates;
   }
 
-  nonlinearAsymmetricPerspectiveShift(x, y, p, offsetX, offsetY) {
-    const adjustedX = x - offsetX;
-    const adjustedY = y - offsetY;
-    const scaleFactorX = 1 + p * Math.pow(adjustedX / 110, 3);
-    const scaleFactorY = 1 + 0.2 * Math.pow(adjustedY / 110, 2);
-    const newX = adjustedX * Math.pow(scaleFactorX, 2) + offsetX;
-    const newY = adjustedY * Math.pow(scaleFactorY, 1.5) + offsetY;
+  nonlinearAsymmetricPerspectiveShift(x, y, p) {
+    const scaleFactorX = 1 + p * Math.pow(x / 110, 3);
+    const scaleFactorY = 1 + 0.2 * Math.pow(y / 110, 2);
+
+    const newX = x * Math.pow(scaleFactorX, 2);
+    const newY = y * Math.pow(scaleFactorY, 1.5);
+
     return { x: newX, y: newY };
   }
 
-  morphAndDraw(p1, p2) {
-    this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight); // Clear the canvas
+  morphAndDraw(p) {
+    const originalCoordinates = this.generateRandomCircleCoordinates();
+    const morphedCoordinates = originalCoordinates.map(({ x, y }) => this.nonlinearAsymmetricPerspectiveShift(x, y, p));
 
-    // Draw first morph on the left half
-    const offsetX1 = this.canvasWidth / 4;
-    const offsetY = this.canvasHeight / 2;
-    let originalCoordinates = this.generateRandomCircleCoordinates(offsetX1, offsetY);
-    let morphedCoordinates = originalCoordinates.map(({ x, y }) => 
-      this.nonlinearAsymmetricPerspectiveShift(x, y, p1, offsetX1, offsetY));
-    this.drawCircle(morphedCoordinates, this.generateRandomColor());
+    const minX = Math.min(...morphedCoordinates.map(coord => coord.x));
+    const minY = Math.min(...morphedCoordinates.map(coord => coord.y));
+    const maxX = Math.max(...morphedCoordinates.map(coord => coord.x));
+    const maxY = Math.max(...morphedCoordinates.map(coord => coord.y));
 
-    // Draw second morph on the right half
-    const offsetX2 = 3 * this.canvasWidth / 4;
-    originalCoordinates = this.generateRandomCircleCoordinates(offsetX2, offsetY);
-    morphedCoordinates = originalCoordinates.map(({ x, y }) => 
-      this.nonlinearAsymmetricPerspectiveShift(x, y, p2, offsetX2, offsetY));
-    this.drawCircle(morphedCoordinates, this.generateRandomColor());
+    const centerX = (minX + maxX) / 2;
+    const centerY = (minY + maxY) / 2;
+
+    const normalizedCoordinates = morphedCoordinates.map(({ x, y }) => ({
+      x: x - minX + this.canvas.width / 2,
+      y: y - minY + this.canvas.height / 2
+    }));
+
+    const backgroundColor = this.generateRandomColor();
+    const originalColor = this.generateRandomColor();
+    const morphedColor = this.generateRandomColor();
+
+    this.ctx.fillStyle = backgroundColor;
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.drawCircle(originalCoordinates, originalColor, 1.5);
+    this.drawCircle(normalizedCoordinates, morphedColor, 1.5);
   }
 
-  drawCircle(coordinates, color) {
+  drawCircle(coordinates, color, scaleFactor) {
     this.ctx.beginPath();
+
     this.ctx.moveTo(coordinates[0].x, coordinates[0].y);
 
     for (let i = 1; i < coordinates.length; i++) {
-      const { x, y } = coordinates[i];
+      const x = coordinates[i].x;
+      const y = coordinates[i].y;
       this.ctx.lineTo(x, y);
     }
 
     this.ctx.closePath();
+
     this.ctx.fillStyle = color;
     this.ctx.fill();
   }
 }
 
-
-// Integration with jsPsych goes here...
+// Usage example:
+// const canvasMorpher = new CanvasMorpher('myCanvas', 100, 105);
+// canvasMorpher.morphAndDraw();
