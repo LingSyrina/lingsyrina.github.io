@@ -42,6 +42,8 @@ class CanvasMorpher {
         this.num_ctrls = 4;
         this.offset = 1.7;
         this.maxxy = 700;
+        this.A = 230;
+        this.B = 670;
         this.distortion_amount = 50;
 
         this.x_points = [[], [], [], [], []];
@@ -110,7 +112,7 @@ class CanvasMorpher {
         this.ctrl_y_first[blob][ctrl] = this.ctrl_y_first[blob][ctrl] + Math.sin(angle) * distance;
     }
 
-    morphAndDraw(p, arrangementType = 'dual') {
+    morphAndDraw(p, rand, arrangementType = 'halfEllipse') {
         const flipped = (px, py, cx, cy) => {
             const nx = (cx - px) + cx;
             const ny = (cy - py) + cy;
@@ -139,14 +141,15 @@ class CanvasMorpher {
                 break;
             case 'halfEllipse':
                 const thetaHalfEllipse = p * Math.PI;
-                e = { x: (this.maxxy / 2) + Math.cos(thetaHalfEllipse) * (this.maxxy / 2), y: (this.maxxy / 2) + Math.sin(thetaHalfEllipse) * (this.maxxy / 3) };            
+                e = { x: (this.maxxy / 2) + Math.cos(thetaHalfEllipse) * (this.maxxy / 2.5), y: (this.maxxy / 2) + Math.sin(thetaHalfEllipse) * (this.maxxy / 1.5) };            
                 break;
             case 'dual':
-                const noise = Math.cos(p * Math.PI) * 15
-                e = { x : (this.maxxy / 2.5) + (this.maxxy * p / 2) + noise, y : (this.maxxy / 2.5) + (this.maxxy * p / 2) - noise};
+                const noise = Math.cos(rand * Math.PI) * 150
+                e = { x : this.A + (this.B * p) + noise, y : this.A + (this.B * p) - noise};
+                //e = { x: 860, y: 940};                
                 break;
         }
-        console.log(`Blob ${which} controled by e:`, e);
+        console.log(`Blob ${which} controled by e and random:`, e, rand);
 
         for (let j = 0; j < this.num_ctrls; j++) {
             let m = (this.ctrl_x_first[1][j] - this.ctrl_x_first[0][j]) / this.intrablob_distance;
@@ -198,7 +201,7 @@ class CanvasMorpher {
         this.ctx.bezierCurveTo(this.ctrl_x_first[which][1] + center_x, this.ctrl_y_first[which][1] + center_y, this.ctrl_x_second[which][1] + center_x, this.ctrl_y_second[which][1] + center_y, this.x_points[which][2] + center_x, this.y_points[which][2] + center_y);
         this.ctx.bezierCurveTo(this.ctrl_x_first[which][2] + center_x, this.ctrl_y_first[which][2] + center_y, this.ctrl_x_second[which][2] + center_x, this.ctrl_y_second[which][2] + center_y, this.x_points[which][3] + center_x, this.y_points[which][3] + center_y);
         this.ctx.bezierCurveTo(this.ctrl_x_first[which][3] + center_x, this.ctrl_y_first[which][3] + center_y, this.ctrl_x_second[which][3] + center_x, this.ctrl_y_second[which][3] + center_y, this.x_points[which][0] + center_x, this.y_points[which][0] + center_y);
-        this.ctx.fillStyle = "#884EA0";
+        this.ctx.fillStyle = "#73C6B6";
         this.ctx.fill();
     }
 
@@ -237,10 +240,10 @@ class CanvasMorpher {
 
         // Draw the first shape
         // Clear the original canvas and newCanvas before drawing the second shape
-        originalCtx.clearRect(0, 0, originalCanvas.width, originalCanvas.height); // Clear canvas
-        newCanvas.getContext('2d').clearRect(0, 0, newCanvas.width, newCanvas.height); // Clear newCanvas
+        //originalCtx.clearRect(0, 0, originalCanvas.width, originalCanvas.height); // Clear canvas
+        //newCanvas.getContext('2d').clearRect(0, 0, newCanvas.width, newCanvas.height); // Clear newCanvas
 
-        canvasMorpher.morphAndDraw(p1);
+        canvasMorpher.morphAndDraw(p1, p1**(p1-p2));
         originalCtx.drawImage(newCanvas, 0, 0, 1200, 1200);
 
         // Scale the original canvas to fit the target size
@@ -250,9 +253,9 @@ class CanvasMorpher {
         // Draw the second shape
         // Clear the original canvas and newCanvas before drawing the second shape
         originalCtx.clearRect(0, 0, originalCanvas.width, originalCanvas.height); // Clear canvas
-        newCanvas.getContext('2d').clearRect(0, 0, newCanvas.width, newCanvas.height); // Clear newCanvas
+        //newCanvas.getContext('2d').clearRect(0, 0, newCanvas.width, newCanvas.height); // Clear newCanvas
 
-        canvasMorpher.morphAndDraw(p2);
+        canvasMorpher.morphAndDraw(p2, p1**(p1+p2));
         originalCtx.drawImage(newCanvas, 0, 0, 1200, 1200);
 
         // Scale the original canvas to fit the target size
