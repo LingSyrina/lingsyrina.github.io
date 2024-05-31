@@ -165,7 +165,7 @@
     };
 
 
-    // PROMPTS
+    // frimble vs. orpital
     var A = `frimble`;
     var B = `orpital`;
 
@@ -180,11 +180,11 @@
       ];
     /* Stimuli for learning_phase_1B */
     var learn_stimuli_a2 = [
-        { stimulus: "6", radius_a: .30,name_a: `Compared to this...`,radius_b: .90, prompt: `<p style="font-size:20px;font-weight:bold;"> Compared to the left one, the right one is more ${B}.</p>`, correct_response:1 },
-        { stimulus: "7", radius_a: .20,name_a: `Compared to this...`,radius_b: .20, prompt: `<p style="font-size:20px;font-weight:bold;"> They are equal.</p>`,correct_response:2},
-        { stimulus: "8", radius_a: .25,name_a: `Compared to this...`,radius_b: .10, prompt: `<p style="font-size:20px;font-weight:bold;"> Compared to the left one, the right one is more ${A}.</p>`,correct_response:0 },
-        { stimulus: "9", radius_a: .30,name_a: `Compared to this...`,radius_b: .75, prompt: `<p style="font-size:20px;font-weight:bold;"> Compared to the left one, the right one is more ${B}.</p>`,correct_response:1 },
-        { stimulus: "10", radius_a: .90,name_a: `Compared to this...`,radius_b: .30, prompt: `<p style="font-size:20px;font-weight:bold;"> Compared to the left one, the right one is more ${A}.</p>`,correct_response:0 },
+        { stimulus: "6", radius_a: .30,name_a: `Compared to this...`,radius_b: .90, prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>`, correct_response:'p' },
+        { stimulus: "7", radius_a: .20,name_a: `Compared to this...`,radius_b: .20, prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}. </p>`,correct_response:'p'},
+        { stimulus: "8", radius_a: .25,name_a: `Compared to this...`,radius_b: .10, prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>`,correct_response:'q' },
+        { stimulus: "9", radius_a: .30,name_a: `Compared to this...`,radius_b: .75, prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>`,correct_response:'p' },
+        { stimulus: "10", radius_a: .90,name_a: `Compared to this...`,radius_b: .30, prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>`,correct_response:'q' },
       ];
 
     /* Stimuli for learning_phase_1B */
@@ -205,55 +205,104 @@
 
     /* Stimuli for testing_phase */
     var test_stimuli = [
-      { stimulus: "1", radius_a: .05, prompt: `Compared to this...`, radius_b: .70, key_prompt: `Compared to this, this is more B.`, correct_response:1  },
-      { stimulus: "2", radius_a: .95, prompt: `Compared to this...`,radius_b: .45, key_prompt: `Compared to this, this is more A.` , correct_response:0 },
-      { stimulus: "3", radius_a: .20,prompt: `Compared to this...`,radius_b: .55, key_prompt: `Compared to this, this is more B.` , correct_response:1 },
-      { stimulus: "4", radius_a: .35,prompt: `Compared to this...`,radius_b: .30, key_prompt: `Compared to this, this is more A.` ,correct_response:0 },
-      { stimulus: "5", radius_a: .55,prompt: `Compared to this...`,radius_b: .55, key_prompt: `They are equal.` ,correct_response:2 },
-      { stimulus: "6", radius_a: .40,prompt: `Compared to this...`,radius_b: .90, key_prompt: `Compared to this, this is more B.`, correct_response:1 },
-      { stimulus: "7", radius_a: .20,prompt: `Compared to this...`,radius_b: .20, key_prompt: `They are equal.`,correct_response:2},
-      { stimulus: "8", radius_a: .15,prompt: `Compared to this...`,radius_b: .10, key_prompt: `Compared to this, this is more A.`,correct_response:0 },
-      { stimulus: "9", radius_a: .30,prompt: `Compared to this...`,radius_b: .65, key_prompt: `Compared to this, this is more B.`,correct_response:1 },
-      { stimulus: "10", radius_a: .80,prompt: `Compared to this...`,radius_b: .30, key_prompt: `Compared to this, this is more A.`,correct_response:0 },
+      { stimulus: "1", radius_a: .05, prompt: `Compared to this...`, radius_b: .80, key_prompt: `Compared to this, this is more B.`, correct_response:1  , prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>`},
+      { stimulus: "2", radius_a: .95, prompt: `Compared to this...`,radius_b: .35, key_prompt: `Compared to this, this is more A.` , correct_response:0 , prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>`},
+      { stimulus: "3", radius_a: .10,prompt: `Compared to this...`,radius_b: .55, key_prompt: `Compared to this, this is more B.` , correct_response:1 ,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>`},
+      { stimulus: "4", radius_a: .35,prompt: `Compared to this...`,radius_b: .20, key_prompt: `Compared to this, this is more A.` ,correct_response:0,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>` },
+      { stimulus: "5", radius_a: .55,prompt: `Compared to this...`,radius_b: .55, key_prompt: `They are equal.` ,correct_response:2,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>` },
+      { stimulus: "6", radius_a: .30,prompt: `Compared to this...`,radius_b: .90, key_prompt: `Compared to this, this is more B.`, correct_response:1,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>` },
+      { stimulus: "7", radius_a: .20,prompt: `Compared to this...`,radius_b: .20, key_prompt: `They are equal.`,correct_response:2,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>`},
+      { stimulus: "8", radius_a: .25,prompt: `Compared to this...`,radius_b: .10, key_prompt: `Compared to this, this is more A.`,correct_response:0 ,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>`},
+      { stimulus: "9", radius_a: .30,prompt: `Compared to this...`,radius_b: .75, key_prompt: `Compared to this, this is more B.`,correct_response:1 ,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>`},
+      { stimulus: "10", radius_a: .90,prompt: `Compared to this...`,radius_b: .30, key_prompt: `Compared to this, this is more A.`,correct_response:0,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>` },
       ];
 
       var test_stimuli_2 = [
-        { stimulus: "1", radius_a: .05, prompt: `Compared to this...`, radius_b: .70, key_prompt: `Compared to this, this is more B.`, correct_response:1  },
-        { stimulus: "2", radius_a: .95, prompt: `Compared to this...`,radius_b: .45, key_prompt: `Compared to this, this is more A.` , correct_response:0 },
-        { stimulus: "3", radius_a: .20,prompt: `Compared to this...`,radius_b: .55, key_prompt: `Compared to this, this is more B.` , correct_response:1 },
-        { stimulus: "4", radius_a: .35,prompt: `Compared to this...`,radius_b: .30, key_prompt: `Compared to this, this is more A.` ,correct_response:0 },
-        { stimulus: "5", radius_a: .55,prompt: `Compared to this...`,radius_b: .55, key_prompt: `They are equal.` ,correct_response:2 },
-        { stimulus: "6", radius_a: .40,prompt: `Compared to this...`,radius_b: .90, key_prompt: `Compared to this, this is more B.`, correct_response:1 },
-        { stimulus: "7", radius_a: .20,prompt: `Compared to this...`,radius_b: .20, key_prompt: `They are equal.`,correct_response:2},
-        { stimulus: "8", radius_a: .15,prompt: `Compared to this...`,radius_b: .10, key_prompt: `Compared to this, this is more A.`,correct_response:0 },
-        { stimulus: "9", radius_a: .30,prompt: `Compared to this...`,radius_b: .65, key_prompt: `Compared to this, this is more B.`,correct_response:1 },
-        { stimulus: "10", radius_a: .80,prompt: `Compared to this...`,radius_b: .30, key_prompt: `Compared to this, this is more A.`,correct_response:0 },
+        { stimulus: "1", radius_a: .05, prompt: `Compared to this...`, radius_b: .80, key_prompt: `Compared to this, this is more B.`, correct_response:1,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>`  },
+        { stimulus: "2", radius_a: .95, prompt: `Compared to this...`,radius_b: .35, key_prompt: `Compared to this, this is more A.` , correct_response:0,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>` },
+        { stimulus: "3", radius_a: .10,prompt: `Compared to this...`,radius_b: .55, key_prompt: `Compared to this, this is more B.` , correct_response:1 ,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>`},
+        { stimulus: "4", radius_a: .35,prompt: `Compared to this...`,radius_b: .20, key_prompt: `Compared to this, this is more A.` ,correct_response:0 ,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>`},
+        { stimulus: "5", radius_a: .55,prompt: `Compared to this...`,radius_b: .55, key_prompt: `They are equal.` ,correct_response:2,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>` },
+        { stimulus: "6", radius_a: .30,prompt: `Compared to this...`,radius_b: .90, key_prompt: `Compared to this, this is more B.`, correct_response:1,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>` },
+        { stimulus: "7", radius_a: .20,prompt: `Compared to this...`,radius_b: .20, key_prompt: `They are equal.`,correct_response:2,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>`},
+        { stimulus: "8", radius_a: .25,prompt: `Compared to this...`,radius_b: .10, key_prompt: `Compared to this, this is more A.`,correct_response:0,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>` },
+        { stimulus: "9", radius_a: .30,prompt: `Compared to this...`,radius_b: .75, key_prompt: `Compared to this, this is more B.`,correct_response:1,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>` },
+        { stimulus: "10", radius_a: .90,prompt: `Compared to this...`,radius_b: .30, key_prompt: `Compared to this, this is more A.`,correct_response:0 ,prompt: `<p style="font-size:20px;font-weight:bold;"> Look at the img on the right, Press 'q' if it's more ${A} and 'p' if more ${B}.</p>`},
         ];
 
-      var test_stimuli_3 = [
-        { stimulus: 'img/tall1.png', word: "tall", antonym: "short"},
-        { stimulus: 'img/tall2.png', word: "tall", antonym: "short"},
-        { stimulus: 'img/tall3.png', word: "tall", antonym: "short"},
-        { stimulus: 'img/dark1.png', word: "dark", antonym: "light"},
-        { stimulus: 'img/dark2.png', word: "dark", antonym: "light"},
-        { stimulus: 'img/dark3.png', word: "dark", antonym: "light"},
-        ];
+        var test_stimuli_3 = [
+          { stimulus: 'img/tall1.png', word: "tall", antonym: "short"},
+          { stimulus: 'img/tall2.png', word: "tall", antonym: "short"},
+          { stimulus: 'img/tall3.png', word: "tall", antonym: "short"},
+          { stimulus: 'img/dark1.png', word: "dark", antonym: "light"},
+          { stimulus: 'img/dark2.png', word: "dark", antonym: "light"},
+          { stimulus: 'img/dark3.png', word: "dark", antonym: "light"},
+          ];
+
+
+    // /* Function for generating canvas stimuli */
+    // function Morphfunction(canvas, p1, p2){
+    //     const canvasMorpher = new CanvasMorpher(canvas, 80, 138);
+    //     canvasMorpher.combineImages(canvas, p1, p2);
+    // }
 
 
     /* Function for generating canvas stimuli */
-    function Morphfunction(canvas, p1, p2){
+    function Morphfunction(canvas, p1, p2, n1=0, n2=0) {
+      return new Promise((resolve) => {
         const canvasMorpher = new CanvasMorpher(canvas, 80, 138);
-        canvasMorpher.combineImages(canvas, p1, p2);
+        canvasMorpher.combineImages(canvas, p1, p2, n1, n2, () => {
+          resolve();
+        });
+      });
+    }
+    
+    /* Function for generating canvas stimuli */
+    function XAB_test(canvas, p1, p2, n1=0, n2=0) {
+      return new Promise((resolve) => {
+        const canvasMorpher = new CanvasMorpher(canvas, 80, 138);
+        canvasMorpher.XAB(canvas, p1, p2, n1, n2, () => {
+          resolve();
+        });
+      });
     }
 
 /* Experiment procedures */
+
+    var pre_test = {
+       type: jsPsychCanvasKeyboardResponse,
+       canvas_size: [600, 600],
+       stimulus: async function(c) {
+         await XAB_test(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
+         return c;
+       },
+       choices: ['q', 'p'],
+       prompt: "<p>Which image is the same as the one above? Press 'q' for left and 'p' for right.</p>",
+       response_ends_trial: true,
+       data: {
+               task: `test_response`,
+               correct_response: jsPsych.timelineVariable(`correct_response`),
+               stimuli_1: (jsPsych.timelineVariable(`radius_a`)),
+               stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
+           },
+      on_finish: function(data){
+                   // Score the response as correct or incorrect.
+                   if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
+                     data.wrong = false;
+                   } else {
+                     data.wrong = true;
+                   }
+       }
+     };
+     
     /* block1: learning task */
     /* 1.1 learning: define learning trials*/
     var learn_A_passive = {
         type: jsPsychCanvasKeyboardResponse,
         canvas_size: [400, 900],
-        stimulus: function(c) {
-            Morphfunction(c, jsPsych.timelineVariable(`radius_a`), jsPsych.timelineVariable(`radius_b`));
+        stimulus: async function(c) {
+          await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
+          return c;
         },
         prompt: jsPsych.timelineVariable(`prompt`),
         data: {
@@ -263,11 +312,11 @@
       };
 
      var learn_A_active = {
-        type: jsPsychCanvasButtonResponse,
+        type: jsPsychCanvasKeyboardResponse,
         canvas_size: [400, 900],
-        choices: [`<p style="font-size:20px;font-weight:bold;">The right one is more ${A}.</p>`, `<p style="font-size:20px;font-weight:bold;">The right one is more ${B}.</p>`, `<p style="font-size:20px;font-weight:bold;">They are the same.</p>`],
-        stimulus: function(c) {
-            Morphfunction(c, jsPsych.timelineVariable(`radius_a`), jsPsych.timelineVariable(`radius_b`));
+        stimulus: async function(c) {
+          await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
+          return c;
         },
         response_ends_trial: true,
         data: {
@@ -276,6 +325,8 @@
                 stimuli_2: jsPsych.timelineVariable(`radius_b`),
                 correct_response: jsPsych.timelineVariable(`correct_response`)
             },
+        choices: ['q', 'p'],
+        prompt: jsPsych.timelineVariable(`prompt`),
         on_finish: function(data){
                          // Score the response as correct or incorrect.
                          if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
@@ -301,11 +352,11 @@
       };
 
       var test = {
-         type: jsPsychCanvasButtonResponse,
+         type: jsPsychCanvasKeyboardResponse,
          canvas_size: [400, 900],
-         choices: [`<p style="font-size:20px;font-weight:bold;">The right one is more A.</p>`, `<p style="font-size:20px;font-weight:bold;">The right one is more ${B}.</p>`, `<p style="font-size:20px;font-weight:bold;">They are the same.</p>`],
-         stimulus: function(c) {
-             Morphfunction(c, jsPsych.timelineVariable(`radius_a`), jsPsych.timelineVariable(`radius_b`));
+         stimulus: async function(c) {
+           await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
+           return c;
          },
          response_ends_trial: true,
          data: {
@@ -314,6 +365,9 @@
                  stimuli_1: (jsPsych.timelineVariable(`radius_a`)),
                  stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
              },
+             
+        choices: ['q', 'p'],
+        prompt: jsPsych.timelineVariable(`prompt`),
         on_finish: function(data){
                      // Score the response as correct or incorrect.
                      if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
@@ -325,13 +379,13 @@
        };
 
        var learn_C_active = {
-          type: jsPsychCanvasButtonResponse,
+          type: jsPsychCanvasKeyboardResponse,
           canvas_size: [400, 900],
-          stimulus: function(c) {
-              Morphfunction(c, jsPsych.timelineVariable(`radius_a`), jsPsych.timelineVariable(`radius_b`));
+          stimulus: async function(c) {
+            await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
+            return c;
           },
           prompt: jsPsych.timelineVariable(`prompt`),
-          choices: [`<p style="font-size:20px;font-weight:bold;">  0  </p>`, `<p style="font-size:20px;font-weight:bold;">1</p>`, `<p style="font-size:20px;font-weight:bold;">2</p>`, `<p style="font-size:20px;font-weight:bold;">3</p>`, `<p style="font-size:20px;font-weight:bold;">4</p>`],
           response_ends_trial: true,
           data: {
                   task: `block2_active_response`,
@@ -364,11 +418,11 @@
         };
 
         var test_equally = {
-           type: jsPsychCanvasButtonResponse,
+           type: jsPsychCanvasKeyboardResponse,
            canvas_size: [400, 900],
-           choices: [`<p style="font-size:20px;font-weight:bold;">The right one is more ${A}.</p>`, `<p style="font-size:20px;font-weight:bold;">The right one is more ${B}.</p>`, `<p style="font-size:20px;font-weight:bold;">They are equally ${A}.</p>`, `<p style="font-size:20px;font-weight:bold;">They are equally ${B}.</p>`],
-           stimulus: function(c) {
-               Morphfunction(c, jsPsych.timelineVariable(`radius_a`), jsPsych.timelineVariable(`radius_b`));
+           stimulus: async function(c) {
+             await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
+             return c;
            },
            response_ends_trial: true,
            data: {
@@ -377,6 +431,10 @@
                    stimuli_1: (jsPsych.timelineVariable(`radius_a`)),
                    stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
                },
+               
+             
+          choices: ['q', 'p'],
+          prompt: jsPsych.timelineVariable(`prompt`),
           on_finish: function(data){
                        // Score the response as correct or incorrect.
                        if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
@@ -406,6 +464,10 @@
 
 
       /* define learning procedure*/
+      var pre_test_xab = {
+        timeline: [instruction_break, pre_test],
+        timeline_variables:test_stimuli,
+      };
       // Block I: learning (passive + active)
       var learn_procedure_1 = {
         timeline: [instruction_break, learn_A_passive],
@@ -458,6 +520,7 @@
     var timeline = [];
     timeline.push(welcome);
     /*block1*/
+    timeline.push(pre_test_xab); 
     timeline.push(instruction_1);
     timeline.push(learn_procedure_1);
     timeline.push(instruction_2);
@@ -493,3 +556,4 @@
 
   </script>
 </html>
+
