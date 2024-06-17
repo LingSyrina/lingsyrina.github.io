@@ -3,12 +3,14 @@
   <head>
     <title>Magnitude pilot experiment</title>
     <script src="https://unpkg.com/jspsych"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-external-html"></script>
     <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response"></script>
     <script src="https://unpkg.com/@jspsych/plugin-html-button-response"></script>
     <script src="https://unpkg.com/@jspsych/plugin-canvas-keyboard-response"></script>
     <script src="https://unpkg.com/@jspsych/plugin-canvas-button-response"></script>
     <script src="https://unpkg.com/@jspsych/plugin-image-button-response"></script>
     <script src="https://unpkg.com/@jspsych/plugin-preload"></script>
+    <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
     <link href="https://unpkg.com/jspsych/css/jspsych.css" rel="stylesheet" type="text/css">
     <script src="canvasMorpher.js"></script>
 
@@ -29,15 +31,52 @@
 
   <script>
 
+  //To do:
+  //Provide condition differences for Block 3 (see line 625 in createExperiment function)
+  //Provide randomization of A, B label (see line 208)
+  //Ling: save A/B randomization condition in data
 
   /* initialize jsPsych */
   var jsPsych = initJsPsych({
-    on_finish: function() {
-      var csv = jsPsych.data.get().csv();
-      var filename = "trial.csv";
-      jsPsych.data.get().localSave('csv','mydata.csv');
-    }
+    show_progress_bar: true,
   });
+
+  var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+  };
+
+  var SONAID = getUrlParameter('id');
+  var subjectID = SONAID;
+  if (subjectID===undefined) {subjectID = this.jsPsych.randomization.randomID(8)}; //if ID isn't read in, best to give it a random value
+  jsPsych.data.addProperties({subject_id: subjectID}); //this is the awkward way you need to call jspsych routines now!
+  var check_consent = function(elem) {
+    if (document.getElementById('consent_checkbox').checked) {
+      return true;
+    }
+    else {
+      alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
+      return false;
+    }
+    return false;
+  };
+
+  var consentTrial = {
+    type:jsPsychExternalHtml,
+    url: "http://localhost:8000/consent.html",
+    cont_btn: "start",
+    check_fn: check_consent
+  };
 
     /* Instructions */
     /* welcome message */
@@ -256,7 +295,7 @@
         });
       });
     }
-    
+
     /* Function for generating canvas stimuli */
     function XAB_test(canvas, p1, p2, n1=0, n2=0) {
       return new Promise((resolve) => {
@@ -294,7 +333,7 @@
                    }
        }
      };
-     
+
     /* block1: learning task */
     /* 1.1 learning: define learning trials*/
     var learn_A_passive = {
@@ -365,7 +404,7 @@
                  stimuli_1: (jsPsych.timelineVariable(`radius_a`)),
                  stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
              },
-             
+
         choices: ['q', 'p'],
         prompt: jsPsych.timelineVariable(`prompt`),
         on_finish: function(data){
@@ -431,8 +470,8 @@
                    stimuli_1: (jsPsych.timelineVariable(`radius_a`)),
                    stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
                },
-               
-             
+
+
           choices: ['q', 'p'],
           prompt: jsPsych.timelineVariable(`prompt`),
           on_finish: function(data){
@@ -514,45 +553,120 @@
        randomize_order: true,
      }
 
+    // save to OFS server (check documentation)
+    //  var save_server_data = {
+    //   type: jsPsychCallFunction,
+    //   func: function () {
+    //     var data = jsPsych.data.get().ignore("internal_node_id").json();//ommitting .filter({task: 'property'}) to include all trials
+    //     var xhr = new XMLHttpRequest();
+    //     xhr.open('POST', 'php/save_json.php');
+    //     xhr.setRequestHeader('Content-Type', 'application/json');
+    //     xhr.send(JSON.stringify({ filedata: data }));
+    //     jsPsychPipe.save(experiment_id, filename, data)
+    //   },
+    //   post_trial_gap: 1000
+    // }
+
+    const expID = "iPtLEVGIdxPA";
+    let condition;
+
+    const save_server_data = {
+      type: jsPsychPipe,
+      action: "save",
+      experiment_id: expID,
+      filename: () => `${condition}_${subjectID}.csv`,
+      data_string: ()=>jsPsych.data.get().csv(),
+      post_trial_gap: 1000
+    };
+
+    async function getCondition() {
+      try {
+        const response = await jsPsychPipe.getCondition(expID);
+        console.log('Response:', response); // Log the response to confirm
+
+        // Check if the response is a valid condition number
+        if (typeof response === 'number') {
+          return response;
+        } else {
+          throw new Error('Invalid response format');
+        }
+      } catch (error) {
+        console.error('Failed to get condition:', error);
+      }
+    }
 
 
-    /*set the structure*/
-    var timeline = [];
-    timeline.push(welcome);
-    /*block1*/
-    timeline.push(pre_test_xab); 
-    timeline.push(instruction_1);
-    timeline.push(learn_procedure_1);
-    timeline.push(instruction_2);
-    timeline.push(learn_procedure_2);
+    async function createExperiment() {
+      condition = await getCondition();
 
-    /*block2*/
-    timeline.push(instruction_3);
-    timeline.push(test_procedure_1);
+      var timeline_h = [];
+      var timeline_l = [];
 
+      timeline_h.push(welcome, consentTrial);
+      timeline_l.push(welcome, consentTrial);
 
-    /*block3*/
-    timeline.push(instruction_4);
-    timeline.push(learn_procedure_3);
-    timeline.push(instruction_5);
-    timeline.push(learn_procedure_4);
+      /*block1: Same across all groups*/
+      timeline_h.push(pre_test_xab);
+      timeline_l.push(pre_test_xab);
+      timeline_h.push(instruction_1);
+      timeline_l.push(instruction_1);
+      timeline_h.push(learn_procedure_1);
+      timeline_l.push(learn_procedure_1);
+      timeline_h.push(instruction_2);
+      timeline_l.push(instruction_2);
+      timeline_h.push(learn_procedure_2);
+      timeline_l.push(learn_procedure_2);
 
-    /*block4*/
-    timeline.push(instruction_6);
-    timeline.push(test_procedure_2);
-    timeline.push(instruction_7);
-    timeline.push(test_procedure_3);
+      /*block2: Same across all groups*/
+      timeline_h.push(instruction_3);
+      timeline_l.push(instruction_3);
+      timeline_h.push(test_procedure_1);
+      timeline_l.push(test_procedure_1);
 
-    /*survey*/
-    timeline.push(instruction_8);
-    timeline.push(survey);
+      /*block3: Constrast between two groups*/
+      /*High precision group*/
+      timeline_h.push(instruction_4);
+      timeline_h.push(learn_procedure_3);
+      timeline_h.push(instruction_5);
+      timeline_h.push(learn_procedure_4);
+      /*Low precision group*/
+      timeline_l.push(instruction_4);
+      timeline_l.push(learn_procedure_3);
+      timeline_l.push(instruction_5);
+      timeline_l.push(learn_procedure_4);
 
-    //Follow-up trial with real adjectives
+      /*block4: Same across all groups*/
+      timeline_h.push(instruction_6);
+      timeline_h.push(test_procedure_2);
+      timeline_h.push(instruction_7);
+      timeline_h.push(test_procedure_3);
+      timeline_l.push(instruction_6);
+      timeline_l.push(test_procedure_2);
+      timeline_l.push(instruction_7);
+      timeline_l.push(test_procedure_3);
 
-    timeline.push(closing);
+      /*survey: Same across all groups*/
+      //Follow-up trial with real adjectives
+      timeline_h.push(instruction_8);
+      timeline_h.push(survey);
+      timeline_l.push(instruction_8);
+      timeline_l.push(survey);
 
-    /* start the experiment */
-    jsPsych.run(timeline);
+      /*save_data: Same across all groups*/
+      timeline_h.push(closing);
+      timeline_h.push(save_server_data);
+      timeline_l.push(closing);
+      timeline_l.push(save_server_data);
+
+      if(condition==0){
+        jsPsych.run(timeline_h)
+      } else {
+        jsPsych.run(timeline_l)
+      }
+    }
+
+  createExperiment();
+
 
   </script>
 </html>
