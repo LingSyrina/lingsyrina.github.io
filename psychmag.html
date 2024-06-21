@@ -11,6 +11,7 @@
     <script src="https://unpkg.com/@jspsych/plugin-image-button-response"></script>
     <script src="https://unpkg.com/@jspsych/plugin-preload"></script>
     <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
     <link href="https://unpkg.com/jspsych/css/jspsych.css" rel="stylesheet" type="text/css">
     <script src="canvasMorpher.js"></script>
 
@@ -31,11 +32,7 @@
 
   <script>
 
-  //To do:
-  //Provide condition differences for Block 3 (see line 625 in createExperiment function)
-  //Provide randomization of A, B label (see line 208)
-  //Ling: save A/B randomization condition in data
-
+      
   /* initialize jsPsych */
   var jsPsych = initJsPsych({
     show_progress_bar: true,
@@ -205,8 +202,17 @@
 
 
     // frimble vs. orpital
-    var A = `frimble`;
-    var B = `orpital`;
+    var choices = ['frimble', 'orpital']
+    
+    // word assignment
+    if (Math.random() < 0.5) {
+        var A = choices[0];
+        var B = choices[1];
+    } else {
+        var A = choices[1];
+        var B = choices[0];
+    }
+      
     
     /*
     var test_stimuli_s = [
@@ -252,6 +258,9 @@
         return Math.random() * (max - min) + min;
       }
       
+    // Initialize the random generator with a fixed seen
+    Math.seedrandom('fixed-seed');
+    
     /* Function for Learn stimuli (less restriction)*/
     function generateLearnStimuli(numStimuli, promptType = 1) {
       const stimuli = [];
@@ -327,7 +336,6 @@
             radius_b: p2,
             n1: n1,
             n2: n2,
-            prompt: `<p>The right image is...</br> <strong>Q</strong>: more <strong>${A}</strong>.&emsp;&emsp; <strong>P</strong>: more <strong>${B}</strong>.</p>`,
             correct_response: p1 > p2 ? 'q' : 'p'
           });
         }
@@ -449,17 +457,7 @@
           correct_response: stimulus.p1 > stimulus.p2 ? 'q' : 'p',
         }));
       }
-      function convertforTest(stimuli) {
-        return stimuli.map((stimulus, index) => ({
-          stimulus: index.toString(),
-          p1: stimulus.p1,
-          p2: stimulus.p2,
-          n1: stimulus.n1,
-          n2: stimulus.n2,
-          prompt: `<p>The right image is...</br> <strong>Q</strong>: more <strong>${A}</strong>.&emsp;&emsp; <strong>P</strong>: more <strong>${B}</strong>.</p>`,
-          correct_response: stimulus.p1 > stimulus.p2 ? 'q' : 'p',
-        }));
-      }
+
       
       /*pretest*/
       var pre_test_xab_stimuli = convertToTimelineVariables(pre_test_stimuli);
@@ -477,14 +475,14 @@
       var learn_stimuli_c1l = passiveDegreeStimuli(25,0.3); //low precision
       var learn_stimuli_c2l = activeDegreeStimuli(25,0.3);
 
-      /* Stimuli for testing_phase */
-      var xab_test_stimuli = convertforTest(pre_test_xab_stimuli);
-      var test_stimuli_1 = generateTestStimuli(28).concat(xab_test_stimuli);
+      /* Stimuli for testing_phase_1 */
+      var xab_test_stimuli = convertToTimelineVariables(pre_test_stimuli); // 10 XAB paramters
+      var test_stimuli_1 = generateTestStimuli(28).concat(xab_test_stimuli); // 28 random parameters
 
-      /* Stimuli for testing_phase_2 */
-      var test_stimuli_2 = generateTestStimuli(10);
+      /* Stimuli for testing_phase_2: 38 total */
+      var test_stimuli_2 = generateTestStimuli(10); // 10 random parameters
       
-      var test_stimuli_3 = generateTestStimuli(28);
+      var test_stimuli_3 = generateTestStimuli(18).concat(xab_test_stimuli); // 10 XAB + 18 random
 
 /* Experiment procedures */
 
@@ -493,7 +491,7 @@
          canvas_size: [600, 600],
          stimulus: async function(c) {
            const stim = jsPsych.timelineVariable();
-           await XAB_test(c, stim.radius_a, stim.radius_b, stim.n1, stim.n2);
+           await XAB_test(c, jsPsych.timelineVariable(`radius_a`), jsPsych.timelineVariable(`radius_b`), jsPsych.timelineVariable(`n1`), jsPsych.timelineVariable(`n2`));
            return c;
          },
          choices: ['q', 'p'],
@@ -575,7 +573,7 @@
          type: jsPsychCanvasKeyboardResponse,
          canvas_size: [400, 900],
          stimulus: async function(c) {
-           await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
+           await Morphfunction(c, jsPsych.timelineVariable(`radius_a`), jsPsych.timelineVariable(`radius_b`));
            return c;
          },
          response_ends_trial: true,
@@ -587,7 +585,7 @@
              },
 
         choices: ['q', 'p'],
-        prompt: jsPsych.timelineVariable(`prompt`),
+        prompt: `<p>The right image is...</br> <strong>Q</strong>: more <strong>${A}</strong>.&emsp;&emsp; <strong>P</strong>: more <strong>${B}</strong>.</p>`,
         on_finish: function(data){
                      // Score the response as correct or incorrect.
                      if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
@@ -683,6 +681,8 @@
          };
 
 */
+      // Reset the RNG to use the default random behavior for timeline randomization
+      Math.seedrandom();
 
       /* define learning procedure*/
       var pre_test_xab = {
