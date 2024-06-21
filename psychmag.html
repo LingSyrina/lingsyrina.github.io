@@ -36,6 +36,13 @@
   //Provide randomization of A, B label (see line 208)
   //Ling: save A/B randomization condition in data
 
+  //changes made (Jun 21):
+  // XAB changed to: await XAB_test(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'), jsPsych.timelineVariable('n1'), jsPsych.timelineVariable('n2'));
+  // convertforTest Variable name changed to: 'radius_a', 'radius_b' (from p1, p2)
+  // deleted XAB stimuli from test_stimuli
+  // Pushed XAB pre-test to timeline tests
+  // Changed test-stimuli to be one across all testing phase for within subject comparison
+
   /* initialize jsPsych */
   var jsPsych = initJsPsych({
     show_progress_bar: true,
@@ -207,7 +214,7 @@
     // frimble vs. orpital
     var A = `frimble`;
     var B = `orpital`;
-    
+
     /*
     var test_stimuli_s = [
       { stimulus: 'img/tall1.png', word: "tall", antonym: "short"},
@@ -245,13 +252,13 @@
         });
       });
     }
-   
+
 
    // random generator
    function getRandomArbitrary(min, max) {
         return Math.random() * (max - min) + min;
       }
-      
+
     /* Function for Learn stimuli (less restriction)*/
     function generateLearnStimuli(numStimuli, promptType = 1) {
       const stimuli = [];
@@ -300,7 +307,7 @@
       return stimuli;
     }
 
-      
+
       /*test stimuli; more restricted */
       function generateTestStimuli(numStimuli) {
         const stimuli = [];
@@ -436,8 +443,8 @@
         { p1: 0.65, p2: 0.65, n1: 0, n2: 0.15*670/70 },
         { p1: 0.85, p2: 0.85, n1: 0, n2: 0.15*670/70 }
       ];
-      
-      
+
+
       /* Function to convert specific stimuli to timeline variables */
       function convertToTimelineVariables(stimuli) {
         return stimuli.map((stimulus, index) => ({
@@ -452,18 +459,18 @@
       function convertforTest(stimuli) {
         return stimuli.map((stimulus, index) => ({
           stimulus: index.toString(),
-          p1: stimulus.p1,
-          p2: stimulus.p2,
+          radius_a: stimulus.p1,
+          radius_B: stimulus.p2,
           n1: stimulus.n1,
           n2: stimulus.n2,
           prompt: `<p>The right image is...</br> <strong>Q</strong>: more <strong>${A}</strong>.&emsp;&emsp; <strong>P</strong>: more <strong>${B}</strong>.</p>`,
           correct_response: stimulus.p1 > stimulus.p2 ? 'q' : 'p',
         }));
       }
-      
+
       /*pretest*/
       var pre_test_xab_stimuli = convertToTimelineVariables(pre_test_stimuli);
-      
+
       /* Stimuli for learning_phase_1 */
       var learn_stimuli_a1 = generateLearnStimuli(25, 1);
 
@@ -478,12 +485,10 @@
       var learn_stimuli_c2l = activeDegreeStimuli(25,0.3);
 
       /* Stimuli for testing_phase */
-      var xab_test_stimuli = convertforTest(pre_test_xab_stimuli);
-      var test_stimuli_1 = generateTestStimuli(28).concat(xab_test_stimuli);
+      var test_stimuli_1 = generateTestStimuli(28);
 
       /* Stimuli for testing_phase_2 */
       var test_stimuli_2 = generateTestStimuli(10);
-      
       var test_stimuli_3 = generateTestStimuli(28);
 
 /* Experiment procedures */
@@ -493,7 +498,8 @@
          canvas_size: [600, 600],
          stimulus: async function(c) {
            const stim = jsPsych.timelineVariable();
-           await XAB_test(c, stim.radius_a, stim.radius_b, stim.n1, stim.n2);
+           console.log("Pre-test stimulus:", stim);
+           await XAB_test(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'), jsPsych.timelineVariable('n1'), jsPsych.timelineVariable('n2'));
            return c;
          },
          choices: ['q', 'p'],
@@ -514,7 +520,7 @@
                    }
          }
        };
-      
+
     /* block1: learning task */
     /* 1.1 learning: define learning trials*/
     var learn_A_passive = {
@@ -719,7 +725,7 @@
          timeline_variables: learn_stimuli_c2h,
          randomize_order: true,
        };
-      
+
       var learn_procedure_3l = {
         timeline: [instruction_break, learn_A_passive],
         timeline_variables:learn_stimuli_c1l,
@@ -752,7 +758,7 @@
      }
       */
 
-    
+
     // save to OFS server (check documentation)
     //  var save_server_data = {
     //   type: jsPsychCallFunction,
@@ -812,12 +818,13 @@
 
       /*block2: test; Same across all groups*/
       timeline.push(instruction_3);
+      timeline.push(pre_test_xab);
       timeline.push(test_procedure_1);
 
       /*block3: train; Constrast between two groups*/
-      
+
       const group = Math.random() < 0.5 ? 0 : 1; // 0 for high precision, 1 for low precision
-      
+
       if (group === 0) { //high precision
         jsPsych.data.addProperties({ precision_group: 'high' });
         timeline.push(instruction_4);
@@ -834,7 +841,8 @@
 
       /*block4: test; Same across all groups*/
       timeline.push(instruction_6);
-      timeline.push(test_procedure_2);
+      timeline.push(pre_test_xab);
+      timeline.push(test_procedure_1); //changed to be the same as above for within subject comparison
       timeline.push(instruction_7);
       timeline.push(test_procedure_3);
 
@@ -847,8 +855,8 @@
       /*save_data*/
       timeline.push(closing);
       timeline.push(save_server_data);
-      
-      
+
+
       jsPsych.run(timeline)
     }
 
@@ -857,4 +865,5 @@
 
   </script>
 </html>
+
 
