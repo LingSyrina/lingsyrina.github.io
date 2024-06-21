@@ -269,6 +269,7 @@
         { stimulus: "10", radius_a: .90,prompt: `Compared to this...`,radius_b: .30, key_prompt: `Compared to this, this is more A.`,correct_response:0 ,prompt: `<p style="font-size:20px;"> The right image is...</br> <strong>Q</strong>: more <strong>${A}</strong>.&emsp;&emsp; <strong>P</strong>: more <strong>${B}</strong>.</p>`},
         ];
 
+        /*
         var test_stimuli_3 = [
           { stimulus: 'img/tall1.png', word: "tall", antonym: "short"},
           { stimulus: 'img/tall2.png', word: "tall", antonym: "short"},
@@ -277,7 +278,7 @@
           { stimulus: 'img/dark2.png', word: "dark", antonym: "light"},
           { stimulus: 'img/dark3.png', word: "dark", antonym: "light"},
           ];
-
+         */
 
     // /* Function for generating canvas stimuli */
     // function Morphfunction(canvas, p1, p2){
@@ -547,11 +548,13 @@
            randomize_order: true,
          };
 
+     /*
      var survey = {
        timeline: [instruction_break, real_adj],
        timeline_variables: test_stimuli_3,
        randomize_order: true,
      }
+      */
 
     // save to OFS server (check documentation)
     //  var save_server_data = {
@@ -605,7 +608,7 @@
       timeline_h.push(welcome, consentTrial);
       timeline_l.push(welcome, consentTrial);
 
-      /*block1: Same across all groups*/
+      /*block1: XAB & Pretrain; Same across all groups*/
       timeline_h.push(pre_test_xab);
       timeline_l.push(pre_test_xab);
       timeline_h.push(instruction_1);
@@ -617,13 +620,13 @@
       timeline_h.push(learn_procedure_2);
       timeline_l.push(learn_procedure_2);
 
-      /*block2: Same across all groups*/
+      /*block2: test; Same across all groups*/
       timeline_h.push(instruction_3);
       timeline_l.push(instruction_3);
       timeline_h.push(test_procedure_1);
       timeline_l.push(test_procedure_1);
 
-      /*block3: Constrast between two groups*/
+      /*block3: train; Constrast between two groups*/
       /*High precision group*/
       timeline_h.push(instruction_4);
       timeline_h.push(learn_procedure_3);
@@ -635,7 +638,7 @@
       timeline_l.push(instruction_5);
       timeline_l.push(learn_procedure_4);
 
-      /*block4: Same across all groups*/
+      /*block4: text; Same across all groups*/
       timeline_h.push(instruction_6);
       timeline_h.push(test_procedure_2);
       timeline_h.push(instruction_7);
@@ -647,12 +650,12 @@
 
       /*survey: Same across all groups*/
       //Follow-up trial with real adjectives
-      timeline_h.push(instruction_8);
-      timeline_h.push(survey);
-      timeline_l.push(instruction_8);
-      timeline_l.push(survey);
+      //timeline_h.push(instruction_8);
+      //timeline_h.push(survey);
+      //timeline_l.push(instruction_8);
+      //timeline_l.push(survey);
 
-      /*save_data: Same across all groups*/
+      /*save_data*/
       timeline_h.push(closing);
       timeline_h.push(save_server_data);
       timeline_l.push(closing);
