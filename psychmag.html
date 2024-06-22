@@ -11,6 +11,7 @@
     <script src="https://unpkg.com/@jspsych/plugin-image-button-response"></script>
     <script src="https://unpkg.com/@jspsych/plugin-preload"></script>
     <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
     <link href="https://unpkg.com/jspsych/css/jspsych.css" rel="stylesheet" type="text/css">
     <script src="canvasMorpher.js"></script>
 
@@ -32,9 +33,9 @@
   <script>
 
   //To do:
-  //Provide condition differences for Block 3 (see line 625 in createExperiment function)
-  //Provide randomization of A, B label (see line 208)
-  //Ling: save A/B randomization condition in data
+  //Provide condition differences for Block 3 (see line 625 in createExperiment function): DONE
+  //Provide randomization of A, B label (see line 208): DONE
+  //Ling: save A/B randomization condition in data: DONE
 
   //changes made (Jun 21):
   // XAB changed to: await XAB_test(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'), jsPsych.timelineVariable('n1'), jsPsych.timelineVariable('n2'));
@@ -42,6 +43,11 @@
   // deleted XAB stimuli from test_stimuli
   // Pushed XAB pre-test to timeline tests
   // Changed test-stimuli to be one across all testing phase for within subject comparison
+  // Add randomseed to ensure consistant random number across subjects
+  // Included noise in testing and learning
+  // Reset random seed to null before trial time lines to garantee randomized trial order.
+  // Provided randomization of A, B label
+  // Save A/B randomization condition in file-name
 
   /* initialize jsPsych */
   var jsPsych = initJsPsych({
@@ -84,6 +90,22 @@
     cont_btn: "start",
     check_fn: check_consent
   };
+
+
+    // frimble vs. orpital
+    var choices = ['frimble', 'orpital'];
+
+    // Randomly assign values to A and B
+    if (Math.random() < 0.5) {
+      var A = choices[0];
+      var B = choices[1];
+    } else {
+      var A = choices[1];
+      var B = choices[0];
+    }
+
+    console.log('A:', A);
+    console.log('B:', B);
 
     /* Instructions */
     /* welcome message */
@@ -210,11 +232,6 @@
       `,
     };
 
-
-    // frimble vs. orpital
-    var A = `frimble`;
-    var B = `orpital`;
-
     /*
     var test_stimuli_s = [
       { stimulus: 'img/tall1.png', word: "tall", antonym: "short"},
@@ -237,6 +254,7 @@
     function Morphfunction(canvas, p1, p2, n1=0, n2=0) {
       return new Promise((resolve) => {
         const canvasMorpher = new CanvasMorpher(canvas, 80, 138);
+        console.log('noise', p1, p2, n1, n2);
         canvasMorpher.combineImages(canvas, p1, p2, n1, n2, () => {
           resolve();
         });
@@ -247,17 +265,20 @@
     function XAB_test(canvas, p1, p2, n1=0, n2=0) {
       return new Promise((resolve) => {
         const canvasMorpher = new CanvasMorpher(canvas, 80, 138);
+        console.log('noise', p1, p2, n1, n2);
         canvasMorpher.XAB(canvas, p1, p2, n1, n2, () => {
           resolve();
         });
       });
     }
 
+    // random generator
+    function getRandomArbitrary(min, max) {
+         return Math.random() * (max - min) + min;
+    }
 
-   // random generator
-   function getRandomArbitrary(min, max) {
-        return Math.random() * (max - min) + min;
-      }
+    // Initialize the RNG with a fixed seed
+    Math.seedrandom('fixed-seed');
 
     /* Function for Learn stimuli (less restriction)*/
     function generateLearnStimuli(numStimuli, promptType = 1) {
@@ -303,7 +324,6 @@
           prompt: prompt,
           correct_response: p1 > p2 ? 'q' : 'p'});
       }
-
       return stimuli;
     }
 
@@ -497,8 +517,6 @@
          type: jsPsychCanvasKeyboardResponse,
          canvas_size: [600, 600],
          stimulus: async function(c) {
-           const stim = jsPsych.timelineVariable();
-           console.log("Pre-test stimulus:", stim);
            await XAB_test(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'), jsPsych.timelineVariable('n1'), jsPsych.timelineVariable('n2'));
            return c;
          },
@@ -527,7 +545,7 @@
         type: jsPsychCanvasKeyboardResponse,
         canvas_size: [400, 900],
         stimulus: async function(c) {
-          await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
+          await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'), jsPsych.timelineVariable('n1'), jsPsych.timelineVariable('n2'));
           return c;
         },
         prompt: jsPsych.timelineVariable(`prompt`),
@@ -541,7 +559,7 @@
         type: jsPsychCanvasKeyboardResponse,
         canvas_size: [400, 900],
         stimulus: async function(c) {
-          await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
+          await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'), jsPsych.timelineVariable('n1'), jsPsych.timelineVariable('n2'));
           return c;
         },
         response_ends_trial: true,
@@ -581,7 +599,7 @@
          type: jsPsychCanvasKeyboardResponse,
          canvas_size: [400, 900],
          stimulus: async function(c) {
-           await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
+           await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'), jsPsych.timelineVariable('n1'), jsPsych.timelineVariable('n2'));
            return c;
          },
          response_ends_trial: true,
@@ -608,7 +626,7 @@
           type: jsPsychCanvasKeyboardResponse,
           canvas_size: [400, 900],
           stimulus: async function(c) {
-            await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
+            await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'), jsPsych.timelineVariable('n1'), jsPsych.timelineVariable('n2'));
             return c;
           },
           prompt: jsPsych.timelineVariable(`prompt`),
@@ -647,7 +665,7 @@
            type: jsPsychCanvasKeyboardResponse,
            canvas_size: [400, 900],
            stimulus: async function(c) {
-             await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'));
+             await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'), jsPsych.timelineVariable('n1'), jsPsych.timelineVariable('n2'));
              return c;
            },
            response_ends_trial: true,
@@ -689,6 +707,8 @@
          };
 
 */
+      // Reset the RNG to use the default random behavior for timeline randomization
+      Math.seedrandom();
 
       /* define learning procedure*/
       var pre_test_xab = {
@@ -780,7 +800,7 @@
       type: jsPsychPipe,
       action: "save",
       experiment_id: expID,
-      filename: () => `${condition}_${subjectID}.csv`,
+      filename: () => `${condition}_${subjectID}_${A}.csv`,
       data_string: ()=>jsPsych.data.get().csv(),
       post_trial_gap: 1000
     };
