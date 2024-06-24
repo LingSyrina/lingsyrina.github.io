@@ -94,6 +94,15 @@
       stimulus: "<p> Thank you very much again for your participation! We sincerely appreciate your time and effort.</p> <p>You can close your window whenever you feel comfortable.</p>"
     };
 
+    var exp_break = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <p>Phew!</p>
+        <p>Maybe it's time for a short break! Take your time, and press any key whenever you are ready to get back to our experiment.</p>
+      `,
+      post_trial_gap: 500
+    };
+
     /* instruction for learning phase_1 */
     // Passive learning
     var instruction_1 = {
@@ -199,14 +208,7 @@
       post_trial_gap: 500
     };
 
-    var break = {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: `
-        <p>Phew!</p>
-        <p>Maybe it's time for a short break! Take your time, and press any key whenever you are ready to get back to our experiment.</p>
-      `,
-      post_trial_gap: 500
-    };
+
      /* Fixation */
     var fixation = {
       type: jsPsychHtmlKeyboardResponse,
@@ -910,7 +912,7 @@
       timeline.push(xab_test_1);
       timeline.push(instruction_3);
       timeline.push(test_procedure_1);
-      timeline.push(break);
+      timeline.push(exp_break);
 
       /*block3: train; Constrast between two groups*/
       
