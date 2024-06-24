@@ -83,6 +83,12 @@
     };
 
     /* closing message */
+
+     var waiting = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "<p> Thanks! We are currently recording your responses. This may take a few seconds -- please <strong>do not close the window </strong>until you see the confirmation page.</p>"
+    };
+    
     var closing = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: "<p> Thank you very much again for your participation! We sincerely appreciate your time and effort.</p> <p>You can close your window whenever you feel comfortable.</p>"
@@ -929,8 +935,9 @@
 
 
       /*save_data*/
-      timeline.push(closing);
+      timeline.push(waiting);
       timeline.push(save_server_data);
+      timeline.push(closing);
       
       
       jsPsych.run(timeline)
