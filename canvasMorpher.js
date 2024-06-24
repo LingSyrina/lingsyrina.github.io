@@ -284,7 +284,7 @@ class CanvasMorpher {
             });
     }
     
-    XAB(canvas, p1, p2, n1=0, n2=0) {
+    XAB(canvas, p1, p2, n1=0, n2=0, condition=0) {
       const ctx = canvas.getContext('2d');
       const newCanvas = createAndManipulateCanvases(canvas);
       const canvasMorpher = new CanvasMorpher(newCanvas, 1200, 1200);
@@ -295,8 +295,12 @@ class CanvasMorpher {
       originalCanvas.height = 1200;
       const originalCtx = originalCanvas.getContext('2d');
     
-      // Draw the first shape (p1)
-      canvasMorpher.morphAndDraw(p1, n1);
+      // Draw the first shape (condition 1: p1, else: p2)
+      if (condition == 1) {
+        canvasMorpher.morphAndDraw(p1, n1);
+      } else {
+        canvasMorpher.morphAndDraw(p2, n2);
+      }
       originalCtx.drawImage(newCanvas, 0, 0, 1200, 1200);
     
       // Scale the original canvas to fit the target size
