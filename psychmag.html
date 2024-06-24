@@ -306,6 +306,7 @@
 
         stimuli.push({
           stimulus: (i + 1).toString(),
+          task: 'block1_passive_response',
           radius_a: p1,
           radius_b: p2,
           n1: n1,
@@ -383,6 +384,7 @@
 
           stimuli.push({
             stimulus: (i + 1).toString(),
+            task: 'block2_passive_response',
             radius_a: p1,
             radius_b: p2,
             n1: n1,
@@ -507,7 +509,61 @@
          prompt: "<p>Which image is the same as the one on top? </br> Press '<strong>Q</strong>' for left; '<strong>P</strong>' for right.</p>",
          response_ends_trial: true,
          data: {
-                 task: `test_response`,
+                 task: `XAB_pre_test`,
+                 correct_response: jsPsych.timelineVariable(`correct_response`),
+                 stimuli_1: (jsPsych.timelineVariable(`radius_a`)),
+                 stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
+             },
+        on_finish: function(data){
+                   // Score the response as correct or incorrect.
+                   if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
+                     data.wrong = false;
+                   } else {
+                     data.wrong = true;
+                   }
+         }
+       };
+      
+      var XABtest = {
+         type: jsPsychCanvasKeyboardResponse,
+         canvas_size: [600, 600],
+         stimulus: async function(c) {
+           const stim = jsPsych.timelineVariable();
+           await XAB_test(c, jsPsych.timelineVariable(`radius_a`), jsPsych.timelineVariable(`radius_b`), jsPsych.timelineVariable(`n1`), jsPsych.timelineVariable(`n2`));
+           return c;
+         },
+         choices: ['q', 'p'],
+         prompt: "<p>Which image is the same as the one on top? </br> Press '<strong>Q</strong>' for left; '<strong>P</strong>' for right.</p>",
+         response_ends_trial: true,
+         data: {
+                 task: `XAB_test`,
+                 correct_response: jsPsych.timelineVariable(`correct_response`),
+                 stimuli_1: (jsPsych.timelineVariable(`radius_a`)),
+                 stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
+             },
+        on_finish: function(data){
+                   // Score the response as correct or incorrect.
+                   if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
+                     data.wrong = false;
+                   } else {
+                     data.wrong = true;
+                   }
+         }
+       };
+      
+      var XABtest2 = {
+         type: jsPsychCanvasKeyboardResponse,
+         canvas_size: [600, 600],
+         stimulus: async function(c) {
+           const stim = jsPsych.timelineVariable();
+           await XAB_test(c, jsPsych.timelineVariable(`radius_a`), jsPsych.timelineVariable(`radius_b`), jsPsych.timelineVariable(`n1`), jsPsych.timelineVariable(`n2`));
+           return c;
+         },
+         choices: ['q', 'p'],
+         prompt: "<p>Which image is the same as the one on top? </br> Press '<strong>Q</strong>' for left; '<strong>P</strong>' for right.</p>",
+         response_ends_trial: true,
+         data: {
+                 task: `XAB_test2`,
                  correct_response: jsPsych.timelineVariable(`correct_response`),
                  stimuli_1: (jsPsych.timelineVariable(`radius_a`)),
                  stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
@@ -533,6 +589,7 @@
         },
         prompt: jsPsych.timelineVariable(`prompt`),
         data: {
+                task:jsPsych.timelineVariable('block1_passive_response'),
                 stimuli_1: jsPsych.timelineVariable(`radius_a`),
                 stimuli_2: jsPsych.timelineVariable(`radius_b`)
             },
@@ -712,8 +769,8 @@
       };
       // Block II: testing
     
-      var xab_test = {
-        timeline: [instruction_break, pre_test],
+      var xab_test_1 = {
+        timeline: [instruction_break, XABtest],
         timeline_variables:pre_test_xab_stimuli,
         randomize_order: true
       };
@@ -747,8 +804,8 @@
         randomize_order: true,
       };
        // Block IV: testing
-       var test_procedure_2 = { // XAB TEST
-          timeline: [instruction_break, test],
+       var xab_test_2 = { // XAB TEST
+          timeline: [instruction_break, XABtest2],
           timeline_variables: pre_test_xab_stimuli,
           randomize_order: true,
         };
@@ -827,7 +884,7 @@
 
       /*block2: test; Same across all groups*/
       timeline.push(instruction_xab);
-      timeline.push(xab_test);
+      timeline.push(xab_test_1);
       timeline.push(instruction_3);
       timeline.push(test_procedure_1);
 
@@ -851,7 +908,7 @@
 
       /*block4: test; Same across all groups*/
       timeline.push(instruction_6);
-      timeline.push(test_procedure_2);
+      timeline.push(xab_test_2);
       timeline.push(instruction_7);
       timeline.push(test_procedure_3);
 
