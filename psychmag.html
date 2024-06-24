@@ -484,12 +484,14 @@
       var learn_stimuli_c2l = activeDegreeStimuli(25,0.3); // 25 passive learning, low precision (0.3)
 
       /* Stimuli for testing_phase_1 */
+    //after XAB test (identical to the pre_XAB_test)
       var test_stimuli_1 = generateTestStimuli(28); // 28 random parameters
 
       /* Stimuli for testing_phase_2: 38 total */
-      var test_stimuli_2 = generateTestStimuli(10); // 10 random parameters
+      //after XAB test (identical to the pre_XAB_test)
+      //var test_stimuli_2 = generateTestStimuli(10); // 10 random parameters
       
-      var test_stimuli_3 = generateTestStimuli(18).concat(xab_test_stimuli); // 10 XAB + 18 random
+      var test_stimuli_3 = generateTestStimuli(28) // 28 random parameters
 
 /* Experiment procedures */
 
@@ -745,9 +747,9 @@
         randomize_order: true,
       };
        // Block IV: testing
-       var test_procedure_2 = {
+       var test_procedure_2 = { // XAB TEST
           timeline: [instruction_break, test],
-          timeline_variables: test_stimuli_2,
+          timeline_variables: pre_test_xab_stimuli,
           randomize_order: true,
         };
 
