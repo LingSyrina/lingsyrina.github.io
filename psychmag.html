@@ -251,10 +251,11 @@
     }
 
     /* Function for generating canvas stimuli */
-    function XAB_test(canvas, p1, p2, n1=0, n2=0) {
+    function XAB_test(canvas, p1, p2, n1=0, n2=0, condition) {
       return new Promise((resolve) => {
         const canvasMorpher = new CanvasMorpher(canvas, 80, 138);
-        canvasMorpher.XAB(canvas, p1, p2, n1, n2, () => {
+        console.log('noise', p1, p2, n1, n2, condition);
+        canvasMorpher.XAB(canvas, p1, p2, n1, n2, condition, () => {
           resolve();
         });
       });
@@ -441,17 +442,17 @@
         return stimuli;
       }
       /* Specific stimuli for pre_test_xab */
-
+      // condition == 1 then p1 is shown as main stimulus, else p2
       var pre_test_stimuli = [
-        { p1: 0.05, p2: 0.2, n1: 0, n2: 0 },
+        { p1: 0.05, p2: 0.2, n1: 0, n2: 0,  condition: 1},
         { p1: 0.25, p2: 0.4, n1: 0, n2: 0 },
-        { p1: 0.45, p2: 0.6, n1: 0, n2: 0 },
+        { p1: 0.45, p2: 0.6, n1: 0, n2: 0,  condition: 1},
         { p1: 0.65, p2: 0.8, n1: 0, n2: 0 },
-        { p1: 0.85, p2: 1, n1: 0, n2: 0 },
+        { p1: 0.85, p2: 1, n1: 0, n2: 0,  condition: 1},
         { p1: 0.05, p2: 0.05, n1: 0, n2: 0.15*670/70 }, //n2 is like 9....
-        { p1: 0.25, p2: 0.25, n1: 0, n2: 0.15*670/70 },
+        { p1: 0.25, p2: 0.25, n1: 0, n2: 0.15*670/70,  condition: 1},
         { p1: 0.45, p2: 0.45, n1: 0, n2: 0.15*670/70 },
-        { p1: 0.65, p2: 0.65, n1: 0, n2: 0.15*670/70 },
+        { p1: 0.65, p2: 0.65, n1: 0, n2: 0.15*670/70,  condition: 1},
         { p1: 0.85, p2: 0.85, n1: 0, n2: 0.15*670/70 }
       ];
       
@@ -464,7 +465,8 @@
           radius_b: stimulus.p2,
           n1: stimulus.n1,
           n2: stimulus.n2,
-          correct_response: stimulus.p1 > stimulus.p2 ? 'q' : 'p',
+          condition: stimulus.condition,
+          correct_response: stimulus.condition == 1 ? 'q' : 'p',
         }));
       }
 
@@ -502,7 +504,7 @@
          canvas_size: [600, 600],
          stimulus: async function(c) {
            const stim = jsPsych.timelineVariable();
-           await XAB_test(c, jsPsych.timelineVariable(`radius_a`), jsPsych.timelineVariable(`radius_b`), jsPsych.timelineVariable(`n1`), jsPsych.timelineVariable(`n2`));
+           await XAB_test(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'), jsPsych.timelineVariable('n1'), jsPsych.timelineVariable('n2'), jsPsych.timelineVariable('condition'));
            return c;
          },
          choices: ['q', 'p'],
@@ -513,6 +515,7 @@
                  correct_response: jsPsych.timelineVariable(`correct_response`),
                  stimuli_1: (jsPsych.timelineVariable(`radius_a`)),
                  stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
+                 condition: (jsPsych.timelineVariable('condition')),
              },
         on_finish: function(data){
                    // Score the response as correct or incorrect.
@@ -529,7 +532,7 @@
          canvas_size: [600, 600],
          stimulus: async function(c) {
            const stim = jsPsych.timelineVariable();
-           await XAB_test(c, jsPsych.timelineVariable(`radius_a`), jsPsych.timelineVariable(`radius_b`), jsPsych.timelineVariable(`n1`), jsPsych.timelineVariable(`n2`));
+           await XAB_test(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'), jsPsych.timelineVariable('n1'), jsPsych.timelineVariable('n2'), jsPsych.timelineVariable('condition'));
            return c;
          },
          choices: ['q', 'p'],
@@ -540,6 +543,7 @@
                  correct_response: jsPsych.timelineVariable(`correct_response`),
                  stimuli_1: (jsPsych.timelineVariable(`radius_a`)),
                  stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
+                 condition: (jsPsych.timelineVariable('condition')),
              },
         on_finish: function(data){
                    // Score the response as correct or incorrect.
@@ -556,7 +560,7 @@
          canvas_size: [600, 600],
          stimulus: async function(c) {
            const stim = jsPsych.timelineVariable();
-           await XAB_test(c, jsPsych.timelineVariable(`radius_a`), jsPsych.timelineVariable(`radius_b`), jsPsych.timelineVariable(`n1`), jsPsych.timelineVariable(`n2`));
+           await XAB_test(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'), jsPsych.timelineVariable('n1'), jsPsych.timelineVariable('n2'), jsPsych.timelineVariable('condition'));
            return c;
          },
          choices: ['q', 'p'],
@@ -567,6 +571,7 @@
                  correct_response: jsPsych.timelineVariable(`correct_response`),
                  stimuli_1: (jsPsych.timelineVariable(`radius_a`)),
                  stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
+                 condition: (jsPsych.timelineVariable('condition')),
              },
         on_finish: function(data){
                    // Score the response as correct or incorrect.
