@@ -848,12 +848,13 @@
 
     const expID = "iPtLEVGIdxPA";
     let condition;
+    let group_name;
 
     const save_server_data = {
       type: jsPsychPipe,
       action: "save",
       experiment_id: expID,
-      filename: () => `${condition}_${subjectID}.csv`,
+      filename: () => `${group_name}_${subjectID}_${A}.csv`,
       data_string: ()=>jsPsych.data.get().csv(),
       post_trial_gap: 1000
     };
@@ -897,15 +898,17 @@
 
       /*block3: train; Constrast between two groups*/
       
-      const group = Math.random() < 0.5 ? 0 : 1; // 0 for high precision, 1 for low precision
+      //const group = Math.random() < 0.5 ? 0 : 1; // 0 for high precision, 1 for low precision
       
-      if (group === 0) { //high precision
+      if (condition === 0) { //high precision
+        group_name = 'high';
         jsPsych.data.addProperties({ precision_group: 'high' });
         timeline.push(instruction_4);
         timeline.push(learn_procedure_3h);
         timeline.push(instruction_5);
         timeline.push(learn_procedure_4h);
       } else { // low precision
+        group_name = 'low';
         jsPsych.data.addProperties({ precision_group: 'low' });
         timeline.push(instruction_4);
         timeline.push(learn_procedure_3l);
