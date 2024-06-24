@@ -154,7 +154,7 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
         <p> <strong>Great Job!</strong> </p>
-        <p> We're going to give you another set of questions.<br/> However, we are <strong>no longer</strong> telling you whether you\'ve got the right answer or not!</p>
+        <p> We're going to give you another set of questions. </br> Find the identical image!</p>
         <p> Press any key to continue.</p>
       `,
       post_trial_gap: 500
@@ -186,7 +186,9 @@
     var instruction_xab = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
-        <p>need to add XAB instruction</p>
+        <p>Awesome!</p>
+        <p>Now we are giving you the task similar to what you did at the beginning of the experiment. Your task is to find <strong>the same image</strong> shown at the top of the screen.</p>
+        <p>Press any key to continue.</p>
       `,
       post_trial_gap: 500
     };
@@ -723,7 +725,7 @@
 
 
           choices: ['q', 'p'],
-          prompt: jsPsych.timelineVariable(`prompt`),
+          prompt: `<p>The right image is...</br> <strong>Q</strong>: more <strong>${A}</strong>.&emsp;&emsp; <strong>P</strong>: more <strong>${B}</strong>.</p>`,
           on_finish: function(data){
                        // Score the response as correct or incorrect.
                        if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
