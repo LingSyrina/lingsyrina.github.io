@@ -182,6 +182,14 @@
       post_trial_gap: 500
     };
 
+      /* instruction for testing phase_2b */
+    var instruction_xab = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <p>need to add XAB instruction</p>
+      `,
+      post_trial_gap: 500
+    };
      /* Fixation */
     var fixation = {
       type: jsPsychHtmlKeyboardResponse,
@@ -262,7 +270,7 @@
     Math.seedrandom('fixed-seed');
     
     /* Function for Learn stimuli (less restriction)*/
-    function generateLearnStimuli(numStimuli, promptType = 1) {
+    function generateLearnStimuli(numStimuli, promptType = 1) { // 1=passive, 2=active
       const stimuli = [];
       const differences = [];
       for (let i = 3; i <= 19; i++) {
@@ -463,21 +471,20 @@
       var pre_test_xab_stimuli = convertToTimelineVariables(pre_test_stimuli);
       
       /* Stimuli for learning_phase_1 */
-      var learn_stimuli_a1 = generateLearnStimuli(25, 1);
+      var learn_stimuli_a1 = generateLearnStimuli(25, 1); // (25 trial, 1: passive)
 
       /* Stimuli for learning_phase_2 */
-      var learn_stimuli_a2 = generateLearnStimuli(25, 2);
+      var learn_stimuli_a2 = generateLearnStimuli(25, 2); // (25 trial, 2: active)
 
       /* Stimuli for learning_phase_1C */
-      var learn_stimuli_c1h = passiveDegreeStimuli(25,0.15); //high precision
-      var learn_stimuli_c2h = activeDegreeStimuli(25,0.15);
+      var learn_stimuli_c1h = passiveDegreeStimuli(25,0.15); // 25 passive learning, high precision (0.15)
+      var learn_stimuli_c2h = activeDegreeStimuli(25,0.15); // 25 active larning, high precision 
 
-      var learn_stimuli_c1l = passiveDegreeStimuli(25,0.3); //low precision
-      var learn_stimuli_c2l = activeDegreeStimuli(25,0.3);
+      var learn_stimuli_c1l = passiveDegreeStimuli(25,0.3); // 25 passive learning, low precision (0.3)
+      var learn_stimuli_c2l = activeDegreeStimuli(25,0.3); // 25 passive learning, low precision (0.3)
 
       /* Stimuli for testing_phase_1 */
-      var xab_test_stimuli = convertToTimelineVariables(pre_test_stimuli); // 10 XAB paramters
-      var test_stimuli_1 = generateTestStimuli(28).concat(xab_test_stimuli); // 28 random parameters
+      var test_stimuli_1 = generateTestStimuli(28); // 28 random parameters
 
       /* Stimuli for testing_phase_2: 38 total */
       var test_stimuli_2 = generateTestStimuli(10); // 10 random parameters
@@ -702,6 +709,12 @@
         randomize_order: true,
       };
       // Block II: testing
+    
+      var xab_test = {
+        timeline: [instruction_break, pre_test],
+        timeline_variables:pre_test_xab_stimuli,
+        randomize_order: true
+      };
       var test_procedure_1 = {
          timeline: [instruction_break, test],
          timeline_variables: test_stimuli_1,
@@ -811,6 +824,8 @@
       timeline.push(learn_procedure_2);
 
       /*block2: test; Same across all groups*/
+      timeline.push(instruction_xab);
+      timeline.push(xab_test);
       timeline.push(instruction_3);
       timeline.push(test_procedure_1);
 
