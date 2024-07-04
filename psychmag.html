@@ -538,31 +538,43 @@
         }));
       }
 
+      /*Stimuli number*/
       
+      var learn = 25;
+      var test = 28;
+      var equally = 10;
+
+       
+      //For debug only (should be commented out for real experiment)
+      var learn = 1;
+      var test = 1;
+      var equally = 1;
+      
+
       /*pretest*/
       var pre_test_xab_stimuli = convertToTimelineVariables(pre_test_stimuli);
       
       /* Stimuli for learning_phase_1 */
-      var learn_stimuli_a1 = generateLearnStimuli(25, 1); // (25 trial, 1: passive)
+      var learn_stimuli_a1 = generateLearnStimuli(learn, 1); // (25 trial, 1: passive)
 
       /* Stimuli for learning_phase_2 */
-      var learn_stimuli_a2 = generateLearnStimuli(25, 2); // (25 trial, 2: active)
+      var learn_stimuli_a2 = generateLearnStimuli(learn, 2); // (25 trial, 2: active)
 
       /* Stimuli for learning_phase_1C */
       // Should we adjust low precision so that it's always non-zero? (Validating equally tests)
-      var learn_stimuli_c1h = passiveDegreeStimuli(25,0.15); // 25 passive learning, high precision (0.15)
-      var learn_stimuli_c2h = activeDegreeStimuli(25,0.15); // 25 active larning, high precision 
+      var learn_stimuli_c1h = passiveDegreeStimuli(learn,0.15); // 25 passive learning, high precision (0.15)
+      var learn_stimuli_c2h = activeDegreeStimuli(learn,0.15); // 25 active larning, high precision 
 
-      var learn_stimuli_c1l = passiveDegreeStimuli(25,0.3); // 25 passive learning, low precision (0.3)
-      var learn_stimuli_c2l = activeDegreeStimuli(25,0.3); // 25 passive learning, low precision (0.3)
+      var learn_stimuli_c1l = passiveDegreeStimuli(learn,0.3); // 25 passive learning, low precision (0.3)
+      var learn_stimuli_c2l = activeDegreeStimuli(learn,0.3); // 25 passive learning, low precision (0.3)
 
       /* Stimuli for testing 'more A/B' */
     //after XAB test (identical to the pre_XAB_test)
-      var test_stimuli = generateTestStimuli(28); // 28 random parameters
+      var test_stimuli = generateTestStimuli(test); // 28 random parameters
 
       /* Stimuli for testin equally */
       //after XAB test (identical to the pre_XAB_test)
-      var test_stimuli_equally = generateEqualTestStimuli(10); // 10 random parameters      
+      var test_stimuli_equally = generateEqualTestStimuli(equally); // 10 random parameters      
 
 
 /* Experiment procedures */
