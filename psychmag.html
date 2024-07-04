@@ -261,17 +261,6 @@
         var A = choices[1];
         var B = choices[0];
     }
-      
-    
-    
-    var test_stimuli_s = [
-      { stimulus: 'img/tall1.png', word: "tall", antonym: "short"},
-      { stimulus: 'img/tall2.png', word: "tall", antonym: "short"},
-      { stimulus: 'img/tall3.png', word: "tall", antonym: "short"},
-      { stimulus: 'img/dark1.png', word: "dark", antonym: "light"},
-      { stimulus: 'img/dark2.png', word: "dark", antonym: "light"},
-      { stimulus: 'img/dark3.png', word: "dark", antonym: "light"},
-      ];
      
 
     // /* Function for generating canvas stimuli */
@@ -579,9 +568,19 @@
     //after XAB test (identical to the pre_XAB_test)
       var test_stimuli = generateTestStimuli(test); // 28 random parameters
 
-      /* Stimuli for testin equally */
+      /* Stimuli for testing equally */
       //after XAB test (identical to the pre_XAB_test)
-      var test_stimuli_equally = generateEqualTestStimuli(equally); // 10 random parameters      
+      var test_stimuli_equally = generateEqualTestStimuli(equally); // 10 random parameters     
+
+    /* Stimuli for language survey */
+    var test_stimuli_s = [
+      { stimulus: 'img/tall1.png', word: "tall", antonym: "short", condition: 'tall1'},
+      { stimulus: 'img/tall2.png', word: "tall", antonym: "short", condition: 'tall2'},
+      { stimulus: 'img/tall3.png', word: "tall", antonym: "short", condition: 'tall3'},
+      { stimulus: 'img/dark1.png', word: "dark", antonym: "light", condition: 'dark1'},
+      { stimulus: 'img/dark2.png', word: "dark", antonym: "light", condition: 'dark2'},
+      { stimulus: 'img/dark3.png', word: "dark", antonym: "light", condition: 'dark3'},
+      ];
 
 
 /* Experiment procedures */
