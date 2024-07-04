@@ -7,7 +7,6 @@
     <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response"></script>
     <script src="https://unpkg.com/@jspsych/plugin-html-button-response"></script>
     <script src="https://unpkg.com/@jspsych/plugin-canvas-keyboard-response"></script>
-    <script src="https://unpkg.com/@jspsych/plugin-canvas-button-response"></script>
     <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response"></script>
     <script src="https://unpkg.com/@jspsych/plugin-preload"></script>
     <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
@@ -882,7 +881,7 @@
              prompt:function() {
                var word = jsPsych.timelineVariable('word');
                var antonym = jsPsych.timelineVariable('antonym');
-               return `<p>The right image is...</br> <strong>1</strong>: more <strong>${word}</strong>.&emsp;&emsp; <strong>2</strong>: more <strong>${antonym}</strong>. &emsp;&emsp; <strong>3</strong>: equally <strong>${word}</strong>.&emsp;&emsp; <strong>4</strong>: equally <strong>${antonym}</strong>. </p>`},
+               return `<p style="font-size:20px;">Compared to the left one, <strong>the right one is...</strong><br /> <strong>1</strong>: more <strong>${word}</strong>.&emsp;&emsp; <strong>2</strong>: more <strong>${antonym}</strong>. &emsp;&emsp; <strong>3</strong>: equally <strong>${word}</strong>.&emsp;&emsp; <strong>4</strong>: equally <strong>${antonym}</strong>. </p>`},
              response_ends_trial: true,
              data: {
                      task: `Language_survey`,
