@@ -36,6 +36,8 @@
   // 2. Is 10 trials for equally (distance: 0, 3, 6) good enough?
   // 3. Update survey imgs (10 tirals?)
   // 4. Adjust test stimuli differences to [3,10] to test extrapolation? 
+  // 5. Update instruction blocks for equally tests and language survey. 
+
       
   /* initialize jsPsych */
   var jsPsych = initJsPsych({
@@ -162,11 +164,12 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
         <p> <strong>Awesome!</strong> <br/>
-        Now, we would like to ask you to choose the <strong>correct statement for the image on the right</strong>.</p>
+        Now, we would like to ask you to pick the <strong>correct number on the scale you just saw</strong> for the pair of images.</p>
         Press any key to continue.
       `,
       post_trial_gap: 500
     };
+    
 
     /* instruction for testing phase_2a */
     var instruction_6 = {
@@ -184,7 +187,7 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
         <p> <strong>Excellent!</strong> </p>
-        <p> We're going to give you one last set of questions.<br/> You will continue to <strong>compare pairs of images</strong> and <strong>choose the correct description</strong> for the <strong>image on the right</strong>!</p>
+        <p> We're going to give you another set of questions.<br/> You will continue to <strong>compare pairs of images</strong> and <strong>choose the correct description</strong> for the <strong>image on the right</strong>!</p>
         <p> Press any key to continue.</p>
       `,
       post_trial_gap: 500
@@ -208,6 +211,16 @@
         <p>Awesome!</p>
         <p>Now we are giving you a task similar to what you did at the beginning of the experiment. </br>Your task is to find <strong>the same image</strong> shown at the top of the screen.</p>
         <p>Press any key to continue.</p>
+      `,
+      post_trial_gap: 500
+    };
+
+    var instruction_equally = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <p> <strong>Awesome!</strong> <br/>
+        Now, we would like to ask you to choose the <strong>correct statement for the image on the right</strong>.</p>
+        Press any key to continue.
       `,
       post_trial_gap: 500
     };
@@ -401,7 +414,7 @@
             radius_b: p2,
             n1: n1,
             n2: n2,
-            correct_response: p1 > p2 ? 'q' : 'p'
+            prompt: `<p style="font-size:20px;">Compared to the left one, <strong>the right one is...</strong> <strong>1</strong>: more <strong>${A}</strong>.&emsp;&emsp; <strong>2</strong>: more <strong>${B}</strong>. &emsp;&emsp; <strong>3</strong>: equally <strong>${A}</strong>.&emsp;&emsp; <strong>4</strong>: equally <strong>${B}</strong>. </p>`,
           });
         }
 
