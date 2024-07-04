@@ -31,7 +31,11 @@
   <body></body>
 
   <script>
-
+  //To do:
+  // 1. Should we adjust low precision so that it's always non-zero? (Validating equally tests)
+  // 2. Is 10 trials for equally (distance: 0, 3, 6) good enough?
+  // 3. Update survey imgs (10 tirals?)
+  // 4. Adjust test stimuli differences to [3,10] to test extrapolation? 
       
   /* initialize jsPsych */
   var jsPsych = initJsPsych({
@@ -372,6 +376,38 @@
         return stimuli;
       }
 
+     function generateEqualTestStimuli(numStimuli) {
+        const stimuli = [];
+        const differences = [0.05 * 0, 0.05 * 3, 0.05 * 6]; //0.05 * d where d = |p1-p2|
+
+        for (let i = 0; i < numStimuli; i++) {
+          let p1, p2;
+          const diff = differences[Math.floor(Math.random() * differences.length)];
+
+          if (i < numStimuli / 2) {
+            p1 = getRandomArbitrary(0.15, 1 - diff);
+            p2 = p1 + diff;
+          } else {
+            p2 = getRandomArbitrary(0.15, 1 - diff);
+            p1 = p2 + diff;
+          }
+
+          const n1 = getRandomArbitrary(-1, 1);
+          const n2 = getRandomArbitrary(-1, 1);
+
+          stimuli.push({
+            stimulus: (i + 1).toString(),
+            radius_a: p1,
+            radius_b: p2,
+            n1: n1,
+            n2: n2,
+            correct_response: p1 > p2 ? 'q' : 'p'
+          });
+        }
+
+        return stimuli;
+      }
+
       function passiveDegreeStimuli(numStimuli, n) {
         const stimuli = [];
         const differences = [];
@@ -500,21 +536,21 @@
       var learn_stimuli_a2 = generateLearnStimuli(25, 2); // (25 trial, 2: active)
 
       /* Stimuli for learning_phase_1C */
+      // Should we adjust low precision so that it's always non-zero? (Validating equally tests)
       var learn_stimuli_c1h = passiveDegreeStimuli(25,0.15); // 25 passive learning, high precision (0.15)
       var learn_stimuli_c2h = activeDegreeStimuli(25,0.15); // 25 active larning, high precision 
 
       var learn_stimuli_c1l = passiveDegreeStimuli(25,0.3); // 25 passive learning, low precision (0.3)
       var learn_stimuli_c2l = activeDegreeStimuli(25,0.3); // 25 passive learning, low precision (0.3)
 
-      /* Stimuli for testing_phase_1 */
+      /* Stimuli for testing 'more A/B' */
     //after XAB test (identical to the pre_XAB_test)
-      var test_stimuli_1 = generateTestStimuli(28); // 28 random parameters
+      var test_stimuli = generateTestStimuli(28); // 28 random parameters
 
-      /* Stimuli for testing_phase_2: 38 total */
+      /* Stimuli for testin equally */
       //after XAB test (identical to the pre_XAB_test)
-      //var test_stimuli_2 = generateTestStimuli(10); // 10 random parameters
-      
-      var test_stimuli_3 = generateTestStimuli(28) // 28 random parameters
+      var test_stimuli_equally = generateEqualTestStimuli(10); // 10 random parameters      
+
 
 /* Experiment procedures */
 
@@ -653,7 +689,7 @@
           return last_trial_correct ? "<p style=font-size:20px;font-weight:bold;>Yes! Great job!</p>" : "<p style=font-size:20px;font-weight:bold;>Nope, let's try again!</p>";
         },
         choices: 'NO_KEYS',
-        trial_duration: 1000 // 1 second
+        trial_duration: 500 // .5 second
       };
 
       // Loop which includes feedback trial
@@ -673,7 +709,7 @@
          },
          response_ends_trial: true,
          data: {
-                 task: `test_response`,
+                 task: `test_response_predegree`,
                  correct_response: jsPsych.timelineVariable(`correct_response`),
                  stimuli_1: (jsPsych.timelineVariable(`radius_a`)),
                  stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
@@ -724,7 +760,7 @@
           }
         };
 
-        var test_equally = {
+        var test2 = {
            type: jsPsychCanvasKeyboardResponse,
            canvas_size: [400, 900],
            stimulus: async function(c) {
@@ -733,7 +769,7 @@
            },
            response_ends_trial: true,
            data: {
-                   task: `test_response`,
+                   task: `test_response_postdegree`,
                    correct_response: jsPsych.timelineVariable(`correct_response`),
                    stimuli_1: (jsPsych.timelineVariable(`radius_a`)),
                    stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
@@ -752,21 +788,85 @@
           }
          };
 
+      var test_equally_1 = {
+           type: jsPsychCanvasKeyboardResponse,
+           canvas_size: [400, 900],
+           stimulus: async function(c) {
+             await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'), jsPsych.timelineVariable('n1'), jsPsych.timelineVariable('n2'));
+             return c;
+           },
+           response_ends_trial: true,
+           data: {
+                   task: `test_equally_predegree`,
+                   stimuli_1: (jsPsych.timelineVariable(`radius_a`)),
+                   stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
+               },
+
+
+          choices: ['1', '2', '3', '4'],
+          prompt: jsPsych.timelineVariable(`prompt`),
+          on_finish: function(data){
+                       // Score the response as correct or incorrect.
+                       if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
+                         data.wrong = false;
+                       } else {
+                         data.wrong = true;
+                       }
+           }
+         };
+
+         var test_equally_2 = {
+            type: jsPsychCanvasKeyboardResponse,
+            canvas_size: [400, 900],
+            stimulus: async function(c) {
+              await Morphfunction(c, jsPsych.timelineVariable('radius_a'), jsPsych.timelineVariable('radius_b'), jsPsych.timelineVariable('n1'), jsPsych.timelineVariable('n2'));
+              return c;
+            },
+            response_ends_trial: true,
+            data: {
+                    task: `test_equally_postdegree`,
+                    stimuli_1: (jsPsych.timelineVariable(`radius_a`)),
+                    stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
+                },
+
+
+           choices: ['1', '2', '3', '4'],
+           prompt: jsPsych.timelineVariable(`prompt`),
+           on_finish: function(data){
+                        // Score the response as correct or incorrect.
+                        if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
+                          data.wrong = false;
+                        } else {
+                          data.wrong = true;
+                        }
+            }
+          };
+
       /*
          var real_adj = {
-             type: jsPsychImageButtonResponse,
+             type: jsPsychImageKeyboardResponse,
              stimulus: jsPsych.timelineVariable(`stimulus`),
              stimulus_height: 400,
-             choices: function() {
+             choices: ['1', '2', '3', '4'],
+             prompt:function() {
                var word = jsPsych.timelineVariable('word');
                var antonym = jsPsych.timelineVariable('antonym');
-               return [
-                  `The right one is ${word}er.`,
-                  `The right one is ${antonym}.`,
-                  `They are equally ${word}.`,
-                  `They are equally ${antonym}.`
-                ];
-            },
+               return `<p>The right image is...</br> <strong>1</strong>: more <strong>${word}</strong>.&emsp;&emsp; <strong>2</strong>: more <strong>${antonym}</strong>. &emsp;&emsp; <strong>3</strong>: equally <strong>${word}</strong>.&emsp;&emsp; <strong>4</strong>: equally <strong>${antonym}</strong>. </p>`},
+             response_ends_trial: true,
+             data: {
+                     task: `Language_survey`,
+                     word: (jsPsych.timelineVariable(`word`)),
+                     antonym: (jsPsych.timelineVariable(`antonym`)),
+                     condition: (jsPsych.timelineVariable(`condition`)),
+                 },
+             on_finish: function(data){
+                          // Score the response as correct or incorrect.
+                          if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
+                            data.wrong = false;
+                          } else {
+                            data.wrong = true;
+                          }
+              }
          };
 
 */
@@ -790,8 +890,7 @@
         timeline_variables: learn_stimuli_a2,
         randomize_order: true,
       };
-      // Block II: testing
-    
+      // Block II: testing  
       var xab_test_1 = {
         timeline: [instruction_break, XABtest],
         timeline_variables:pre_test_xab_stimuli,
@@ -799,9 +898,16 @@
       };
       var test_procedure_1 = {
          timeline: [instruction_break, test],
-         timeline_variables: test_stimuli_1,
+         timeline_variables: test_stimuli,
          randomize_order: true,
        };
+
+      var equally_test_1 = {
+           timeline: [instruction_break, test_equally_1],
+           timeline_variables: test_stimuli_equally,
+           randomize_order: true,
+         };
+
        // Block III: learning (passive + active)
        var learn_procedure_3h = {
          timeline: [instruction_break, learn_A_passive],
@@ -826,16 +932,23 @@
         timeline_variables: learn_stimuli_c2l,
         randomize_order: true,
       };
+    
        // Block IV: testing
        var xab_test_2 = { // XAB TEST
           timeline: [instruction_break, XABtest2],
           timeline_variables: pre_test_xab_stimuli,
           randomize_order: true,
-        };
+        };  
 
-      var test_procedure_3 = {
-           timeline: [instruction_break, test_equally],
-           timeline_variables: test_stimuli_3,
+      var test_procedure_2 = {
+           timeline: [instruction_break, test2],
+           timeline_variables: test_stimuli,
+           randomize_order: true,
+         };
+    
+      var equally_test_2 = {
+           timeline: [instruction_break, test_equally_2],
+           timeline_variables: test_stimuli_equally,
            randomize_order: true,
          };
 
@@ -896,7 +1009,7 @@
       condition = await getCondition();
 
       var timeline = [];
-
+      //timeline.push(preload);
       timeline.push(welcome, consentTrial);
 
       /*block1: XAB & Pretrain; Same across all groups*/
@@ -911,6 +1024,8 @@
       timeline.push(xab_test_1);
       timeline.push(instruction_3);
       timeline.push(test_procedure_1);
+      timeline.push(instruction_3); //need modification
+      timeline.push(equally_test);
       timeline.push(exp_break);
 
       /*block3: train; Constrast between two groups*/
@@ -937,11 +1052,15 @@
       timeline.push(instruction_6);
       timeline.push(xab_test_2);
       timeline.push(instruction_7);
-      timeline.push(test_procedure_3);
+      timeline.push(test_procedure_2);
+      timeline.push(instruction_7); //need modification
+      timeline.push(equally_test);
+      
+
 
       /*survey: Same across all groups*/
       //Follow-up trial with real adjectives
-      //timeline.push(instruction_8);
+      //timeline.push(instruction_8); //need modification
       //timeline.push(survey);
 
 
