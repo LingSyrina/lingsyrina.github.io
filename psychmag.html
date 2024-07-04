@@ -44,6 +44,12 @@
     show_progress_bar: true,
   });
 
+  var preload = {
+      type: jsPsychPreload,
+      show_progress_bar: true,
+      images: ['img/dark1.png', 'img/dark2.png',"img/dark3.png","img/tall1.png","img/tall2.png",'img/tall3.png']
+    };
+
   var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
@@ -187,7 +193,7 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
         <p> <strong>Excellent!</strong> </p>
-        <p> <br/> You will continue to <strong>compare pairs of images</strong> and <strong>choose the correct description</strong> for the <strong>image on the right</strong>!</p>
+        <p> You will continue to <strong>compare pairs of images</strong> and <strong>choose the correct description</strong> for the <strong>image on the right</strong>!</p>
         <p> Press any key to continue.</p>
       `,
       post_trial_gap: 500
@@ -258,7 +264,7 @@
     }
       
     
-    /*
+    
     var test_stimuli_s = [
       { stimulus: 'img/tall1.png', word: "tall", antonym: "short"},
       { stimulus: 'img/tall2.png', word: "tall", antonym: "short"},
@@ -267,7 +273,7 @@
       { stimulus: 'img/dark2.png', word: "dark", antonym: "light"},
       { stimulus: 'img/dark3.png', word: "dark", antonym: "light"},
       ];
-     */
+     
 
     // /* Function for generating canvas stimuli */
     // function Morphfunction(canvas, p1, p2){
@@ -714,7 +720,7 @@
           return last_trial_correct ? "<p style=font-size:20px;font-weight:bold;>Yes! Great job!</p>" : "<p style=font-size:20px;font-weight:bold;>Nope, let's try again!</p>";
         },
         choices: 'NO_KEYS',
-        trial_duration: 500 // .5 second
+        trial_duration: 700 // .7 second
       };
 
       // Loop which includes feedback trial
@@ -867,7 +873,7 @@
             }
           };
 
-      /*
+      
          var real_adj = {
              type: jsPsychImageKeyboardResponse,
              stimulus: jsPsych.timelineVariable(`stimulus`),
@@ -894,7 +900,7 @@
               }
          };
 
-*/
+
       // Reset the RNG to use the default random behavior for timeline randomization
       Math.seedrandom();
 
@@ -977,13 +983,13 @@
            randomize_order: true,
          };
 
-     /*
+     
      var survey = {
        timeline: [instruction_break, real_adj],
        timeline_variables: test_stimuli_s,
        randomize_order: true,
      }
-      */
+      
 
     
     // save to OFS server (check documentation)
@@ -1034,7 +1040,7 @@
       condition = await getCondition();
 
       var timeline = [];
-      //timeline.push(preload);
+      timeline.push(preload);
       timeline.push(welcome, consentTrial);
 
       /*block1: XAB & Pretrain; Same across all groups*/
@@ -1085,8 +1091,8 @@
 
       /*survey: Same across all groups*/
       //Follow-up trial with real adjectives
-      //timeline.push(instruction_8); //need modification
-      //timeline.push(survey);
+      timeline.push(instruction_8); //need modification
+      timeline.push(survey);
 
 
       /*save_data*/
