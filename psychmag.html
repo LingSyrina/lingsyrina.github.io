@@ -536,14 +536,14 @@
                  stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
                  condition: (jsPsych.timelineVariable('condition')),
              },
-        on_finish: function(data){
-                   // Score the response as correct or incorrect.
-                   if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
-                     data.correct = false;
-                   } else {
-                     data.correct = true;
-                   }
-         }
+        on_finish: function(data) {
+          // Score the response as correct or incorrect.
+          if (data.response != data.correct_response) {
+            data.correct = false;
+          } else {
+            data.correct = true;
+          }
+        }
        };
       
       var XABtest = {
@@ -564,14 +564,14 @@
                  stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
                  condition: (jsPsych.timelineVariable('condition')),
              },
-        on_finish: function(data){
-                   // Score the response as correct or incorrect.
-                   if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
-                     data.correct = false;
-                   } else {
-                     data.correct = true;
-                   }
-         }
+        on_finish: function(data) {
+          // Score the response as correct or incorrect.
+          if (data.response != data.correct_response) {
+            data.correct = false;
+          } else {
+            data.correct = true;
+          }
+        }
        };
       
       var XABtest2 = {
@@ -592,14 +592,14 @@
                  stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
                  condition: (jsPsych.timelineVariable('condition')),
              },
-        on_finish: function(data){
-                   // Score the response as correct or incorrect.
-                   if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
-                     data.correct = false;
-                   } else {
-                     data.correct = true;
-                   }
-         }
+          on_finish: function(data) {
+            // Score the response as correct or incorrect.
+            if (data.response != data.correct_response) {
+              data.correct = false;
+            } else {
+              data.correct = true;
+            }
+          }
        };
       
     /* block1: learning task */
@@ -635,27 +635,32 @@
             },
         choices: ['q', 'p'],
         prompt: jsPsych.timelineVariable(`prompt`),
-        on_finish: function(data){
-                         // Score the response as correct or incorrect.
-                         if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
-                           data.correct = false;
-                         } else {
-                           data.correct = true;
-                         }
+        on_finish: function(data) {
+          // Score the response as correct or incorrect.
+          if (data.response != data.correct_response) {
+            data.correct = false;
+          } else {
+            data.correct = true;
+          }
         }
       };
 
+      // Feedback trial
+      var feedback = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: function() {
+          var last_trial_correct = jsPsych.data.get().last(1).values()[0].correct;
+          return last_trial_correct ? "<p style=font-size:20px;font-weight:bold;>Yes! Great job!</p>" : "<p style=font-size:20px;font-weight:bold;>Nope, let's try again!</p>";
+        },
+        choices: 'NO_KEYS',
+        trial_duration: 1000 // 1 second
+      };
+
+      // Loop which includes feedback trial
       var looped_A_active = {
-        timeline: [learn_A_active],
-        loop_function: function(data){
-          if (jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
-            alert(`Nope, let\'s try again!`);
-            return true;
-            //jsPsych.resumeExperiment(learn_A_2b); // Resume the experiment
-          } else{
-            alert(`Yes! Great job!`);
-            return false;
-          }
+        timeline: [learn_A_active, feedback],
+        loop_function: function(data) {
+          return !data.values()[0].correct; // Continue looping if the response was incorrect
         }
       };
 
@@ -676,14 +681,14 @@
 
         choices: ['q', 'p'],
         prompt: `<p>The right image is...</br> <strong>Q</strong>: more <strong>${A}</strong>.&emsp;&emsp; <strong>P</strong>: more <strong>${B}</strong>.</p>`,
-        on_finish: function(data){
-                     // Score the response as correct or incorrect.
-                     if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
-                       data.correct = false;
-                     } else {
-                       data.correct = true;
-                     }
-         }
+        on_finish: function(data) {
+          // Score the response as correct or incorrect.
+          if (data.response != data.correct_response) {
+            data.correct = false;
+          } else {
+            data.correct = true;
+          }
+        }
        };
 
        var learn_C_active = {
@@ -701,27 +706,21 @@
                   stimuli_1: (jsPsych.timelineVariable(`radius_a`)),
                   stimuli_2: (jsPsych.timelineVariable(`radius_b`)),
               },
-          on_finish: function(data){
-                  // Score the response as correct or incorrect.
-                  if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
-                    data.correct = false;
-                  } else {
-                    data.correct = true;
-                  }
-                }
+        on_finish: function(data) {
+          // Score the response as correct or incorrect.
+          if (data.response != data.correct_response) {
+            data.correct = false;
+          } else {
+            data.correct = true;
+          }
+        }
         };
 
+        // Loop which includes feedback trial
         var looped_C_active = {
-          timeline: [learn_C_active],
-          loop_function: function(data){
-            if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
-              alert(`Nope, let\'s try again!`);
-              return true;
-              //jsPsych.resumeExperiment(learn_A_2b); // Resume the experiment
-            } else{
-              alert(`Yes! Great job!`);
-              return false;
-            }
+          timeline: [learn_C_active, feedback],
+          loop_function: function(data) {
+            return !data.values()[0].correct; // Continue looping if the response was incorrect
           }
         };
 
@@ -743,14 +742,14 @@
 
           choices: ['q', 'p'],
           prompt: `<p>The right image is...</br> <strong>Q</strong>: more <strong>${A}</strong>.&emsp;&emsp; <strong>P</strong>: more <strong>${B}</strong>.</p>`,
-          on_finish: function(data){
-                       // Score the response as correct or incorrect.
-                       if(jsPsych.data.get().last(1).values()[0].response != jsPsych.data.get().last(1).values()[0].correct_response){
-                         data.correct = false;
-                       } else {
-                         data.correct = true;
-                       }
-           }
+          on_finish: function(data) {
+            // Score the response as correct or incorrect.
+            if (data.response != data.correct_response) {
+              data.correct = false;
+            } else {
+              data.correct = true;
+            }
+          }
          };
 
       /*
