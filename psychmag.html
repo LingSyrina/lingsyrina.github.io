@@ -44,7 +44,7 @@
   var preload = {
       type: jsPsychPreload,
       show_progress_bar: true,
-      images: ['img/dark1.png', 'img/dark2.png',"img/dark3.png","img/tall1.png","img/tall2.png",'img/tall3.png']
+      images: ['img/short0.png', 'img/short1.png',"img/short1b.png","img/short2.png","img/short4.png","img/tall0.png",'img/tall1.png',"img/tall1b.png","img/tall2.png",'img/tall4.png']
     };
 
   var getUrlParameter = function getUrlParameter(sParam) {
@@ -576,12 +576,16 @@
 
     /* Stimuli for language survey */
     var test_stimuli_s = [
+      { stimulus: 'img/short0.png', word: "tall", antonym: "short", condition: 'short0'},
+      { stimulus: 'img/short1.png', word: "tall", antonym: "short", condition: 'short1'},
+      { stimulus: 'img/short1b.png', word: "tall", antonym: "short", condition: 'short1b'},
+      { stimulus: 'img/short2.png', word: "tall", antonym: "short", condition: 'short2'},
+      { stimulus: 'img/short4.png', word: "tall", antonym: "short", condition: 'short4'},
+      { stimulus: 'img/tall0.png', word: "tall", antonym: "short", condition: 'tall0'},
       { stimulus: 'img/tall1.png', word: "tall", antonym: "short", condition: 'tall1'},
+      { stimulus: 'img/tall1b.png', word: "tall", antonym: "short", condition: 'tall1b'},
       { stimulus: 'img/tall2.png', word: "tall", antonym: "short", condition: 'tall2'},
-      { stimulus: 'img/tall3.png', word: "tall", antonym: "short", condition: 'tall3'},
-      { stimulus: 'img/dark1.png', word: "dark", antonym: "light", condition: 'dark1'},
-      { stimulus: 'img/dark2.png', word: "dark", antonym: "light", condition: 'dark2'},
-      { stimulus: 'img/dark3.png', word: "dark", antonym: "light", condition: 'dark3'},
+      { stimulus: 'img/tall4.png', word: "tall", antonym: "short", condition: 'tall4'},
       ];
 
 
@@ -884,7 +888,7 @@
              prompt:function() {
                var word = jsPsych.timelineVariable('word');
                var antonym = jsPsych.timelineVariable('antonym');
-               return `<p style="font-size:20px;">Compared to the left one, <strong>the right one is...</strong><br /> <strong>1</strong>: more <strong>${word}</strong>.&emsp;&emsp; <strong>2</strong>: more <strong>${antonym}</strong>. &emsp;&emsp; <strong>3</strong>: equally <strong>${word}</strong>.&emsp;&emsp; <strong>4</strong>: equally <strong>${antonym}</strong>. </p>`},
+               return `<p style="font-size:20px;">Compared to the left one, <strong>the right one is...</strong><br /> <strong>1</strong>: <strong>${word}er</strong>.&emsp;&emsp; <strong>2</strong>: <strong>${antonym}er</strong>. &emsp;&emsp; <strong>3</strong>: equally <strong>${word}</strong>.&emsp;&emsp; <strong>4</strong>: equally <strong>${antonym}</strong>. </p>`},
              response_ends_trial: true,
              data: {
                      task: `Language_survey`,
