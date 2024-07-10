@@ -290,9 +290,10 @@
     }
    
 
-   // random generator
+   // random generator -- currently revised so that it spits 2 decimal places
    function getRandomArbitrary(min, max) {
-        return Math.random() * (max - min) + min;
+        let nn = Math.random() * (max - min) + min;
+        return Math.round(nn*100)/100;
       }
       
     // Initialize the random generator with a fixed seen
