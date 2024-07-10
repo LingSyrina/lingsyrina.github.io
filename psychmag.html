@@ -223,7 +223,7 @@
       stimulus: `
         <p> <strong>Awesome!</strong> <br/>
         Now, we would like to ask you to choose the <strong>correct statement for the image on the right</strong>.</p>
-        Press any key to continue.
+        <p>Press any key to continue.</p>
       `,
       post_trial_gap: 500
     };
@@ -1063,7 +1063,6 @@
 
       /*block3: train; Constrast between two groups*/
       
-      //const group = Math.random() < 0.5 ? 0 : 1; // 0 for high precision, 1 for low precision
       
       if (condition === 0) { //high precision
         group_name = 'high';
