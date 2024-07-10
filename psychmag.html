@@ -486,9 +486,9 @@
           const degreeDifference = Math.trunc(Math.abs(p1 - p2) / n);
           let prompt;
           if (p1 > p2) {
-              prompt = `<p style="font-size:20px;"><strong>From 0 to 4</strong>, how many degree(s) is <strong>the right one more ${A}</strong>?</br>(Use number keys)</p>`;
+              prompt = `<p style="font-size:20px;"><strong>From 1 to 6</strong>, how many degree(s) is <strong>the right one more ${A}</strong>?</br>(Use number keys)</p>`;
           } else {
-              prompt = `<p style="font-size:20px;"><strong>From 0 to 4</strong>, how many degree(s) is <strong>the right one more ${B}</strong>?</br>(Use number keys)</p>`;
+              prompt = `<p style="font-size:20px;"><strong>From 1 to 6</strong>, how many degree(s) is <strong>the right one more ${B}</strong>?</br>(Use number keys)</p>`;
           }
 
           stimuli.push({
@@ -559,15 +559,15 @@
 
       /* Stimuli for learning_phase_1C */
       // Should we adjust low precision so that it's always non-zero? (Validating equally tests)
-      var learn_stimuli_c1h = passiveDegreeStimuli(learn,0.15); // 25 passive learning, high precision (0.15)
-      var learn_stimuli_c2h = activeDegreeStimuli(learn,0.15); // 25 active larning, high precision 
+      var learn_stimuli_c1h = passiveDegreeStimuli(learn,0.2); // 25 passive learning, high precision (0.2)
+      var learn_stimuli_c2h = activeDegreeStimuli(learn,0.2); // 25 active larning, high precision
 
-      var learn_stimuli_c1l = passiveDegreeStimuli(learn,0.3); // 25 passive learning, low precision (0.3)
-      var learn_stimuli_c2l = activeDegreeStimuli(learn,0.3); // 25 passive learning, low precision (0.3)
+      var learn_stimuli_c1l = passiveDegreeStimuli(learn,0.4); // 25 passive learning, low precision (0.4)
+      var learn_stimuli_c2l = activeDegreeStimuli(learn,0.4); // 25 passive learning, low precision (0.4)
 
       /* Stimuli for testing 'more A/B' */
     //after XAB test (identical to the pre_XAB_test)
-      var test_stimuli = generateTestStimuli(test); // 28 random parameters
+      var test_stimuli = generateTestStimuli(test); // 30 random parameters
 
       /* Stimuli for testing equally */
       //after XAB test (identical to the pre_XAB_test)
