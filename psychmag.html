@@ -330,7 +330,7 @@
                 prompt = `<p style="font-size:20px;"> Compared to the left one, <strong>the right one is more ${B}</strong>.</p> <br /> (Press any key to continue to the next image)`;
             }
         } else {
-          prompt = `<p>Compared to the left, the right image is...</br> <strong>Q</strong>: more <strong>${A}</strong>.&emsp;&emsp; <strong>P</strong>: more <strong>${B}</strong>.</p>`;
+          prompt = `<p>Compared to the left, <strong>the right image is</strong>...</br> <strong>Q</strong>: more <strong>${A}</strong>.&emsp;&emsp; <strong>P</strong>: more <strong>${B}</strong>.</p>`;
         }
 
         stimuli.push({
@@ -536,8 +536,8 @@
       var learn = 25;
       var test = 30;
       var equally = 10;
-      var highp = 0.2;
-      var lowp = 0.4;
+      var highp = 0.05 * 2;
+      var lowp = 0.05 * 4;
 
        
       //For debug only (should be commented out for real experiment)
@@ -748,7 +748,7 @@
              },
 
         choices: ['q', 'p'],
-        prompt: `<p>Compared to the left, the right image is...</br> <strong>Q</strong>: more <strong>${A}</strong>.&emsp;&emsp; <strong>P</strong>: more <strong>${B}</strong>.</p>`,
+        prompt: `<p>Compared to the left, <strong>the right image is</strong>...</br> <strong>Q</strong>: more <strong>${A}</strong>.&emsp;&emsp; <strong>P</strong>: more <strong>${B}</strong>.</p>`,
         on_finish: function(data) {
           // Score the response as correct or incorrect.
           if (data.response != data.correct_response) {
@@ -809,7 +809,7 @@
 
 
           choices: ['q', 'p'],
-          prompt: `<p>Compared to the left, the right image is...</br> <strong>Q</strong>: more <strong>${A}</strong>.&emsp;&emsp; <strong>P</strong>: more <strong>${B}</strong>.</p>`,
+          prompt: `<p>Compared to the left, <strong>the right image is</strong>...</br> <strong>Q</strong>: more <strong>${A}</strong>.&emsp;&emsp; <strong>P</strong>: more <strong>${B}</strong>.</p>`,
           on_finish: function(data) {
             // Score the response as correct or incorrect.
             if (data.response != data.correct_response) {
