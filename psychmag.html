@@ -31,11 +31,9 @@
 
   <script>
   //To do:
-  // 1. Should we adjust low precision so that it's always non-zero? (Validating equally tests)
-  // 2. Is 10 trials for equally (distance: 0, 3, 6) good enough?
+
   // 3. Update survey imgs (10 tirals?)
-  // 4. Adjust test stimuli differences to [3,10] to test extrapolation? 
-  // 5. Update instruction blocks for equally tests and language survey. 
+  // 5. Update instruction blocks for equally tests and language survey.
 
       
   /* initialize jsPsych */
@@ -538,6 +536,8 @@
       var learn = 25;
       var test = 30;
       var equally = 10;
+      var highp = 0.2;
+      var lowp = 0.4;
 
        
       //For debug only (should be commented out for real experiment)
@@ -559,11 +559,11 @@
 
       /* Stimuli for learning_phase_1C */
       // Should we adjust low precision so that it's always non-zero? (Validating equally tests)
-      var learn_stimuli_c1h = passiveDegreeStimuli(learn,0.2); // 25 passive learning, high precision (0.2)
-      var learn_stimuli_c2h = activeDegreeStimuli(learn,0.2); // 25 active larning, high precision
+      var learn_stimuli_c1h = passiveDegreeStimuli(learn,highp); // 25 passive learning, high precision (0.2)
+      var learn_stimuli_c2h = activeDegreeStimuli(learn,highp); // 25 active larning, high precision
 
-      var learn_stimuli_c1l = passiveDegreeStimuli(learn,0.4); // 25 passive learning, low precision (0.4)
-      var learn_stimuli_c2l = activeDegreeStimuli(learn,0.4); // 25 passive learning, low precision (0.4)
+      var learn_stimuli_c1l = passiveDegreeStimuli(learn,lowp); // 25 passive learning, low precision (0.4)
+      var learn_stimuli_c2l = activeDegreeStimuli(learn,lowp); // 25 passive learning, low precision (0.4)
 
       /* Stimuli for testing 'more A/B' */
     //after XAB test (identical to the pre_XAB_test)
