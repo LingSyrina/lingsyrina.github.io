@@ -437,7 +437,7 @@
           const n1 = getRandomArbitrary(-1, 1);
           const n2 = getRandomArbitrary(-1, 1);
 
-          const degreeDifference = Math.trunc(Math.abs(p1 - p2) / n);
+          const degreeDifference = Math.trunc(diff / n);
           let prompt;
           if (p1 > p2) {
               prompt = `<p style="font-size:20px;">Compared to the left one, <strong>the right one is ${degreeDifference} degree(s) more ${A}</strong>.</p><br />(Press any key to continue to the next image)`;
@@ -482,12 +482,12 @@
           const n1 = getRandomArbitrary(-1, 1);
           const n2 = getRandomArbitrary(-1, 1);
 
-          const degreeDifference = Math.trunc(Math.abs(p1 - p2) / n);
+          const degreeDifference = Math.trunc(diff / n);
           let prompt;
           if (p1 > p2) {
-              prompt = `<p style="font-size:20px;"><strong>From 1 to 6</strong>, how many degree(s) is <strong>the right one more ${A}</strong>?</br>(Use number keys)</p>`;
+              prompt = `<p style="font-size:20px;"><strong>From 1 to 4</strong>, how many degree(s) is <strong>the right one more ${A}</strong>?</br>(Use number keys)</p>`;
           } else {
-              prompt = `<p style="font-size:20px;"><strong>From 1 to 6</strong>, how many degree(s) is <strong>the right one more ${B}</strong>?</br>(Use number keys)</p>`;
+              prompt = `<p style="font-size:20px;"><strong>From 1 to 4</strong>, how many degree(s) is <strong>the right one more ${B}</strong>?</br>(Use number keys)</p>`;
           }
 
           stimuli.push({
