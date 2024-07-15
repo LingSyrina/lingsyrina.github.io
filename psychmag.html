@@ -101,10 +101,10 @@
 
     var exp_break = {
       type: jsPsychHtmlButtonResponse,
-      choices: ['I am ready.'],
+      choices: ['<p style="font-size:14px;font-weight:bold;"> I am ready! </p>'],
       stimulus: `
         <p><strong>Perfect!</strong></p>
-        <p>Maybe it's time for a short break! </br>Take your time, and click the button below whenever you feel ready to get back to our experiment.</p>
+        <p>Maybe it's time for a short break! </br>Take your time, and click the button below whenever you feel ready to get back to our experiment.</br></br> </p>
       `,
       response_ends_trial: true,
       post_trial_gap: 500
