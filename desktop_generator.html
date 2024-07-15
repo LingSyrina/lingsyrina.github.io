@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desktop Wallpaper Generator</title>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas2image/0.1.1/canvas2image.min.js"></script>
+</head>
+<body>
+    <h1>Enter Desktop Names</h1>
+    <form id="wallpaperForm">
+        <label for="desktop_names">Workspace Names (comma-separated, CAPITAL-letter recommended):</label>
+        <input type="text" id="desktop_names" name="desktop_names" required>
+        <button type="submit">Generate Wallpapers</button>
+    </form>
+    <div id="wallpapers"></div>
+    <script>
+        document.getElementById('wallpaperForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const desktopNames = document.getElementById('desktop_names').value.split(',');
+            generateWallpapers(desktopNames);
+        });
+
+        function getLowBrightnessColor() {
+            return `rgb(${Math.random() * 100}, ${Math.random() * 100}, ${Math.random() * 100})`;
+        }
+
+        function adjustColorComponent(component, dim) {
+            return Math.max(0, Math.min(255, component + dim));
+        }
+
+        function getAdjustedColor(baseColor, adjustment) {
+            const rgb = baseColor.match(/\d+/g).map(Number);
+            return `rgb(${adjustColorComponent(rgb[0], adjustment)}, ${adjustColorComponent(rgb[1], adjustment)}, ${adjustColorComponent(rgb[2], adjustment)})`;
+        }
+
+        function drawTextWithThickness(ctx, text, x, y, fontSize, color, thicknessRange) {
+            ctx.font = `${fontSize}px Arial`;
+            for (let offset = -thicknessRange; offset <= thicknessRange; offset++) {
+                for (let xOffset = -thicknessRange; xOffset <= thicknessRange; xOffset++) {
+                    ctx.fillStyle = color;
+                    ctx.fillText(text, x + offset, y + xOffset);
+                }
+            }
+        }
+
+        function generateWallpapers(desktopNames) {
+            const wallpapersDiv = document.getElementById('wallpapers');
+            wallpapersDiv.innerHTML = '';
+
+            desktopNames.forEach(name => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1366;
+                canvas.height = 768;
+                const ctx = canvas.getContext('2d');
+
+                const backgroundColor = getLowBrightnessColor();
+                ctx.fillStyle = backgroundColor;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                const textColor = getAdjustedColor(backgroundColor, 200);
+                const textColorBackground = getAdjustedColor(backgroundColor, 50);
+                const textColorSub = getAdjustedColor(backgroundColor, 100);
+
+                // Draw background text
+                drawTextWithThickness(ctx, name, 50, 100, 36, textColorBackground, 1);
+
+                // Draw main text
+                drawTextWithThickness(ctx, name, canvas.width / 4, canvas.height / 2, 150, textColor, 3);
+
+                // Draw vertical text
+                ctx.save();
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.rotate(-Math.PI / 2);
+                drawTextWithThickness(ctx, name, 0, 0, 70, textColorSub, 2);
+                ctx.restore();
+
+                // Add the canvas to the DOM
+                wallpapersDiv.appendChild(canvas);
+
+                // Add a download link
+                const link = document.createElement('a');
+                link.innerText = `Download ${name} wallpaper`;
+                link.href = canvas.toDataURL('image/png');
+                link.download = `${name}_wallpaper.png`;
+                wallpapersDiv.appendChild(link);
+                wallpapersDiv.appendChild(document.createElement('br'));
+            });
+        }
+    </script>
+</body>
+</html>
