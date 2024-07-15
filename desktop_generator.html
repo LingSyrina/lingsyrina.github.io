@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desktop Wallpaper Generator</title>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas2image/0.1.1/canvas2image.min.js"></script>
 </head>
 <body>
     <h1>Enter Desktop Names</h1>
@@ -37,12 +36,48 @@
 
         function drawTextWithThickness(ctx, text, x, y, fontSize, color, thicknessRange) {
             ctx.font = `${fontSize}px Arial`;
+            ctx.textBaseline = 'top';
             for (let offset = -thicknessRange; offset <= thicknessRange; offset++) {
                 for (let xOffset = -thicknessRange; xOffset <= thicknessRange; xOffset++) {
                     ctx.fillStyle = color;
                     ctx.fillText(text, x + offset, y + xOffset);
                 }
             }
+        }
+
+        function drawRotatedText(ctx, text, x, y, fontSize, color, thicknessRange) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(-Math.PI / 2);
+            drawTextWithThickness(ctx, text, 0, 0, fontSize, color, thicknessRange);
+            ctx.restore();
+        }
+
+        function drawTiltedText(ctx, width, height, text, fontSize, color, thicknessRange) {
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = width;
+            tempCanvas.height = height;
+            const tempCtx = tempCanvas.getContext('2d');
+
+            tempCtx.translate(width / 2, height / 2);
+            tempCtx.rotate(Math.PI / 18); // Rotate by 10 degrees
+            drawTextWithThickness(tempCtx, text, -width / 2 + 50, -height / 2 + 50, fontSize, color, thicknessRange);
+
+            ctx.drawImage(tempCanvas, 0, 0);
+        }
+
+        function backgroundText(ctx, width, height, text, fontSize, color, thicknessRange) {
+            const textWidth = ctx.measureText(text).width;
+            const yStartPositions = [height * 0.2, height * 0.3, height * 0.8, height * 0.9];
+            const xStartPositions = [width * 0.1, width * 0.2, width * 0.2, width * 0.6];
+
+            yStartPositions.forEach((yStart, index) => {
+                let x = xStartPositions[index];
+                while (x + textWidth * 1.25 <= width) {
+                    drawTextWithThickness(ctx, text, x, yStart, fontSize, color, thicknessRange);
+                    x += textWidth * 1.25;
+                }
+            });
         }
 
         function generateWallpapers(desktopNames) {
@@ -64,17 +99,14 @@
                 const textColorSub = getAdjustedColor(backgroundColor, 100);
 
                 // Draw background text
-                drawTextWithThickness(ctx, name, 50, 100, 36, textColorBackground, 1);
+                backgroundText(ctx, canvas.width, canvas.height, name, 36, textColorBackground, 1);
 
                 // Draw main text
-                drawTextWithThickness(ctx, name, canvas.width / 4, canvas.height / 2, 150, textColor, 3);
+                drawTextWithThickness(ctx, name, 0, -50, 150, textColor, 3);
+                drawTextWithThickness(ctx, name, (canvas.width - ctx.measureText(name).width) / 2, (canvas.height - 150) / 2, 150, textColorSub, 3);
 
                 // Draw vertical text
-                ctx.save();
-                ctx.translate(canvas.width / 2, canvas.height / 2);
-                ctx.rotate(-Math.PI / 2);
-                drawTextWithThickness(ctx, name, 0, 0, 70, textColorSub, 2);
-                ctx.restore();
+                drawRotatedText(ctx, name, canvas.width / 2, (canvas.height + ctx.measureText(name).width) / 2, 70, textColorSub, 2);
 
                 // Add the canvas to the DOM
                 wallpapersDiv.appendChild(canvas);
@@ -91,3 +123,4 @@
     </script>
 </body>
 </html>
+
