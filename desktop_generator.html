@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Desktop Wallpaper Generator</title>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
 </head>
 <body>
     <h1>Enter Desktop Names</h1>
@@ -13,6 +14,7 @@
         <input type="text" id="desktop_names" name="desktop_names" required>
         <button type="submit">Generate Wallpapers</button>
     </form>
+    <div id="downloadLink"></div>
     <div id="wallpapers"></div>
     <script>
         document.getElementById('wallpaperForm').addEventListener('submit', function(event) {
@@ -22,16 +24,22 @@
         });
 
         function getLowBrightnessColor() {
-            return `rgb(${Math.random() * 100}, ${Math.random() * 100}, ${Math.random() * 100})`;
+            const r = Math.floor(Math.random() * 100);
+            const g = Math.floor(Math.random() * 100);
+            const b = Math.floor(Math.random() * 100);
+            return `rgb(${r}, ${g}, ${b})`;
         }
 
-        function adjustColorComponent(component, dim) {
-            return Math.max(0, Math.min(255, component + dim));
+        function adjustColorComponent(component, adjustment) {
+            return Math.max(0, Math.min(255, component + adjustment));
         }
 
         function getAdjustedColor(baseColor, adjustment) {
             const rgb = baseColor.match(/\d+/g).map(Number);
-            return `rgb(${adjustColorComponent(rgb[0], adjustment)}, ${adjustColorComponent(rgb[1], adjustment)}, ${adjustColorComponent(rgb[2], adjustment)})`;
+            const r = adjustColorComponent(rgb[0], adjustment);
+            const g = adjustColorComponent(rgb[1], adjustment);
+            const b = adjustColorComponent(rgb[2], adjustment);
+            return `rgb(${r}, ${g}, ${b})`;
         }
 
         function drawTextWithThickness(ctx, text, x, y, fontSize, color, thicknessRange) {
@@ -60,9 +68,9 @@
             const tempCtx = tempCanvas.getContext('2d');
 
             tempCtx.translate(width / 2, height / 2);
-            tempCtx.rotate(Math.PI / 18); // Rotate by 10 degrees
-            drawTextWithThickness(tempCtx, text, -width / 2 + 50, -height / 2 + 50, fontSize, color, thicknessRange);
-
+            tempCtx.rotate(-Math.PI / 18); // Rotate by 10 degrees
+            tempCtx.translate(-width / 2, -height / 2);
+            backgroundText(tempCtx, width, height, text, fontSize, color, thicknessRange);
             ctx.drawImage(tempCanvas, 0, 0);
         }
 
@@ -73,18 +81,21 @@
 
             yStartPositions.forEach((yStart, index) => {
                 let x = xStartPositions[index];
-                while (x + textWidth * 1.25 <= width) {
+                while (x + textWidth * 4.25 <= width) {
                     drawTextWithThickness(ctx, text, x, yStart, fontSize, color, thicknessRange);
-                    x += textWidth * 1.25;
+                    x += textWidth * 4.25;
                 }
             });
         }
 
-        function generateWallpapers(desktopNames) {
+        async function generateWallpapers(desktopNames) {
+            const zip = new JSZip();
             const wallpapersDiv = document.getElementById('wallpapers');
+            const downloadLinkDiv = document.getElementById('downloadLink');
             wallpapersDiv.innerHTML = '';
+            downloadLinkDiv.innerHTML = '';
 
-            desktopNames.forEach(name => {
+            const promises = desktopNames.map(name => new Promise((resolve, reject) => {
                 const canvas = document.createElement('canvas');
                 canvas.width = 1366;
                 canvas.height = 768;
@@ -94,33 +105,65 @@
                 ctx.fillStyle = backgroundColor;
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                const textColor = getAdjustedColor(backgroundColor, 200);
                 const textColorBackground = getAdjustedColor(backgroundColor, 50);
+                const textColor = getAdjustedColor(backgroundColor, 200);
                 const textColorSub = getAdjustedColor(backgroundColor, 100);
 
                 // Draw background text
-                backgroundText(ctx, canvas.width, canvas.height, name, 36, textColorBackground, 1);
+                drawTiltedText(ctx, canvas.width, canvas.height, name, 36, textColorBackground, 1);
 
                 // Draw main text
-                drawTextWithThickness(ctx, name, 0, -50, 150, textColor, 3);
+                drawTextWithThickness(ctx, name, 0, -25, 150, textColor, 3);
                 drawTextWithThickness(ctx, name, (canvas.width - ctx.measureText(name).width) / 2, (canvas.height - 150) / 2, 150, textColorSub, 3);
 
                 // Draw vertical text
-                drawRotatedText(ctx, name, canvas.width / 2, (canvas.height + ctx.measureText(name).width) / 2, 70, textColorSub, 2);
+                drawRotatedText(ctx, name, 0, (canvas.height + ctx.measureText(name).width) / 2, 70, textColorSub, 2);
 
-                // Add the canvas to the DOM
-                wallpapersDiv.appendChild(canvas);
+                // Add the image to the zip
+                canvas.toBlob(blob => {
+                    zip.file(`${name}_wallpaper.png`, blob);
+                    resolve();
+                });
+            }));
 
-                // Add a download link
+            await Promise.all(promises);
+
+            zip.generateAsync({ type: 'blob' }).then(content => {
                 const link = document.createElement('a');
-                link.innerText = `Download ${name} wallpaper`;
-                link.href = canvas.toDataURL('image/png');
-                link.download = `${name}_wallpaper.png`;
-                wallpapersDiv.appendChild(link);
-                wallpapersDiv.appendChild(document.createElement('br'));
+                link.innerText = 'Download All Wallpapers';
+                link.href = URL.createObjectURL(content);
+                link.download = 'wallpapers.zip';
+                downloadLinkDiv.appendChild(link);
+
+                // Generate previews
+                desktopNames.forEach(name => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = 1366;
+                    canvas.height = 768;
+                    const ctx = canvas.getContext('2d');
+
+                    const backgroundColor = getLowBrightnessColor();
+                    ctx.fillStyle = backgroundColor;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    const textColorBackground = getAdjustedColor(backgroundColor, 50);
+                    const textColor = getAdjustedColor(backgroundColor, 200);
+                    const textColorSub = getAdjustedColor(backgroundColor, 100);
+
+                    // Draw background text
+                    drawTiltedText(ctx, canvas.width, canvas.height, name, 36, textColorBackground, 1);
+
+                    // Draw main text
+                    drawTextWithThickness(ctx, name, 0, -25, 150, textColor, 3);
+                    drawTextWithThickness(ctx, name, (canvas.width - ctx.measureText(name).width) / 2, (canvas.height - 150) / 2, 150, textColorSub, 3);
+
+                    // Draw vertical text
+                    drawRotatedText(ctx, name, 0, (canvas.height + ctx.measureText(name).width) / 2, 70, textColorSub, 2);
+
+                    wallpapersDiv.appendChild(canvas);
+                });
             });
         }
     </script>
 </body>
 </html>
-
