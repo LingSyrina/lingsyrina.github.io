@@ -350,31 +350,46 @@
       /*test stimuli; more restricted */
       function generateTestStimuli(numStimuli) {
         const stimuli = [];
-        const differences = [0.05 * 3, 0.05 * 6, 0.05 * 10, 0.05 * 14, 0.05 * 16]; //0.05 * d where d = |p1-p2|
+        const differences = [0.05 * 2, 0.05 * 5, 0.05 * 9, 0.05 * 13, 0.05 * 16]; //0.05 * d where d = |p1-p2|
+        const numDiff = differences.length;
+        
+        //determine # of stimuli for each distance
+        const baseC = Math.floor(numStimuli / numDiff);
+        const extraC = numStimuli % numDiff;
+        
+        //array with the distribution of counts
+        const counts = new Array(numDiff).fill(baseC);
+        for (let i = 0; i < extraC; i++){
+            counts[i]++;
+        }
+        
+        
+        for (let j = 0; j < numDiff; j++){
+            for (let k = 0; k < counts[j]; k++) {
+              let p1, p2;
+              const diff = differences[j];
+              
 
-        for (let i = 0; i < numStimuli; i++) {
-          let p1, p2;
-          const diff = differences[Math.floor(Math.random() * differences.length)];
+              if (stimuli.length < numStimuli / 2) {
+                p1 = getRandomArbitrary(0.15, 1 - diff);
+                p2 = p1 + diff;
+              } else {
+                p2 = getRandomArbitrary(0.15, 1 - diff);
+                p1 = p2 + diff;
+              }
 
-          if (i < numStimuli / 2) {
-            p1 = getRandomArbitrary(0.15, 1 - diff);
-            p2 = p1 + diff;
-          } else {
-            p2 = getRandomArbitrary(0.15, 1 - diff);
-            p1 = p2 + diff;
-          }
+              const n1 = getRandomArbitrary(-1, 1);
+              const n2 = getRandomArbitrary(-1, 1);
 
-          const n1 = getRandomArbitrary(-1, 1);
-          const n2 = getRandomArbitrary(-1, 1);
-
-          stimuli.push({
-            stimulus: (i + 1).toString(),
-            radius_a: p1,
-            radius_b: p2,
-            n1: n1,
-            n2: n2,
-            correct_response: p1 > p2 ? 'q' : 'p'
-          });
+              stimuli.push({
+                stimulus: (stimuli.length + 1).toString(),
+                radius_a: p1,
+                radius_b: p2,
+                n1: n1,
+                n2: n2,
+                correct_response: p1 > p2 ? 'q' : 'p'
+              });
+            }
         }
 
         return stimuli;
@@ -540,14 +555,14 @@
 
        
       //For debug only (should be commented out for real experiment)
-      /*
-      var learn = 1;
-      var test = 1;
+      
+      var active = 1;
+      var passive = 1;
       var equally = 1;
       var pre_test_stimuli = [
         { p1: 0.05, p2: 0.2, n1: 0, n2: 0,  condition: 1},
       ];
-      */
+      
 
       /*pretest*/
       var pre_test_xab_stimuli = convertToTimelineVariables(pre_test_stimuli);
