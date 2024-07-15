@@ -40,7 +40,7 @@
   var preload = {
       type: jsPsychPreload,
       show_progress_bar: true,
-      images: ['img/short0.png', 'img/short1.png',"img/short1b.png","img/short2.png","img/short4.png","img/tall0.png",'img/tall1.png',"img/tall1b.png","img/tall2.png",'img/tall4.png']
+      images: ['img/0_low.png', 'img/1a_low.png',"img/1b_low.png","img/2_low.png","img/3_low.png","img/0_high.png",'img/1a_high.png',"img/1b_high.png","img/2_high.png",'img/3_high.png']
     };
 
   var getUrlParameter = function getUrlParameter(sParam) {
@@ -558,6 +558,7 @@
       
       var active = 1;
       var passive = 1;
+      var test = 1
       var equally = 1;
       var pre_test_stimuli = [
         { p1: 0.05, p2: 0.2, n1: 0, n2: 0,  condition: 1},
@@ -591,16 +592,16 @@
 
     /* Stimuli for language survey */
     var test_stimuli_s = [
-      { stimulus: 'img/short0.png', word: "tall", antonym: "short", condition: 'short0'},
-      { stimulus: 'img/short1.png', word: "tall", antonym: "short", condition: 'short1'},
-      { stimulus: 'img/short1b.png', word: "tall", antonym: "short", condition: 'short1b'},
-      { stimulus: 'img/short2.png', word: "tall", antonym: "short", condition: 'short2'},
-      { stimulus: 'img/short4.png', word: "tall", antonym: "short", condition: 'short4'},
-      { stimulus: 'img/tall0.png', word: "tall", antonym: "short", condition: 'tall0'},
-      { stimulus: 'img/tall1.png', word: "tall", antonym: "short", condition: 'tall1'},
-      { stimulus: 'img/tall1b.png', word: "tall", antonym: "short", condition: 'tall1b'},
-      { stimulus: 'img/tall2.png', word: "tall", antonym: "short", condition: 'tall2'},
-      { stimulus: 'img/tall4.png', word: "tall", antonym: "short", condition: 'tall4'},
+      { stimulus: 'img/0_low.png', word: "tall", antonym: "short", condition: '0_low'},
+      { stimulus: 'img/1a_low.png', word: "tall", antonym: "short", condition: '1a_low'},
+      { stimulus: 'img/1b_low.png', word: "tall", antonym: "short", condition: '1b_low'},
+      { stimulus: 'img/2_low.png', word: "tall", antonym: "short", condition: '2_low'},
+      { stimulus: 'img/3_low.png', word: "tall", antonym: "short", condition: '3_low'},
+      { stimulus: 'img/0_high.png', word: "tall", antonym: "short", condition: '0_high'},
+      { stimulus: 'img/1a_high.png', word: "tall", antonym: "short", condition: '1a_high'},
+      { stimulus: 'img/1b_high.png', word: "tall", antonym: "short", condition: '1b_high'},
+      { stimulus: 'img/2_high.png', word: "tall", antonym: "short", condition: '2_high'},
+      { stimulus: 'img/3_high.png', word: "tall", antonym: "short", condition: '3_high'},
       ];
 
 
