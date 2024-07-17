@@ -84,10 +84,7 @@
     /* welcome message */
     var welcome = {
       type: jsPsychHtmlKeyboardResponse,
-      stimulus: `<p style="font-size:20px;font-weight:bold;"> Thank you for your participation! </p> 
-      <p>Press the space bar to begin.</p>
-      `,
-      choices: [' '], // restricts to space bar press
+      stimulus: `<p style="font-size:20px;font-weight:bold;"> Thank you for your participation! </p> <p> Press any key to begin.</p>`
     };
 
     /* closing message */
@@ -121,9 +118,8 @@
         <p> In this section, <br />
         You will <strong>compare pairs of images </strong> which appear in the center of the screen.<br />
         Below each image will be <strong> a statement that describes it</strong>. <br/>
-        (<p>Press the space bar to continue.</p>)
+        <p> (Press any key to begin) </p>
       `,
-      choices: [' '], // restricts to space bar press
       post_trial_gap: 500
     };
 
@@ -134,9 +130,8 @@
         <p> In this section, <br />
         you will continue to <strong>compare pairs of images</strong>. <br/>
         However, you will now be asked to <strong>choose the correct description</strong> for the <strong>image on the right</strong>.</p>
-        (<p>Press the space bar to continue.</p>)
+        (Press any key to continue)
       `,
-      choices: [' '], // restricts to space bar press
       /* I am deliberately not telling them that they will be given limitless chances until they get it right -- just so they can pay more attention.*/
       post_trial_gap: 500
     };
@@ -147,9 +142,8 @@
       stimulus: `
         <p> <strong>Great Job!</strong> </p>
         <p> Continue answering our questions by <strong>selecting the correct description</strong> for the <strong>image on the right</strong>.</br> However, we are no longer telling you whether you\'ve got the right answer or not!</p>
-        <p>Press the space bar to continue.</p>
+        <p> (Press any key to continue)</p>
       `,
-      choices: [' '], // restricts to space bar press
       post_trial_gap: 500
     };
 
@@ -161,9 +155,8 @@
         <p> Welcome back!</p>
         <p> You will continue to see pairs of images accompanied by the description.
         <br/> This time, we are giving you more detailed description, using <strong>our own mysterious scale</strong>... </p>
-        <p>Press the space bar to continue.</p>
+        <p>(Press any key to continue)</p>
       `,
-      choices: [' '], // restricts to space bar press
       post_trial_gap: 500
     };
 
@@ -173,9 +166,8 @@
       stimulus: `
         <p> <strong>Awesome!</strong> <br/>
         Now, we would like to ask you to <strong>guess the correct degree</strong> for each pair of images.</p>
-        <p>Press the space bar to continue.</p>
+        <p>Press any key to continue.</p>
       `,
-      choices: [' '], // restricts to space bar press
       post_trial_gap: 500
     };
     
@@ -186,9 +178,8 @@
       stimulus: `
         <p> <strong>Great Job!</strong> </p>
         <p> We're going to give you another set of questions. </br> Find the identical image!</p>
-        <p>Press the space bar to continue.</p>
+        <p> Press any key to continue.</p>
       `,
-      choices: [' '], // restricts to space bar press
       post_trial_gap: 500
     };
 
@@ -198,9 +189,8 @@
       stimulus: `
         <p> <strong>Excellent!</strong> </p>
         <p> You will continue to <strong>compare pairs of images</strong> and <strong>choose the correct description</strong> for the <strong>image on the right</strong>!</p>
-        <p>Press the space bar to continue.</p>
+        <p> Press any key to continue.</p>
       `,
-      choices: [' '], // restricts to space bar press
       post_trial_gap: 500
     };
 
@@ -210,9 +200,8 @@
       stimulus: `
         <p> <strong>Great job!</strong> </p>
         <p> This is the last part of the experiment.<br/> This time you will be seeing <strong>different descriptions with familiar concepts </strong>. Choose the best one!</p>
-        <p>Press the space bar to continue.</p>
+        <p> Press any key to continue.</p>
       `,
-      choices: [' '], // restricts to space bar press
       post_trial_gap: 500
     };
 
@@ -222,9 +211,8 @@
       stimulus: `
         <p>Awesome!</p>
         <p>Now we are giving you a task similar to what you did at the beginning of the experiment. </br>Your task is to find <strong>the same image</strong> shown at the top of the screen.</p>
-        <p>Press the space bar to continue.</p>
+        <p>Press any key to continue.</p>
       `,
-      choices: [' '], // restricts to space bar press
       post_trial_gap: 500
     };
 
@@ -233,9 +221,8 @@
       stimulus: `
         <p> <strong>Awesome!</strong> <br/>
         Now, we would like to ask you to choose the <strong>correct statement for the image on the right</strong>.</p>
-        <p>Press the space bar to continue.</p>
+        <p>Press any key to continue.</p>
       `,
-      choices: [' '], // restricts to space bar press
       post_trial_gap: 500
     };
 
@@ -254,9 +241,8 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
         <p style="font-size:20px;font-weight:bold;"> Look at this pair! </p>
-        <p> (Press the space bar when you are ready)</p>
+        <p> (Press any key when you are ready)</p>
       `,
-      choices: [' '], // restricts to space bar press
     };
 
 
