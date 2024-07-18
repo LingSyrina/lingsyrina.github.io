@@ -397,7 +397,12 @@
               }
 
               const n1 = getRandomArbitrary(-1, 1);
-              const n2 = getRandomArbitrary(-1, 1);
+              //const n2 = getRandomArbitrary(-1, 1);
+              if (n1 < 0) {
+                  const n2 = n1 - 1;
+              } else {
+                  const n2 = n1 + 1;
+              }
 
               stimuli.push({
                 stimulus: (stimuli.length + 1).toString(),
@@ -430,7 +435,12 @@
           }
 
           const n1 = getRandomArbitrary(-1, 1);
-          const n2 = getRandomArbitrary(-1, 1);
+          //const n2 = getRandomArbitrary(-1, 1);
+          if (n1 < 0) {
+              const n2 = n1 - 1;
+          } else {
+              const n2 = n1 + 1;
+          }
 
           stimuli.push({
             stimulus: (i + 1).toString(),
@@ -536,14 +546,20 @@
       /* Specific stimuli for pre_test_xab */
       // condition == 1 then p1 is shown as main stimulus, else p2
       var pre_test_stimuli = [
-        { p1: 0.05, p2: 0.2, n1: 0, n2: 0,  condition: 1},
-        { p1: 0.25, p2: 0.4, n1: 0, n2: 0 },
-        { p1: 0.45, p2: 0.6, n1: 0, n2: 0,  condition: 1},
-        { p1: 0.65, p2: 0.8, n1: 0, n2: 0 },
-        { p1: 0.85, p2: 1, n1: 0, n2: 0,  condition: 1},
-        { p1: 0.05, p2: 0.05, n1: 0, n2: 0.15*670/70 }, //n2 is like 9....
-        { p1: 0.25, p2: 0.25, n1: 0, n2: 0.15*670/70,  condition: 1},
+        { p1: 0.05, p2: 0.2, n1: 0, n2: 0,  condition: 1},   //1-4
+        { p1: 0.15, p2: 0.3, n1: 0, n2: 0 },                 //3-5, newly added (July 18th)
+        { p1: 0.25, p2: 0.4, n1: 0, n2: 0, condition: 1},    //5-8
+        { p1: 0.35, p2: 0.5, n1: 0, n2: 0 },                 //7-10, newly added
+        { p1: 0.45, p2: 0.6, n1: 0, n2: 0,  condition: 1},   //9-12
+        { p1: 0.55, p2: 0.7, n1: 0, n2: 0 },                  //11-14, newly added
+        { p1: 0.65, p2: 0.8, n1: 0, n2: 0 },                //13-16
+        { p1: 0.85, p2: 1, n1: 0, n2: 0,  condition: 1},    //17-20
+        { p1: 0.05, p2: 0.05, n1: 0, n2: 0.15*670/70 },
+        { p1: 0.15, p2: 0.15, n1: 0, n2: 0.15*670/70, condition: 1},  //newly added
+        { p1: 0.25, p2: 0.25, n1: 0, n2: 0.15*670/70 },
+        { p1: 0.35, p2: 0.35, n1: 0, n2: 0.15*670/70, condition: 1},     //newly added
         { p1: 0.45, p2: 0.45, n1: 0, n2: 0.15*670/70 },
+        { p1: 0.55, p2: 0.55, n1: 0, n2: 0.15*670/70, condition: 1},     //newly added
         { p1: 0.65, p2: 0.65, n1: 0, n2: 0.15*670/70,  condition: 1},
         { p1: 0.85, p2: 0.85, n1: 0, n2: 0.15*670/70 }
       ];
@@ -565,7 +581,9 @@
       /*Stimuli number*/
 
       var active = 35;
+      var active_d = 45;    //# trials for degree training
       var passive = 15;
+      var passive_d = 15;   //# trials for degree training
       var test = 30;
       var equally = 10;
       var highp = 0.05 * 2;
@@ -575,7 +593,9 @@
       //For debug only (should be commented out for real experiment)
 
       var active = 1;
+      var active_d = 1;
       var passive = 1;
+      var passive_d = 1;
       var test = 1
       var equally = 1;
       var pre_test_stimuli = [
@@ -595,11 +615,11 @@
 
       /* Stimuli for learning_phase_1C */
       // Should we adjust low precision so that it's always non-zero? (Validating equally tests)
-      var learn_stimuli_c1h = passiveDegreeStimuli(passive,highp); // 15 passive learning, high precision (0.2)
-      var learn_stimuli_c2h = activeDegreeStimuli(active,highp); // 35 active larning, high precision
+      var learn_stimuli_c1h = passiveDegreeStimuli(passive_d,highp); // 15 passive learning, high precision (0.2)
+      var learn_stimuli_c2h = activeDegreeStimuli(active_d,highp); // 35 active larning, high precision
 
-      var learn_stimuli_c1l = passiveDegreeStimuli(passive,lowp); // 15 passive learning, low precision (0.4)
-      var learn_stimuli_c2l = activeDegreeStimuli(active,lowp); // 35 passive learning, low precision (0.4)
+      var learn_stimuli_c1l = passiveDegreeStimuli(passive_d,lowp); // 15 passive learning, low precision (0.4)
+      var learn_stimuli_c2l = activeDegreeStimuli(active_d,lowp); // 35 passive learning, low precision (0.4)
 
       /* Stimuli for testing 'more A/B' */
     //after XAB test (identical to the pre_XAB_test)
