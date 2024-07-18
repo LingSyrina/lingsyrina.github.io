@@ -1,4 +1,4 @@
-// to-do: fix the gliching loading 
+// to-do: fix the gliching loading
 
 
 function createAndManipulateCanvases(originalCanvas) {
@@ -121,11 +121,11 @@ class CanvasMorpher {
             const ny = (cy - py) + cy;
             return [nx, ny];
         };
-        
+
         const which = 4;
         const center_x = 0;
-        const center_y = 0;    
-            
+        const center_y = 0;
+
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         let e;
@@ -140,19 +140,19 @@ class CanvasMorpher {
             case 'halfCircle':
                 const thetaHalfCircle = p * Math.PI;
                 e = { x: (this.maxxy / 2) + Math.cos(thetaHalfCircle) * (this.maxxy / 2), y: (this.maxxy / 2) + Math.sin(thetaHalfCircle) * (this.maxxy / 2) };
-                //e = { x: 1185, y: 5};                
+                //e = { x: 1185, y: 5};
                 break;
             case 'halfEllipse':
                 const thetaHalfEllipse = p * Math.PI;
-                e = { x: (this.maxxy / 2) + Math.cos(thetaHalfEllipse) * (this.maxxy / 2.5), y: (this.maxxy / 2) + Math.sin(thetaHalfEllipse) * (this.maxxy / 1.5) };            
+                e = { x: (this.maxxy / 2) + Math.cos(thetaHalfEllipse) * (this.maxxy / 2.5), y: (this.maxxy / 2) + Math.sin(thetaHalfEllipse) * (this.maxxy / 1.5) };
                 break;
             case 'dual':
                 const noise = rand * 70
                 e = { x : this.A + (this.B * p) + noise, y : this.A + (this.B * p) - noise};
-                //e = { x: 860, y: 940};                
+                //e = { x: 860, y: 940};
                 break;
         }
-        console.log(`Blob ${which} controled by e and random:`, e, rand);
+        //console.log(`Blob ${which} controled by e and random:`, e, rand);
 
         for (let j = 0; j < this.num_ctrls; j++) {
             let m = (this.ctrl_x_first[1][j] - this.ctrl_x_first[0][j]) / this.intrablob_distance;
@@ -174,7 +174,7 @@ class CanvasMorpher {
             this.ctrl_x_first[4][j] = (horizontal_rec_x + vertical_rec_x) / 2;
             this.ctrl_y_first[4][j] = (horizontal_rec_y + vertical_rec_y) / 2;
         }
-        
+
         let c2 = flipped(this.ctrl_x_first[which][1], this.ctrl_y_first[which][1], this.x_points[which][1], this.y_points[which][1]);
         this.ctrl_x_second[which][0] = c2[0];
         this.ctrl_y_second[which][0] = c2[1];
@@ -189,14 +189,14 @@ class CanvasMorpher {
 
         c2 = flipped(this.ctrl_x_first[which][0], this.ctrl_y_first[which][0], this.x_points[which][0], this.y_points[which][0]);
         this.ctrl_x_second[which][3] = c2[0];
-        this.ctrl_y_second[which][3] = c2[1];   
-             
+        this.ctrl_y_second[which][3] = c2[1];
+
 
         // Log the points and control points
-        console.log(`Blob ${which} Control Points First:`, this.ctrl_x_first[which], this.ctrl_y_first[which]);
-        console.log(`Blob ${which} Control Points Second:`, this.ctrl_x_second[which], this.ctrl_y_second[which]);
-        
-        
+        //console.log(`Blob ${which} Control Points First:`, this.ctrl_x_first[which], this.ctrl_y_first[which]);
+        //console.log(`Blob ${which} Control Points Second:`, this.ctrl_x_second[which], this.ctrl_y_second[which]);
+
+
         this.ctx.lineWidth = 6;
         this.ctx.beginPath();
         this.ctx.moveTo(this.x_points[which][0] + center_x, this.y_points[which][0] + center_y);
@@ -229,18 +229,18 @@ class CanvasMorpher {
         scaledCanvas.width = targetWidth;
         scaledCanvas.height = targetHeight;
         const scaledCtx = scaledCanvas.getContext('2d');
-        
+
         // Clear canvas
-        scaledCtx.clearRect(0, 0, targetWidth, targetHeight); 
+        scaledCtx.clearRect(0, 0, targetWidth, targetHeight);
 
         // Draw the original canvas onto the scaled canvas
         scaledCtx.drawImage(originalCanvas, 0, 0, targetWidth, targetHeight);
 
         return scaledCanvas;
     }
-    
 
-    combineImages(canvas, p1, p2, n1=0, n2=0) { 
+
+    combineImages(canvas, p1, p2, n1=0, n2=0) {
         const ctx = canvas.getContext('2d');
         const newCanvas = createAndManipulateCanvases(canvas);
         const canvasMorpher = new CanvasMorpher(newCanvas, 1200, 1200);
@@ -274,8 +274,8 @@ class CanvasMorpher {
         // Scale the original canvas to fit the target size
         const scaledCanvas2 = this.scaleCanvas(originalCanvas, canvas.width, canvas.height);
         const img2Promise = this.canvasToImage(scaledCanvas2);
-        
-        console.log(`size:`, canvas.width, canvas.height); 
+
+        //console.log(`size:`, canvas.width, canvas.height);
         // Combine the scaled images
          Promise.all([img1Promise, img2Promise]).then(([img1, img2]) => {
                 ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
@@ -283,64 +283,70 @@ class CanvasMorpher {
                 ctx.drawImage(img2, canvas.width / 2, 0);
             });
     }
-    
+
     XAB(canvas, p1, p2, n1=0, n2=0, condition=0) {
+      console.log(`variables:`, p1, p2, n1, n2, condition);
       const ctx = canvas.getContext('2d');
       const newCanvas = createAndManipulateCanvases(canvas);
       const canvasMorpher = new CanvasMorpher(newCanvas, 1200, 1200);
-    
+
       // Create a 1200x1200 canvas for original drawing
       const originalCanvas = document.createElement('canvas');
       originalCanvas.width = 1200;
       originalCanvas.height = 1200;
       const originalCtx = originalCanvas.getContext('2d');
-    
+
       // Draw the first shape (condition 1: p1, else: p2)
-      if (condition == 1) {
-        canvasMorpher.morphAndDraw(p1, n1);
-      } else {
+      // old code
+      if (condition = 1) {
+        //canvasMorpher.morphAndDraw(p1, n1);
+        canvasMorpher.morphAndDraw(p1, 0); // if XAB identical, then n1 == 0, else it takes the baseline
+      }
+      //new condition for similarity
+      if (condition = 2) {
+        canvasMorpher.morphAndDraw(p2, 0); // if XAB identical, then n1 == 0, else it takes the baseline
+      }
+      else {
         canvasMorpher.morphAndDraw(p2, n2);
       }
       originalCtx.drawImage(newCanvas, 0, 0, 1200, 1200);
-    
+
       // Scale the original canvas to fit the target size
       const scaledCanvas1 = this.scaleCanvas(originalCanvas, canvas.width*2/3, canvas.height*2/3);
       const img1Promise = this.canvasToImage(scaledCanvas1);
-    
+
       // Clear the original canvas for the next shape
       originalCtx.clearRect(0, 0, originalCanvas.width, originalCanvas.height);
-    
+
       // Draw the second shape (p2)
       canvasMorpher.morphAndDraw(p1, n1);
       originalCtx.drawImage(newCanvas, 0, 0, 1200, 1200);
-    
+
       // Scale the original canvas to fit the target size
       const scaledCanvas2 = this.scaleCanvas(originalCanvas, canvas.width*2/3, canvas.height*2/3);
       const img2Promise = this.canvasToImage(scaledCanvas2);
-    
+
       // Clear the original canvas for the next shape
       originalCtx.clearRect(0, 0, originalCanvas.width, originalCanvas.height);
-    
+
       // Draw the third shape (p3)
       canvasMorpher.morphAndDraw(p2, n2);
       originalCtx.drawImage(newCanvas, 0, 0, 1200, 1200);
-    
+
       // Scale the original canvas to fit the target size
       const scaledCanvas3 = this.scaleCanvas(originalCanvas, canvas.width*2/3, canvas.height*2/3);
       const img3Promise = this.canvasToImage(scaledCanvas3);
-    
+
       // Combine the scaled images in a triangular arrangement
       Promise.all([img1Promise, img2Promise, img3Promise]).then(([img1, img2, img3]) => {
             ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-    
+
             // Calculate the positions
             const centerX = (canvas.width) / 4;
             const row1Y = 0;
             const row2Y = canvas.height / 2;
             const img2X = 0;
             const img3X = (canvas.width / 2);
-            console.log(`position:`, centerX, row1Y, img2X, row2Y, img3X);
-            
             // Draw the images
             ctx.drawImage(img1, centerX, row1Y);           // Top center image
             ctx.drawImage(img2, img2X, row2Y);             // Bottom left image
@@ -357,4 +363,3 @@ class CanvasMorpher {
 // const canvas = document.getElementById('myCanvas');
 // const canvasMorpher = new CanvasMorpher(canvas, 100, 105);
 // canvasMorpher.morphAndDraw(0.5);
-
