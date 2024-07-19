@@ -31,8 +31,10 @@
 
   <script>
 
-  // Training I, II, & Test_equally : promoted noise range from [-1, 1] to [-2.5, 2.5]
+  // Training I, II: promoted noise range to [-1, 1] diff = 1.5, and [-1.5, 1.5] diff = 2
+  // Test_equally : promoted noise range from [-1, 1] to [-2.5, 2.5]
   // Testing : promoted noise range from [-2, 2] to [-3.5, 3.5]
+  // Try [-1.5, 1.5] in training & [-2.5, 2.5] in testing if current version is too difficult
 
   /* initialize jsPsych */
   var jsPsych = initJsPsych({
