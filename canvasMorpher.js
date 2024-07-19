@@ -152,7 +152,8 @@ class CanvasMorpher {
                 //e = { x: 860, y: 940};
                 break;
         }
-        //console.log(`Blob ${which} controled by e and random:`, e, rand);
+        console.log(`Blob controled by:`, p, rand);
+        console.log(`Blob renders:`, e);
 
         for (let j = 0; j < this.num_ctrls; j++) {
             let m = (this.ctrl_x_first[1][j] - this.ctrl_x_first[0][j]) / this.intrablob_distance;
@@ -213,7 +214,7 @@ class CanvasMorpher {
      return new Promise((resolve, reject) => {
        const img = new Image();
        img.onload = () => {
-         console.log("Image loaded");
+         //console.log("Image loaded");
          resolve(img);
        };
        img.onerror = (error) => {
@@ -285,7 +286,8 @@ class CanvasMorpher {
     }
 
     XAB(canvas, p1, p2, n1=0, n2=0, condition=0) {
-      console.log(`variables:`, p1, p2, n1, n2, condition);
+      console.log(`variables:`, p1, p2, n1, n2, condition, `type of condition:`, typeof condition);
+
       const ctx = canvas.getContext('2d');
       const newCanvas = createAndManipulateCanvases(canvas);
       const canvasMorpher = new CanvasMorpher(newCanvas, 1200, 1200);
@@ -298,17 +300,21 @@ class CanvasMorpher {
 
       // Draw the first shape (condition 1: p1, else: p2)
       // old code
-      if (condition = 1) {
-        //canvasMorpher.morphAndDraw(p1, n1);
-        canvasMorpher.morphAndDraw(p1, 0); // if XAB identical, then n1 == 0, else it takes the baseline
+      if (condition == 1) {
+        console.log(`Condition 1`);
+        canvasMorpher.morphAndDraw(p1, 0);
+        //canvasMorpher.morphAndDraw(p1, 0); // if XAB identical, then n1 == 0, else it takes the baseline
       }
       //new condition for similarity
-      if (condition = 2) {
+      else if (condition == 2) {
+        console.log(`Condition 2`);
         canvasMorpher.morphAndDraw(p2, 0); // if XAB identical, then n1 == 0, else it takes the baseline
       }
-      else {
+      else if (condition == 0){
+        console.log(`Condition 0`);
         canvasMorpher.morphAndDraw(p2, n2);
       }
+
       originalCtx.drawImage(newCanvas, 0, 0, 1200, 1200);
 
       // Scale the original canvas to fit the target size
