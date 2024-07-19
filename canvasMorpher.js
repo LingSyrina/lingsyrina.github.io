@@ -302,8 +302,7 @@ class CanvasMorpher {
       // old code
       if (condition == 1) {
         console.log(`Condition 1`);
-        canvasMorpher.morphAndDraw(p1, 0);
-        //canvasMorpher.morphAndDraw(p1, 0); // if XAB identical, then n1 == 0, else it takes the baseline
+        canvasMorpher.morphAndDraw(p1, 0); // if XAB identical, then n1 == 0, else it takes the baseline
       }
       //new condition for similarity
       else if (condition == 2) {
