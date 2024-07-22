@@ -403,6 +403,11 @@
         const stimuli = [];
         const differences = [0.05 * 2, 0.05 * 5, 0.05 * 9, 0.05 * 13, 0.05 * 16]; //0.05 * d where d = |p1-p2|
         const numDiff = differences.length;
+        
+        for (let i = 0; i < numStimuli; i++) {
+          let p1, p2;
+          const diffs = differences[Math.floor(Math.random() * differences.length)];
+
 
         //determine # of stimuli for each distance
         const baseC = Math.floor(numStimuli / numDiff);
@@ -418,7 +423,7 @@
         for (let j = 0; j < numDiff; j++){
             for (let k = 0; k < counts[j]; k++) {
               let p1, p2;
-              const diff = differences[j];
+              const diff = diffs[j];
 
 
               if (stimuli.length < numStimuli / 2) {
@@ -634,14 +639,14 @@
       var active_d = 45;    //# trials for degree training
       var passive = 15;
       var passive_d = 15;   //# trials for degree training
-      var test = 30;
+      var test = 35;
       var equally = 10;
       var highp = 0.05 * 2;
       var lowp = 0.05 * 4;
 
 
       //For debug only (should be commented out for real experiment)
-    /*
+      /*
       var active = 1;
       var active_d = 1;
       var passive = 1;
