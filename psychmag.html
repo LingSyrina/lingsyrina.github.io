@@ -414,11 +414,9 @@
             counts[i]++;
         }
 
-        for (let j = 0; j < numDiff; j++) {
-                const diff = differences[j];
-
-                for (let k = 0; k < counts[j]; k++) {
-                    let p1, p2;
+        for (let j = 0; j < numStimuli; j++) {
+                let p1, p2;
+                const diff = differences[Math.floor(Math.random() * differences.length)];
 
                     // Create half of the stimuli with p1 < p2 and the other half with p1 > p2
                     if (stimuli.length < numStimuli / 2) {
