@@ -677,8 +677,9 @@
 
       /*Stimuli number*/
       var active = 35;
-      var active_d = 22;    //# trials for degree training
-      var active_d2 = 23;
+      var active_d = 15;    //# trials for degree training
+      var active_d2 = 15;
+      var active_d3 = 15;
       var passive = 15;
       var passive_d = 7;   //# trials for degree training
       var passive_d2 = 8;
@@ -691,10 +692,11 @@
       var active = 1;
       var active_d = 1;
       var active_d2 = 1;
+      var active_d3 = 1;
       var passive = 1;
       var passive_d = 1;
       var passive_d2 = 1;
-      var test = 28;
+      var test = 1;
       var equally = 1;
       var highp = 0.05 * 2;
       var lowp = 0.05 * 4;
@@ -721,11 +723,15 @@
       var learn_stimuli_c2h = activeDegreeStimuli(active_d,highp); // 35 active larning, high precision
       var learn_stimuli_c3h = passiveDegreeStimuli(passive_d2,highp); // 15 passive learning, high precision (0.2)
       var learn_stimuli_c4h = activeDegreeStimuli(active_d2,highp); // 35 active larning, high precision
+      var learn_stimuli_c5h = activeDegreeStimuli(active_d3,highp); // 35 active larning, high precision
+
 
       var learn_stimuli_c1l = passiveDegreeStimuli(passive_d,lowp); // 15 passive learning, low precision (0.4)
       var learn_stimuli_c2l = activeDegreeStimuli(active_d,lowp); // 35 passive learning, low precision (0.4)
       var learn_stimuli_c3l = passiveDegreeStimuli(passive_d2,lowp); // 15 passive learning, low precision (0.4)
       var learn_stimuli_c4l = activeDegreeStimuli(active_d2,lowp); // 35 passive learning, low precision (0.4)
+      var learn_stimuli_c5l = activeDegreeStimuli(active_d3,lowp); // 35 passive learning, low precision (0.4)
+
 
       /* Stimuli for testing 'more A/B' */
     //after XAB test (identical to the pre_XAB_test)
@@ -1278,6 +1284,12 @@
          randomize_order: true,
        };
 
+      var learn_procedure_7h = {
+         timeline: [instruction_break,looped_C_active],
+         timeline_variables: learn_stimuli_c5h,
+         randomize_order: true,
+       };
+
       var learn_procedure_3l = {
         timeline: [instruction_break, learn_A_passive],
         timeline_variables:learn_stimuli_c1l,
@@ -1299,6 +1311,12 @@
        var learn_procedure_6l = {
          timeline: [instruction_break,looped_C_active],
          timeline_variables: learn_stimuli_c4l,
+         randomize_order: true,
+       };
+
+      var learn_procedure_6l = {
+         timeline: [instruction_break,looped_C_active],
+         timeline_variables: learn_stimuli_c5l,
          randomize_order: true,
        };
 
@@ -1408,13 +1426,15 @@
         timeline.push(instruction_5, learn_procedure_4h);
         timeline.push(instruction_4_1, learn_procedure_5h);
         timeline.push(instruction_5_1, learn_procedure_6h);
+        timeline.push(instruction_5_2, learn_procedure_7h);
       } else { // low precision
         group_name = 'low';
         jsPsych.data.addProperties({ precision_group: 'low' });
         timeline.push(instruction_4, learn_procedure_3l);
         timeline.push(instruction_5, learn_procedure_4l);
-        timeline.push(instruction_4_1, learn_procedure_3h);
-        timeline.push(instruction_5_1, learn_procedure_4h);
+        timeline.push(instruction_4_1, learn_procedure_5l);
+        timeline.push(instruction_5_1, learn_procedure_6l);
+        timeline.push(instruction_5_2, learn_procedure_7l);
       }
 
       /*block4: test; Same across all groups*/
