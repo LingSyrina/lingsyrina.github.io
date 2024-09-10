@@ -213,6 +213,17 @@
       post_trial_gap: 500
     };
 
+    var instruction_5_2 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <p> <strong>Awesome!</strong> <br/>
+        Now, we would like to ask you to <strong>guess the correct degree</strong> for each pair of images.</p>
+        <p>(Press the space bar to continue.)</p>
+      `,
+      choices: [' '], // restricts to space bar press
+      post_trial_gap: 500
+    };
+
 
     /* instruction for testing phase_2a */
     var instruction_6 = {
