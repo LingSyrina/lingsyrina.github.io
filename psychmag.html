@@ -31,10 +31,9 @@
 
   <script>
 
-  // Training I, II: promoted noise range to [-1, 1] diff = 1.5, and [-1.5, 1.5] diff = 2
-  // Test_equally : promoted noise range from [-1, 1] to [-2.5, 2.5]
-  // Testing : promoted noise range from [-2, 2] to [-3.5, 3.5]
-  // Try [-1.5, 1.5] in training & [-2.5, 2.5] in testing if current version is too difficult
+  // Training I, II: promoted noise range to [-1.5, 1.5] diff = 1.5
+  // Test_equally : promoted noise range from [-1, 1] to [-2.5, 2.5] diff = 0
+  // Testing : promoted noise range to [-2, 2] diff = 2
 
   /* initialize jsPsych */
   var jsPsych = initJsPsych({
@@ -351,12 +350,12 @@
         //const n = getRandomArbitrary(-.5, .5);
 
         if (i < numStimuli / 2) {
-          p1 = getRandomArbitrary(0.05, 1 - diff);
+          p1 = getRandomArbitrary(0.15, 1 - diff);
           p2 = p1 + diff;
           //n1 = n;
           //n2 = (n1 +  1.5);
         } else {
-          p2 = getRandomArbitrary(0.05, 1 - diff);
+          p2 = getRandomArbitrary(0.15, 1 - diff);
           p1 = p2 + diff;
           //n1 = n;
           //n2 = (n1 -  1.5);
@@ -366,9 +365,9 @@
         //const n2 = getRandomArbitrary(-1, 1);
         let n2;
         if (n1 < 0) {
-            n2 = (n1 - 1.5);
-        } else {
             n2 = (n1 + 1.5);
+        } else {
+            n2 = (n1 - 1.5);
         }
 
         let prompt;
@@ -404,10 +403,6 @@
         const differences = [0.05 * 2, 0.05 * 5, 0.05 * 9, 0.05 * 13, 0.05 * 16]; //0.05 * d where d = |p1-p2|
         const numDiff = differences.length;
         
-        for (let i = 0; i < numStimuli; i++) {
-          let p1, p2;
-          const diffs = differences[Math.floor(Math.random() * differences.length)];
-
 
         //determine # of stimuli for each distance
         const baseC = Math.floor(numStimuli / numDiff);
@@ -419,42 +414,51 @@
             counts[i]++;
         }
 
+        for (let j = 0; j < numDiff; j++) {
+                const diff = differences[j];
 
-        for (let j = 0; j < numDiff; j++){
-            for (let k = 0; k < counts[j]; k++) {
-              let p1, p2;
-              const diff = diffs[j];
+                for (let k = 0; k < counts[j]; k++) {
+                    let p1, p2;
 
+                    // Create half of the stimuli with p1 < p2 and the other half with p1 > p2
+                    if (stimuli.length < numStimuli / 2) {
+                        // p1 < p2
+                        p1 = getRandomArbitrary(0.05, 1 - diff);
+                        p2 = p1 + diff;
+                    } else {
+                        // p1 > p2
+                        p2 = getRandomArbitrary(0.05, 1 - diff);
+                        p1 = p2 + diff;
+                    }
 
-              if (stimuli.length < numStimuli / 2) {
-                p1 = getRandomArbitrary(0.15, 1 - diff);
-                p2 = p1 + diff;
-              } else {
-                p2 = getRandomArbitrary(0.15, 1 - diff);
-                p1 = p2 + diff;
-              }
+                    // Generate n1 and n2 values
+                    const n1 = getRandomArbitrary(-1.5, 1.5);
+                    let n2;
+                    if (n1 < 0) {
+                        n2 = (n1 + 2);
+                    } else {
+                        n2 = (n1 - 2);
+                    }
 
-              const n1 = getRandomArbitrary(-1.5, 1.5);
-              //const n2 = getRandomArbitrary(-1, 1);
-              let n2;
-              if (n1 < 0) {
-                  n2 = (n1 - 2);
-              } else {
-                  n2 = (n1 + 2);
-              }
-
-              stimuli.push({
-                stimulus: (stimuli.length + 1).toString(),
-                radius_a: p1,
-                radius_b: p2,
-                n1: n1,
-                n2: n2,
-                correct_response: p1 > p2 ? 'q' : 'p'
-              });
+                    // Add stimulus to the array
+                    stimuli.push({
+                        stimulus: (stimuli.length + 1).toString(),
+                        radius_a: p1,
+                        radius_b: p2,
+                        n1: n1,
+                        n2: n2,
+                        correct_response: p1 > p2 ? 'q' : 'p'
+                    });
+                }
             }
-        }
 
-        return stimuli;
+            // Shuffle the stimuli array to randomize the order
+            for (let i = stimuli.length - 1; i > 0; i--){
+                const j = Math.floor(Math.random() * (i + 1));
+                [stimuli[i], stimuli[j]] = [stimuli[j], stimuli[i]]
+            }
+
+            return stimuli;
       }
 
    function generateEqualTestStimuli(numStimuli) {
@@ -466,10 +470,10 @@
           const diff = differences[Math.floor(Math.random() * differences.length)];
 
           if (i < numStimuli / 2) {
-            p1 = getRandomArbitrary(0.15, 1 - diff);
+            p1 = getRandomArbitrary(0.05, 1 - diff);
             p2 = p1 + diff;
           } else {
-            p2 = getRandomArbitrary(0.15, 1 - diff);
+            p2 = getRandomArbitrary(0.05, 1 - diff);
             p1 = p2 + diff;
           }
 
@@ -507,15 +511,24 @@
           const diff = differences[Math.floor(Math.random() * differences.length)];
 
           if (i < numStimuli / 2) {
-            p1 = getRandomArbitrary(0.05, 1 - diff);
+            p1 = getRandomArbitrary(0.15, 1 - diff);
             p2 = p1 + diff;
           } else {
-            p2 = getRandomArbitrary(0.05, 1 - diff);
+            p2 = getRandomArbitrary(0.15, 1 - diff);
             p1 = p2 + diff;
           }
 
-          const n1 = getRandomArbitrary(-2.5, 2.5); // promoted range from [-1, 1] to [-2.5, 2.5]
-          const n2 = getRandomArbitrary(-2.5, 2.5); // promoted range from [-1, 1] to [-2.5, 2.5]
+          //const n1 = getRandomArbitrary(-2.5, 2.5); // promoted range from [-1, 1] to [-2.5, 2.5]
+          //const n2 = getRandomArbitrary(-2.5, 2.5); // promoted range from [-1, 1] to [-2.5, 2.5]
+          const n1 = getRandomArbitrary(-1, 1);
+          //const n2 = getRandomArbitrary(-1, 1);
+          let n2;
+          if (n1 < 0) {
+              n2 = (n1 + 1.5);
+          } else {
+              n2 = (n1 - 1.5);
+          }
+
 
           const degreeDifference = Math.trunc(diff / n);
           let prompt;
@@ -552,15 +565,22 @@
           const diff = differences[Math.floor(Math.random() * differences.length)];
 
           if (i < numStimuli / 2) {
-            p1 = getRandomArbitrary(0.05, 1 - diff);
+            p1 = getRandomArbitrary(0.15, 1 - diff);
             p2 = p1 + diff;
           } else {
-            p2 = getRandomArbitrary(0.05, 1 - diff);
+            p2 = getRandomArbitrary(0.15, 1 - diff);
             p1 = p2 + diff;
           }
 
-          const n1 = getRandomArbitrary(-2.5, 2.5); // promoted range from [-1, 1] to [-2.5, 2.5]
-          const n2 = getRandomArbitrary(-2.5, 2.5); // promoted range from [-1, 1] to [-2.5, 2.5]
+          //const n1 = getRandomArbitrary(-2.5, 2.5); // promoted range from [-1, 1] to [-2.5, 2.5]
+          //const n2 = getRandomArbitrary(-2.5, 2.5); // promoted range from [-1, 1] to [-2.5, 2.5]
+          const n1 = getRandomArbitrary(-1, 1);
+          let n2;
+          if (n1 < 0) {
+              n2 = (n1 + 1.5);
+          } else {
+              n2 = (n1 - 1.5);
+          }
 
           const degreeDifference = Math.trunc(diff / n);
           let prompt;
