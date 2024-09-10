@@ -177,8 +177,32 @@
       post_trial_gap: 500
     };
 
+    var instruction_4_1 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <p> Welcome back!</p>
+        <p> You will continue to see pairs of images accompanied by the description.
+        <br/> This time, we are giving you more detailed description, using <strong>our own mysterious scale</strong>... </p>
+        <p>(Press the space bar to continue.)</p>
+      `,
+      choices: [' '], // restricts to space bar press
+      post_trial_gap: 500
+    };
+
+
     //Active
     var instruction_5 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <p> <strong>Awesome!</strong> <br/>
+        Now, we would like to ask you to <strong>guess the correct degree</strong> for each pair of images.</p>
+        <p>(Press the space bar to continue.)</p>
+      `,
+      choices: [' '], // restricts to space bar press
+      post_trial_gap: 500
+    };
+
+    var instruction_5_1 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
         <p> <strong>Awesome!</strong> <br/>
@@ -652,23 +676,25 @@
       }
 
       /*Stimuli number*/
-      /*
       var active = 35;
-      var active_d = 45;    //# trials for degree training
+      var active_d = 22;    //# trials for degree training
+      var active_d2 = 23;
       var passive = 15;
-      var passive_d = 15;   //# trials for degree training
-      var test = 35;
-      var equally = 10;
+      var passive_d = 7;   //# trials for degree training
+      var passive_d2 = 8;
+      var test = 32;
+      var equally = 30;
       var highp = 0.05 * 2;
       var lowp = 0.05 * 4;
-      */
 
       //For debug only (should be commented out for real experiment)
-      
+      /*     
       var active = 1;
       var active_d = 1;
+      var active_d2 = 1;
       var passive = 1;
       var passive_d = 1;
+      var passive_d2 = 1;
       var test = 28;
       var equally = 1;
       var highp = 0.05 * 2;
@@ -676,10 +702,8 @@
       var pre_test_stimuli = [
         { p1: 0.05, p2: 0.2, n1: 0, n2: 0,  condition: 1},
       ];
+      */
       
-
-
-
       /*pretest*/
       var pre_test_xab_stimuli = convertToTimelineVariables(pre_test_stimuli);
 
@@ -696,9 +720,13 @@
       // Should we adjust low precision so that it's always non-zero? (Validating equally tests)
       var learn_stimuli_c1h = passiveDegreeStimuli(passive_d,highp); // 15 passive learning, high precision (0.2)
       var learn_stimuli_c2h = activeDegreeStimuli(active_d,highp); // 35 active larning, high precision
+      var learn_stimuli_c3h = passiveDegreeStimuli(passive_d2,highp); // 15 passive learning, high precision (0.2)
+      var learn_stimuli_c4h = activeDegreeStimuli(active_d2,highp); // 35 active larning, high precision
 
       var learn_stimuli_c1l = passiveDegreeStimuli(passive_d,lowp); // 15 passive learning, low precision (0.4)
       var learn_stimuli_c2l = activeDegreeStimuli(active_d,lowp); // 35 passive learning, low precision (0.4)
+      var learn_stimuli_c3l = passiveDegreeStimuli(passive_d2,lowp); // 15 passive learning, low precision (0.4)
+      var learn_stimuli_c4l = activeDegreeStimuli(active_d2,lowp); // 35 passive learning, low precision (0.4)
 
       /* Stimuli for testing 'more A/B' */
     //after XAB test (identical to the pre_XAB_test)
@@ -727,7 +755,7 @@
 
       /* Stimuli for testing equally */
       //after XAB test (identical to the pre_XAB_test)
-      var test_stimuli_equally = generateEqualTestStimuli(equally); // 10 random parameters
+    var test_stimuli_equally = generateEqualTestStimuli(equally); // 30 random parameters
 
     /* Stimuli for language survey */
     var test_stimuli_s = [
@@ -1239,6 +1267,18 @@
          randomize_order: true,
        };
 
+      var learn_procedure_5h = {
+         timeline: [instruction_break, learn_A_passive],
+         timeline_variables:learn_stimuli_c3h,
+         randomize_order: true,
+       };
+
+       var learn_procedure_6h = {
+         timeline: [instruction_break,looped_C_active],
+         timeline_variables: learn_stimuli_c4h,
+         randomize_order: true,
+       };
+
       var learn_procedure_3l = {
         timeline: [instruction_break, learn_A_passive],
         timeline_variables:learn_stimuli_c1l,
@@ -1250,6 +1290,18 @@
         timeline_variables: learn_stimuli_c2l,
         randomize_order: true,
       };
+
+      var learn_procedure_5l = {
+         timeline: [instruction_break, learn_A_passive],
+         timeline_variables:learn_stimuli_c3l,
+         randomize_order: true,
+       };
+
+       var learn_procedure_6l = {
+         timeline: [instruction_break,looped_C_active],
+         timeline_variables: learn_stimuli_c4l,
+         randomize_order: true,
+       };
 
        // Block IV: testing
        var xab_test_2 = { // XAB TEST
@@ -1355,11 +1407,15 @@
         jsPsych.data.addProperties({ precision_group: 'high' });
         timeline.push(instruction_4, learn_procedure_3h);
         timeline.push(instruction_5, learn_procedure_4h);
+        timeline.push(instruction_4_1, learn_procedure_5h);
+        timeline.push(instruction_5_1, learn_procedure_6h);
       } else { // low precision
         group_name = 'low';
         jsPsych.data.addProperties({ precision_group: 'low' });
         timeline.push(instruction_4, learn_procedure_3l);
         timeline.push(instruction_5, learn_procedure_4l);
+        timeline.push(instruction_4_1, learn_procedure_3h);
+        timeline.push(instruction_5_1, learn_procedure_4h);
       }
 
       /*block4: test; Same across all groups*/
