@@ -180,9 +180,9 @@
     var instruction_4_1 = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
-        <p> Welcome back!</p>
-        <p> You will continue to see pairs of images accompanied by the description.
-        <br/> This time, we are giving you more detailed description, using <strong>our own mysterious scale</strong>... </p>
+        <p> <strong>Great Job!</strong></p>
+        <p> That was hard, right?
+        <br/> Let's practice again. We will be giving you pairs of images <strong>with description</strong>... </p>
         <p>(Press the space bar to continue.)</p>
       `,
       choices: [' '], // restricts to space bar press
@@ -206,7 +206,18 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: `
         <p> <strong>Awesome!</strong> <br/>
-        Now, we would like to ask you to <strong>guess the correct degree</strong> for each pair of images.</p>
+        Now, let's try again and <strong>guess the correct degree</strong> for each pair of images.</p>
+        <p>(Press the space bar to continue.)</p>
+      `,
+      choices: [' '], // restricts to space bar press
+      post_trial_gap: 500
+    };
+
+    var instruction_5_2 = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: `
+        <p> <strong>Great job!</strong> <br/>
+        Let's try once again. Guess the correct degree for each pair of images!</p>
         <p>(Press the space bar to continue.)</p>
       `,
       choices: [' '], // restricts to space bar press
