@@ -757,53 +757,14 @@
       /* Stimuli for testing 'more A/B' */
     //after XAB test (identical to the pre_XAB_test)
       var test_stimuli = generateTestStimuli(test); // 27 random parameters
-      // Array of test stimuli without correct_response
-      var new_stimuli = [
-        { radius_a: 0, radius_b: 0.25, n1: 0, n2: 0 },
-        { radius_a: 0.25, radius_b: 0, n1: 0, n2: 0 },
-        { radius_a: 0.05, radius_b: 0.30, n1: 0, n2: 0 },
-        { radius_a: 0.30, radius_b: 0.05, n1: 0, n2: 0 },
-        { radius_a: 0.75, radius_b: 1, n1: 0, n2: 0 },
-        { radius_a: 1, radius_b: 0.75, n1: 0, n2: 0 },
-        { radius_a: 0.70, radius_b: 0.95, n1: 0, n2: 0 },
-        { radius_a: 0.95, radius_b: 0.70, n1: 0, n2: 0 }
-      ];
-      
-      // Add correct_response dynamically based on p1 > p2
-      new_stimuli.forEach(stimuli => {
-        stimuli.correct_response = stimuli.p1 > stimuli.p2 ? 'q' : 'p';
-      });
-      
-      // Push the new stimuli to test_stimuli array
-      test_stimuli.push(...new_stimuli);
-      
-      console.log(test_stimuli);
-
-      /* Stimuli for testing equally */
-      //after XAB test (identical to the pre_XAB_test)
+    //after XAB test (identical to the pre_XAB_test)
     var test_stimuli_equally = generateEqualTestStimuli(equally); // 30 random parameters
 
     /* Stimuli for language survey */
     var test_stimuli_s = [
       { stimulus: 'img/05_low.png', word: "tall", antonym: "short", condition: '05_low'},
-      { stimulus: 'img/25a_low.png', word: "tall", antonym: "short", condition: '25a_low'},
-      { stimulus: 'img/25b_low.png', word: "tall", antonym: "short", condition: '25b_low'},
-      { stimulus: 'img/3a_low.png', word: "tall", antonym: "short", condition: '3a_low'},
-      { stimulus: 'img/3b_low.png', word: "tall", antonym: "short", condition: '3b_low'},
-       { stimulus: 'img/35a_low.png', word: "tall", antonym: "short", condition: '35a_low'},
-      { stimulus: 'img/35b_low.png', word: "tall", antonym: "short", condition: '35b_low'},
-      { stimulus: 'img/4a_low.png', word: "tall", antonym: "short", condition: '4a_low'},
-      { stimulus: 'img/4b_low.png', word: "tall", antonym: "short", condition: '4b_low'},
       { stimulus: 'img/5_low.png', word: "tall", antonym: "short", condition: '5_low'},
       { stimulus: 'img/05_high.png', word: "tall", antonym: "short", condition: '05_high'},
-      { stimulus: 'img/25a_high.png', word: "tall", antonym: "short", condition: '25a_high'},
-      { stimulus: 'img/25b_high.png', word: "tall", antonym: "short", condition: '25b_high'},
-      { stimulus: 'img/3a_high.png', word: "tall", antonym: "short", condition: '3a_high'},
-      { stimulus: 'img/3b_high.png', word: "tall", antonym: "short", condition: '3b_high'},
-      { stimulus: 'img/35a_high.png', word: "tall", antonym: "short", condition: '35a_high'},
-      { stimulus: 'img/35b_high.png', word: "tall", antonym: "short", condition: '35b_high'},
-      { stimulus: 'img/4a_high.png', word: "tall", antonym: "short", condition: '4a_high'},
-      { stimulus: 'img/4b_high.png', word: "tall", antonym: "short", condition: '4b_high'},
       { stimulus: 'img/5_high.png', word: "tall", antonym: "short", condition: '5_high'},
       ];
 
