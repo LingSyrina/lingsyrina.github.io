@@ -397,12 +397,12 @@
         //const n = getRandomArbitrary(-.5, .5);
 
         if (i < numStimuli / 2) {
-          p1 = getRandomArbitrary(0.15, 1 - diff);
+          p1 = getRandomArbitrary(0.15, 0.85 - diff);
           p2 = p1 + diff;
           //n1 = n;
           //n2 = (n1 +  1.5);
         } else {
-          p2 = getRandomArbitrary(0.15, 1 - diff);
+          p2 = getRandomArbitrary(0.15, 0.85 - diff);
           p1 = p2 + diff;
           //n1 = n;
           //n2 = (n1 -  1.5);
@@ -477,12 +477,12 @@
                     }
 
                     // Generate n1 and n2 values
-                    const n1 = getRandomArbitrary(-1.5, 1.5);
+                    const n1 = getRandomArbitrary(-2.5, 2.5);
                     let n2;
                     if (n1 < 0) {
-                        n2 = (n1 + 2);
+                        n2 = (n1 + 2.5);
                     } else {
-                        n2 = (n1 - 2);
+                        n2 = (n1 - 2.5);
                     }
 
                     // Add stimulus to the array
@@ -556,10 +556,10 @@
           const diff = differences[Math.floor(Math.random() * differences.length)];
 
           if (i < numStimuli / 2) {
-            p1 = getRandomArbitrary(0.15, 1 - diff);
+            p1 = getRandomArbitrary(0.15, 0.85 - diff);
             p2 = p1 + diff;
           } else {
-            p2 = getRandomArbitrary(0.15, 1 - diff);
+            p2 = getRandomArbitrary(0.15, 0.85 - diff);
             p1 = p2 + diff;
           }
 
@@ -610,10 +610,10 @@
           const diff = differences[Math.floor(Math.random() * differences.length)];
 
           if (i < numStimuli / 2) {
-            p1 = getRandomArbitrary(0.15, 1 - diff);
+            p1 = getRandomArbitrary(0.15, 0.85 - diff);
             p2 = p1 + diff;
           } else {
-            p2 = getRandomArbitrary(0.15, 1 - diff);
+            p2 = getRandomArbitrary(0.15, 0.85 - diff);
             p1 = p2 + diff;
           }
 
@@ -775,8 +775,8 @@
 
       // Apply noise to each stimulus
       new_stimuli = new_stimuli.map(stimulus => {
-          let n1 = getRandomArbitrary(-1.5, 1.5);
-          let n2 = (n1 < 0) ? (n1 + 2) : (n1 - 2);
+          let n1 = getRandomArbitrary(-2.5, 2.5);
+          let n2 = (n1 < 0) ? (n1 + 2.5) : (n1 - 2.5);
           return { ...stimulus, n1, n2 };
       });
       
@@ -796,7 +796,7 @@
 
     console.log(test_stimuli_equally);
 
-    var debug = "off";
+    var debug = "on";
     if (debug === "on"){
       downloadConsoleLogs();
     } 
