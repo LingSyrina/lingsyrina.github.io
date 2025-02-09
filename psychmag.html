@@ -770,6 +770,13 @@
         { radius_a: 0.70, radius_b: 0.95, n1: 0, n2: 0 },
         { radius_a: 0.95, radius_b: 0.70, n1: 0, n2: 0 }
       ];
+
+      // Apply noise to each stimulus
+      new_stimuli = new_stimuli.map(stimulus => {
+          let n1 = getRandomArbitrary(-1.5, 1.5);
+          let n2 = (n1 < 0) ? (n1 + 2) : (n1 - 2);
+          return { ...stimulus, n1, n2 };
+      });
       
       // Add correct_response dynamically based on p1 > p2
       new_stimuli.forEach(stimuli => {
