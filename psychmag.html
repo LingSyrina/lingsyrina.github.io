@@ -739,7 +739,8 @@
 
       /* Stimuli for learning_phase_2 */
       var learn_stimuli_a2 = generateLearnStimuli(active, 2); // (35 trial, 2: active)
-
+      console.log(pre_test_xab_stimuli, learn_stimuli_a1, learn_stimuli_a2);
+      
       /* Stimuli for learning_phase_1C */
       // Should we adjust low precision so that it's always non-zero? (Validating equally tests)
       var learn_stimuli_c1h = passiveDegreeStimuli(passive_d,highp); // 15 passive learning, high precision (0.2)
@@ -747,14 +748,14 @@
       var learn_stimuli_c3h = passiveDegreeStimuli(passive_d2,highp); // 15 passive learning, high precision (0.2)
       var learn_stimuli_c4h = activeDegreeStimuli(active_d2,highp); // 35 active larning, high precision
       var learn_stimuli_c5h = activeDegreeStimuli(active_d3,highp); // 35 active larning, high precision
-
+      console.log(learn_stimuli_c1h, learn_stimuli_c2h, learn_stimuli_c3h, learn_stimuli_c4h, learn_stimuli_c5h);
 
       var learn_stimuli_c1l = passiveDegreeStimuli(passive_d,lowp); // 15 passive learning, low precision (0.4)
       var learn_stimuli_c2l = activeDegreeStimuli(active_d,lowp); // 35 passive learning, low precision (0.4)
       var learn_stimuli_c3l = passiveDegreeStimuli(passive_d2,lowp); // 15 passive learning, low precision (0.4)
       var learn_stimuli_c4l = activeDegreeStimuli(active_d2,lowp); // 35 passive learning, low precision (0.4)
       var learn_stimuli_c5l = activeDegreeStimuli(active_d3,lowp); // 35 passive learning, low precision (0.4)
-
+      console.log(learn_stimuli_c1l, learn_stimuli_c2l, learn_stimuli_c3l, learn_stimuli_c4l, learn_stimuli_c5l);
 
       /* Stimuli for testing 'more A/B' */
     //after XAB test (identical to the pre_XAB_test)
@@ -791,6 +792,13 @@
       /* Stimuli for testing equally */
       //after XAB test (identical to the pre_XAB_test)
     var test_stimuli_equally = generateEqualTestStimuli(equally); // 30 random parameters
+
+    console.log(test_stimuli_equally);
+
+    var debug = "on";
+    if (debug === "on"){
+      downloadConsoleLogs();
+    } 
 
     /* Stimuli for language survey */
     var test_stimuli_s = [
